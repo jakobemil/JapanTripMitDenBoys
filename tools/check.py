@@ -87,6 +87,14 @@ for p in T.get("kosten", {}).get("posten", []):
         fehler.append(f"Kosten {pid}: schaetzungMin größer als schaetzungMax")
     if ist is not None and not isinstance(ist, (int, float)):
         fehler.append(f"Kosten {pid}: ist muss eine Zahl oder null sein")
+    if ist is not None:
+        if p.get("istWaehrung", p.get("waehrung")) not in ("JPY", "EUR"):
+            fehler.append(f"Kosten {pid}: istWaehrung muss 'JPY' oder 'EUR' sein")
+        k = p.get("istKurs")
+        if k is None:
+            warn.append(f"Kosten {pid}: istKurs fehlt, es wird der aktuelle Kurs genommen")
+        elif not (50 < k < 400):
+            fehler.append(f"Kosten {pid}: istKurs {k} ist kein plausibler Euro-Yen-Kurs")
     if lo is None and ist is None:
         warn.append(f"Kosten {pid}: weder Schätzung noch Ist-Betrag")
 

@@ -84,9 +84,14 @@ Es gibt keinen Build-Schritt. Karte: Leaflet mit Kacheln von Esri und OpenStreet
 - `einheit`: `person` = jeder zahlt das (Flug, Essen), `gesamt` = einmal für die Gruppe (Zimmer, Auto). Die Seite teilt `gesamt` durch die Personenzahl.
 - `waehrung`: `JPY` oder `EUR`, gilt für Schätzung und `ist`.
 - `ist`: tatsächlich bezahlter Betrag, `null` solange offen. Die Prognose nimmt `ist`, sonst die Mitte der Schätzung.
+- `istWaehrung`: `EUR` oder `JPY`, in welcher Währung bezahlt wurde (fehlt es, gilt `waehrung`).
+- `istKurs`: Euro-Yen-Kurs am Tag der Eintragung, z. B. `172.5`. Damit wird der bezahlte Betrag umgerechnet, auch wenn sich der Kurs später ändert.
+- `istDatum`: Tag der Eintragung, `JJJJ-MM-TT`.
+
+Die Seite holt beim Öffnen den Tageskurs der EZB (über frankfurter.dev). Er gilt für alle Schätzungen und für neue Einträge. Klappt der Abruf nicht, gilt `reise.wechselkurs`.
 - Neue Posten einfach anhängen, Posten mit gleicher `kategorie` werden gruppiert.
 
-Auf der Seite kann man Ist-Beträge auch direkt eintragen, z. B. `48.000` oder `85 €`. Die bleiben nur im eigenen Browser. Damit alle sie sehen: „Als JSON kopieren“, den Block `posten` in `trip.json` ersetzen, prüfen, pushen.
+Auf der Seite kann man Ist-Beträge auch direkt eintragen, Betrag eintragen und € oder ¥ wählen; Kurs und Datum werden automatisch mitgespeichert. Die bleiben nur im eigenen Browser. Damit alle sie sehen: „Als JSON kopieren“, den Block `posten` in `trip.json` ersetzen, prüfen, pushen.
 
 **Weitere Bereiche:** ``checkliste`, `quellen`, `reise` (Startwerte für Personenzahl und Wechselkurs).
 

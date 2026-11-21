@@ -102,7 +102,10 @@ button{font:inherit;color:inherit}
 .kctl label{display:grid;gap:4px;font-weight:500}
 .kctl input,.kin{font:16px "Noto Sans JP",sans-serif;padding:8px 10px;border:1px solid var(--mut);background:var(--bg);color:var(--ink);min-height:44px;border-radius:4px}
 .kctl input{width:8em}
-.kin{width:9.5em}
+.kin{width:7.5em}
+.kinw{display:flex;gap:4px}
+.kcur{font:16px "Noto Sans JP",sans-serif;min-height:44px;padding:0 6px;border:1px solid var(--mut);background:var(--bg);color:var(--ink);border-radius:4px}
+.kcur:focus-visible{outline:3px solid var(--ver)}
 .kin:focus-visible,.kctl input:focus-visible{outline:3px solid var(--ver)}
 .kb{background:var(--bg);color:var(--ink);border:1px solid var(--rule);box-shadow:none}
 .ksum{display:grid;grid-template-columns:repeat(auto-fit,minmax(13em,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:22px}
@@ -119,7 +122,7 @@ button{font:inherit;color:inherit}
 .ksub td{font-weight:700;color:var(--mut);font-size:14px}
 .ktab tr.paid td:first-child b::after{content:" ✓";color:var(--ver)}
 #kjson{width:100%;font:13px ui-monospace,monospace;margin-top:8px;background:var(--bg);color:var(--ink);border:1px solid var(--rule)}
-@media(max-width:600px){.ktab .kcat td,.ktab .ksub td{display:block;padding-left:0}.ktab .kcat td::before,.ktab .ksub td::before{content:none}.kin{width:100%}}
+@media(max-width:600px){.ktab .kcat td,.ktab .ksub td{display:block;padding-left:0}.ktab .kcat td::before,.ktab .ksub td::before{content:none}.kinw{width:100%}.kin{flex:1;width:auto}}
 .conns{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:4px}
 .conn{width:100%;text-align:left;display:grid;gap:0;background:var(--tint);border:0;border-left:4px solid var(--ver);padding:8px 12px;min-height:44px;cursor:pointer;font-size:15px}
 .conn small{font-size:13px;color:var(--mut)}
@@ -209,13 +212,14 @@ footer{background:var(--ai);color:#dfe4ff;font-size:14px}
 
 <section class="band alt" id="budget"><div class="wrap">
 <h2>Kosten: geschätzt und tatsächlich</h2>
-<p class="lede">Jeder Posten hat eine Schätzung. Sobald etwas bezahlt ist, tragt den echten Betrag ein. Die Prognose nimmt echte Beträge, wo es sie gibt, sonst die Mitte der Schätzung. Hotels mit einem Zimmer für alle, ein Auto für alle.</p>
+<p class="lede">Jeder Posten hat eine Schätzung. Sobald etwas bezahlt ist, tragt den echten Betrag ein und wählt € oder ¥. Der Kurs des Eintragstags wird mitgespeichert, damit sich bezahlte Beträge später nicht mehr verschieben. Die Prognose nimmt echte Beträge, wo es sie gibt, sonst die Mitte der Schätzung. Hotels mit einem Zimmer für alle, ein Auto für alle.</p>
 <div class="kctl">
 <label for="pp">Personen<input id="pp" type="number" min="1" max="12" value="2"></label>
-<label for="fx">Kurs: 1 € = … ¥<input id="fx" type="number" min="100" max="250" step="1" value="180"></label>
+<label for="fx">Kurs: 1 € = … ¥<input id="fx" type="number" min="50" max="300" step="0.01" value="180"></label>
 <button class="btn kb" type="button" id="kexp">Als JSON kopieren</button>
 <button class="btn kb" type="button" id="kres">Eigene Einträge löschen</button>
 </div>
+<p class="small" id="fxinfo">Tageskurs wird geladen …</p>
 <div class="ksum" id="ksum"></div>
 <div class="scroll"><table class="stack ktab"><thead><tr><th>Posten</th><th>Gilt für</th><th>Schätzung</th><th>Tatsächlich</th><th>Pro Person</th></tr></thead><tbody id="ktb"></tbody></table></div>
 <p class="small" id="kmsg">Eingaben im Feld „Tatsächlich“ werden nur in diesem Browser gespeichert. Damit alle sie sehen, mit „Als JSON kopieren“ den Block kopieren und in trip.json unter kosten.posten einfügen.</p>
@@ -356,33 +360,44 @@ const row=(a,cls)=>`<tr>${a.map((c,i)=>`<td${cls&&cls[i]?` class="${cls[i]}"`:""
 
 
 const KP=T.kosten.posten;
-let KO={};try{KO=JSON.parse(localStorage.getItem("jp27kosten")||"{}")}catch(e){}
+const today=()=>new Date().toISOString().slice(0,10),dfmt=d=>d?d.slice(8,10)+"."+d.slice(5,7)+"."+d.slice(0,4):"";
+let KO={};try{KO=JSON.parse(localStorage.getItem("jp27kosten2")||"{}")}catch(e){}
+try{if(!Object.keys(KO).length){const o=JSON.parse(localStorage.getItem("jp27kosten")||"{}");Object.entries(o).forEach(([id,raw])=>{const p=KP.find(x=>x.id===id);if(!p||!String(raw).trim())return;const c=/€|eur/i.test(raw)?"EUR":/¥|yen/i.test(raw)?"JPY":p.waehrung;const v=parseFloat(String(raw).replace(/[^\d.,]/g,"").replace(/[.](?=\d{3})/g,"").replace(",","."));if(!isNaN(v))KO[id]={v,c,k:null,d:null}})}}catch(e){}
+const saveKO=()=>{try{localStorage.setItem("jp27kosten2",JSON.stringify(KO))}catch(e){}};
+const fx=()=>Math.max(50,+$("fx").value||T.reise.wechselkurs||180);
 const fmtE=v=>Math.round(v).toLocaleString("de-DE")+" €",fmtY=v=>"¥"+Math.round(v).toLocaleString("de-DE");
-const parseAmt=(raw,cur)=>{if(raw==null)return null;let s=String(raw).trim();if(!s)return null;let c=cur;if(/€|eur/i.test(s))c="EUR";else if(/¥|yen|jpy/i.test(s))c="JPY";s=s.replace(/[^\d.,-]/g,"");if(/,\d{1,2}$/.test(s))s=s.replace(/\./g,"").replace(",",".");else s=s.replace(/[.,]/g,"");const v=parseFloat(s);return isNaN(v)?null:{v,c}};
-const rawIst=p=>p.id in KO?KO[p.id]:(p.ist==null?"":String(p.ist));
-const kcalc=()=>{const pp=Math.max(1,+$("pp").value||1),fx=Math.max(50,+$("fx").value||180),toY=(v,c)=>c==="EUR"?v*fx:v,fP=p=>p.einheit==="person"?1:1/pp;
+const num=s=>{s=String(s||"").trim().replace(/[^\d.,-]/g,"");if(!s)return null;if(/,\d{1,2}$/.test(s))s=s.replace(/\./g,"").replace(",",".");else if(/\.\d{1,2}$/.test(s)&&!/\.\d{3}/.test(s)){}else s=s.replace(/[.,]/g,"");const v=parseFloat(s);return isNaN(v)?null:v};
+const fromFile=p=>p.ist==null?null:{v:p.ist,c:p.istWaehrung||p.waehrung,k:p.istKurs||null,d:p.istDatum||null,src:"file"};
+const actual=p=>p.id in KO?(KO[p.id]&&KO[p.id].v!=null?{...KO[p.id],src:"own"}:null):fromFile(p);
+const toE=a=>a.c==="EUR"?a.v:a.v/(a.k||fx()),toYa=a=>a.c==="JPY"?a.v:a.v*(a.k||fx());
+const kcalc=()=>{const pp=Math.max(1,+$("pp").value||1),r=fx(),f=p=>p.einheit==="person"?1:1/pp;
 let eMin=0,eMax=0,prog=0,paid=0,openN=0,html="",cat="",sub=0;
-const rows=KP.map(p=>{const hasE=p.schaetzungMin!=null&&p.schaetzungMax!=null,lo=hasE?toY(p.schaetzungMin,p.waehrung):0,hi=hasE?toY(p.schaetzungMax,p.waehrung):0,mid=(lo+hi)/2;
-const a=parseAmt(rawIst(p),p.waehrung),ist=a?toY(a.v,a.c):null,f=fP(p);
-if(hasE){eMin+=lo*f;eMax+=hi*f}const use=ist!=null?ist:hasE?mid:null;if(use!=null)prog+=use*f;else openN++;if(ist!=null)paid+=ist*(p.einheit==="person"?pp:1);
-return{p,hasE,lo,hi,ist,use,f,own:p.id in KO}});
-rows.forEach((r,i)=>{const p=r.p;if(p.kategorie!==cat){if(cat)html+=`<tr class="ksub"><td colspan="4">Summe ${cat}</td><td class="n">${fmtE(sub/fx)}</td></tr>`;cat=p.kategorie;sub=0;html+=`<tr class="kcat"><td colspan="5">${cat}</td></tr>`}
-if(r.use!=null)sub+=r.use*r.f;
-const est=r.hasE?(p.schaetzungMin===p.schaetzungMax?(p.waehrung==="EUR"?fmtE(p.schaetzungMin):fmtY(p.schaetzungMin)):(p.waehrung==="EUR"?fmtE(p.schaetzungMin)+"–"+fmtE(p.schaetzungMax):fmtY(p.schaetzungMin)+"–"+fmtY(p.schaetzungMax))):"offen";
-html+=`<tr class="${r.ist!=null?"paid":""}"><td><b>${p.posten}</b>${p.notiz?`<span class="small kn">${p.notiz}</span>`:""}</td><td>${p.einheit==="person"?"pro Person":"Gruppe gesamt"}</td><td class="n">${est}</td><td><input class="kin" id="ist-${p.id}" data-id="${p.id}" inputmode="decimal" value="${String(rawIst(p)).replace(/"/g,"")}" placeholder="${p.waehrung==="EUR"?"z. B. 85 €":"z. B. 12.000 ¥"}" aria-label="Tatsächlicher Betrag ${p.posten}">${r.own?`<span class="small kn">nur in diesem Browser</span>`:p.ist!=null?`<span class="small kn">aus trip.json</span>`:""}</td><td class="n">${r.use==null?"–":fmtE(r.use*r.f/fx)}<span class="small kn">${r.ist!=null?"bezahlt":r.use!=null?"geschätzt":""}</span></td></tr>`});
-if(cat)html+=`<tr class="ksub"><td colspan="4">Summe ${cat}</td><td class="n">${fmtE(sub/fx)}</td></tr>`;
-const act=document.activeElement&&document.activeElement.classList.contains("kin")?document.activeElement.id:null,pos=act?document.activeElement.selectionStart:0;
+KP.forEach(p=>{const hasE=p.schaetzungMin!=null&&p.schaetzungMax!=null,cE=v=>p.waehrung==="EUR"?v:v/r,lo=hasE?cE(p.schaetzungMin):0,hi=hasE?cE(p.schaetzungMax):0,a=actual(p),ist=a?toE(a):null,use=ist!=null?ist:hasE?(lo+hi)/2:null;
+if(hasE){eMin+=lo*f(p);eMax+=hi*f(p)}if(use!=null)prog+=use*f(p);else openN++;if(ist!=null)paid+=ist*(p.einheit==="person"?pp:1);
+if(p.kategorie!==cat){if(cat)html+=`<tr class="ksub"><td colspan="4">Summe ${cat}</td><td class="n">${fmtE(sub)}</td></tr>`;cat=p.kategorie;sub=0;html+=`<tr class="kcat"><td colspan="5">${cat}</td></tr>`}
+if(use!=null)sub+=use*f(p);
+const sv=v=>p.waehrung==="EUR"?fmtE(v):fmtY(v),est=hasE?(p.schaetzungMin===p.schaetzungMax?sv(p.schaetzungMin):sv(p.schaetzungMin)+"–"+sv(p.schaetzungMax))+`<span class="small kn">≈ ${p.waehrung==="EUR"?fmtY(p.schaetzungMin*r)+(p.schaetzungMin!==p.schaetzungMax?"–"+fmtY(p.schaetzungMax*r):""):fmtE(lo)+(lo!==hi?"–"+fmtE(hi):"")} heute</span>`:"offen";
+const cur=a?a.c:(KO[p.id]&&KO[p.id].c)||p.waehrung,val=a?String(a.v).replace(".",","):"";
+const conv=a?`<span class="small kn">= ${a.c==="EUR"?fmtY(toYa(a)):fmtE(toE(a))}${a.k?`, Kurs ${String(a.k).replace(".",",")}`:""}${a.d?` vom ${dfmt(a.d)}`:""}${a.src==="own"?", nur in diesem Browser":", aus trip.json"}</span>`:"";
+html+=`<tr class="${a?"paid":""}"><td><b>${p.posten}</b>${p.notiz?`<span class="small kn">${p.notiz}</span>`:""}</td><td>${p.einheit==="person"?"pro Person":"Gruppe gesamt"}</td><td class="n">${est}</td><td><div class="kinw"><input class="kin" id="ist-${p.id}" data-id="${p.id}" inputmode="decimal" value="${val}" placeholder="Betrag" aria-label="Tatsächlicher Betrag ${p.posten}"><select class="kcur" data-id="${p.id}" aria-label="Währung ${p.posten}"><option value="EUR"${cur==="EUR"?" selected":""}>€</option><option value="JPY"${cur==="JPY"?" selected":""}>¥</option></select></div>${conv}</td><td class="n">${use==null?"–":fmtE(use*f(p))}<span class="small kn">${ist!=null?"bezahlt":use!=null?"geschätzt":""}</span></td></tr>`});
+if(cat)html+=`<tr class="ksub"><td colspan="4">Summe ${cat}</td><td class="n">${fmtE(sub)}</td></tr>`;
+const ae=document.activeElement,act=ae&&ae.classList&&ae.classList.contains("kin")?ae.id:null,pos=act?ae.selectionStart:0;
 $("ktb").innerHTML=html;if(act){const el=$(act);if(el){el.focus();try{el.setSelectionRange(pos,pos)}catch(e){}}}
 const share=prog>0?Math.min(100,paid/(prog*pp)*100):0;
-$("ksum").innerHTML=`<div><span>Geschätzt pro Person</span><b>${fmtE(eMin/fx)}–${fmtE(eMax/fx)}</b><small>${fmtY(eMin)}–${fmtY(eMax)}</small></div><div class="hl"><span>Prognose pro Person</span><b>${fmtE(prog/fx)}</b><small>Ist-Beträge + Mitte der Schätzung</small></div><div><span>Schon bezahlt, Gruppe</span><b>${fmtE(paid/fx)}</b><small>${share.toFixed(0)} % der Prognose</small><i class="kbar"><em style="width:${share}%"></em></i></div><div><span>Prognose Gruppe (${pp} Pers.)</span><b>${fmtE(prog*pp/fx)}</b><small>${openN?openN+" Posten ohne Betrag, z. B. Flug nach Japan":"alle Posten haben einen Betrag"}</small></div>`};
-$("ktb").addEventListener("input",e=>{const el=e.target.closest(".kin");if(!el)return;KO[el.dataset.id]=el.value;try{localStorage.setItem("jp27kosten",JSON.stringify(KO))}catch(x){}clearTimeout(kcalc.t);kcalc.t=setTimeout(kcalc,350)});
-["pp","fx"].forEach(i=>$(i).addEventListener("input",kcalc));
-$("kres").onclick=()=>{KO={};try{localStorage.removeItem("jp27kosten")}catch(e){}kcalc();$("kmsg").textContent="Eigene Einträge gelöscht, es gelten wieder die Werte aus trip.json."};
-$("kexp").onclick=()=>{const out=KP.map(p=>{const a=parseAmt(rawIst(p),p.waehrung);let ist=null;if(a)ist=a.c===p.waehrung?a.v:Math.round(a.c==="EUR"?a.v*(+$("fx").value||180):a.v/(+$("fx").value||180));return{...p,ist}});const txt='"posten": '+JSON.stringify(out,null,2);$("kjson").value=txt;
+$("ksum").innerHTML=`<div><span>Geschätzt pro Person</span><b>${fmtE(eMin)}–${fmtE(eMax)}</b><small>${fmtY(eMin*r)}–${fmtY(eMax*r)}</small></div><div class="hl"><span>Prognose pro Person</span><b>${fmtE(prog)}</b><small>Ist-Beträge + Mitte der Schätzung</small></div><div><span>Schon bezahlt, Gruppe</span><b>${fmtE(paid)}</b><small>${share.toFixed(0)} % der Prognose</small><i class="kbar"><em style="width:${share}%"></em></i></div><div><span>Prognose Gruppe (${pp} Pers.)</span><b>${fmtE(prog*pp)}</b><small>${openN?openN+" Posten ohne Betrag":"alle Posten haben einen Betrag"}</small></div>`};
+const setOwn=(id,v,c)=>{const old=KO[id]||fromFile(KP.find(p=>p.id===id))||{};const changed=old.v!==v||old.c!==c;KO[id]=v==null?{v:null}:{v,c,k:changed||!old.k?+fx().toFixed(2):old.k,d:changed||!old.d?today():old.d};saveKO()};
+$("ktb").addEventListener("input",e=>{const el=e.target.closest(".kin");if(!el)return;const id=el.dataset.id,sel=$("ktb").querySelector(`.kcur[data-id="${id}"]`);let c=sel.value;if(/€|eur/i.test(el.value))c="EUR";else if(/¥|yen|jpy/i.test(el.value))c="JPY";setOwn(id,num(el.value),c);clearTimeout(kcalc.t);kcalc.t=setTimeout(kcalc,500)});
+$("ktb").addEventListener("change",e=>{const el=e.target.closest(".kcur");if(!el)return;const id=el.dataset.id,inp=$("ist-"+id);setOwn(id,num(inp.value),el.value);kcalc()});
+["pp","fx"].forEach(i=>$(i).addEventListener("input",()=>{if(i==="fx")$("fxinfo").textContent="Kurs von Hand gesetzt. Gilt für Schätzungen und neue Einträge; eingetragene Beträge behalten ihren Kurs.";kcalc()}));
+$("kres").onclick=()=>{KO={};try{localStorage.removeItem("jp27kosten2")}catch(e){}kcalc();$("kmsg").textContent="Eigene Einträge gelöscht, es gelten wieder die Werte aus trip.json."};
+$("kexp").onclick=()=>{const out=KP.map(p=>{const a=actual(p),q={...p};if(a){q.ist=a.v;q.istWaehrung=a.c;q.istKurs=a.k||+fx().toFixed(2);q.istDatum=a.d||today()}else{q.ist=null;delete q.istWaehrung;delete q.istKurs;delete q.istDatum}return q});const txt='"posten": '+JSON.stringify(out,null,2);$("kjson").value=txt;
 const ok=()=>{$("kmsg").textContent="Kopiert. In trip.json den Block \"posten\" unter \"kosten\" damit ersetzen, prüfen mit python3 tools/check.py, dann pushen."};
 const fb=()=>{$("kdet").open=true;$("kjson").select();$("kmsg").textContent="Kopieren wurde blockiert. Der Text steht unten markiert zum manuellen Kopieren."};
 try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}};
 kcalc();
+const FXAPI=["https://api.frankfurter.dev/v1/latest?base=EUR&symbols=JPY","https://api.frankfurter.app/latest?from=EUR&to=JPY"];
+const getFx=i=>{if(i>=FXAPI.length){$("fxinfo").textContent=`Tageskurs nicht abrufbar, Startwert aus trip.json (${T.reise.wechselkurs}).`;return}fetch(FXAPI[i]).then(r=>r.ok?r.json():Promise.reject()).then(j=>{const k=j&&j.rates&&j.rates.JPY;if(!k)throw 0;$("fx").value=k.toFixed(2);$("fxinfo").textContent=`Tageskurs der EZB vom ${dfmt(j.date)}: 1 € = ${String(k.toFixed(2)).replace(".",",")} ¥`;kcalc()}).catch(()=>getFx(i+1))};
+getFx(0);
 
 let saved={};try{saved=JSON.parse(localStorage.getItem("jp27chk")||"{}")}catch(e){}
 const HTD=T.hotels.map((h,i)=>["Hotel buchen",`<strong>${h.stadt}, ${h.naechte}</strong> (${h.anzahlNaechte} ${h.anzahlNaechte>1?"Nächte":"Nacht"}): Empfehlung ${h.empfehlung}. Alternativen: ${h.alternativen}. Richtwert ${h.preis} pro Nacht. ${h.hinweis}.`,"h"+i]);
