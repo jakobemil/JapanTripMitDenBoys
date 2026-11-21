@@ -60,7 +60,26 @@ Es gibt keinen Build-Schritt. Karte: Leaflet mit Kacheln von Esri und OpenStreet
 
 **`hotels`**: `ort` (Kürzel), `naechte`, `stadt`, `empfehlung`, `alternativen`, `preis` (Text), `hinweis`, `preisMin`/`preisMax` in Yen pro Nacht für den Budget-Rechner, `anzahlNaechte`.
 
-**Weitere Bereiche:** `transport`, `mietwagen`, `onsen`, `essenTabelle`, `budget` (`art`: `person`, `auto` oder `hotels`), `checkliste`, `quellen`, `reise` (Personen und Wechselkurs als Startwerte).
+**`kosten.posten`**: jeder Kostenpunkt mit Schätzung und echtem Betrag.
+
+```json
+{
+  "id": "hotel-bep", "kategorie": "Hotels",
+  "posten": "Beppu, 10.–11.3. (2 Nächte)",
+  "einheit": "gesamt", "waehrung": "JPY",
+  "schaetzungMin": 60000, "schaetzungMax": 140000,
+  "ist": null, "notiz": "Ein Zimmer für alle"
+}
+```
+
+- `einheit`: `person` = jeder zahlt das (Flug, Essen), `gesamt` = einmal für die Gruppe (Zimmer, Auto). Die Seite teilt `gesamt` durch die Personenzahl.
+- `waehrung`: `JPY` oder `EUR`, gilt für Schätzung und `ist`.
+- `ist`: tatsächlich bezahlter Betrag, `null` solange offen. Die Prognose nimmt `ist`, sonst die Mitte der Schätzung.
+- Neue Posten einfach anhängen, Posten mit gleicher `kategorie` werden gruppiert.
+
+Auf der Seite kann man Ist-Beträge auch direkt eintragen, z. B. `48.000` oder `85 €`. Die bleiben nur im eigenen Browser. Damit alle sie sehen: „Als JSON kopieren“, den Block `posten` in `trip.json` ersetzen, prüfen, pushen.
+
+**Weitere Bereiche:** `transport`, `mietwagen`, `onsen`, `essenTabelle`, `checkliste`, `quellen`, `reise` (Startwerte für Personenzahl und Wechselkurs).
 
 ### Beispiel: Ort einfügen
 Einen Abstecher nach Kobe am 18. März: unter `orte` einen Eintrag `"KOB"` mit Koordinaten anlegen und am Tag 18 die Stopps auf `["KUR", "HIM", "KOB", "OSA"]` ändern. Mehr braucht es nicht.

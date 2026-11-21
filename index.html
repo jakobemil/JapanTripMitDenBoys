@@ -98,6 +98,28 @@ button{font:inherit;color:inherit}
 .leaflet-container a{color:#1f2f6b}
 .mapfail{position:absolute;inset:0;display:grid;place-content:center;gap:8px;padding:24px;text-align:center;background:#1f2f6b;color:#fff;z-index:900}
 .mapfail span{max-width:42ch;color:#dfe4ff;font-size:15px}
+.kctl{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:end;margin-bottom:18px}
+.kctl label{display:grid;gap:4px;font-weight:500}
+.kctl input,.kin{font:16px "Noto Sans JP",sans-serif;padding:8px 10px;border:1px solid var(--mut);background:var(--bg);color:var(--ink);min-height:44px;border-radius:4px}
+.kctl input{width:8em}
+.kin{width:9.5em}
+.kin:focus-visible,.kctl input:focus-visible{outline:3px solid var(--ver)}
+.kb{background:var(--bg);color:var(--ink);border:1px solid var(--rule);box-shadow:none}
+.ksum{display:grid;grid-template-columns:repeat(auto-fit,minmax(13em,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:22px}
+.ksum div{background:var(--bg);padding:14px 16px;display:grid;gap:2px}
+.ksum span{font-size:14px;color:var(--mut)}
+.ksum b{font:900 clamp(22px,2.6vw,30px)/1.15 "Zen Kaku Gothic New",sans-serif;white-space:nowrap}
+.ksum .hl b{color:var(--ver)}
+.ksum small{font-size:13px;color:var(--mut)}
+.kbar{display:block;height:6px;background:var(--rule);margin-top:6px}
+.kbar em{display:block;height:100%;background:var(--ai)}
+.ktab td{vertical-align:middle}
+.ktab .kn{display:block;font-size:13px}
+.kcat td{font:700 17px "Zen Kaku Gothic New",sans-serif;padding-top:18px;border-bottom:2px solid var(--ink);background:none}
+.ksub td{font-weight:700;color:var(--mut);font-size:14px}
+.ktab tr.paid td:first-child b::after{content:" ✓";color:var(--ver)}
+#kjson{width:100%;font:13px ui-monospace,monospace;margin-top:8px;background:var(--bg);color:var(--ink);border:1px solid var(--rule)}
+@media(max-width:600px){.ktab .kcat td,.ktab .ksub td{display:block;padding-left:0}.ktab .kcat td::before,.ktab .ksub td::before{content:none}.kin{width:100%}}
 .nav2{display:flex;gap:8px;margin-top:16px}
 .nav2 .btn{background:var(--tint);color:var(--ink);box-shadow:none}
 .tl{grid-column:1/-1;background:var(--ai);padding:12px 0 4px;border-top:1px solid #ffffff22}
@@ -174,7 +196,7 @@ footer{background:var(--ai);color:#dfe4ff;font-size:14px}
 </div>
 </header>
 <nav class="scroll" aria-label="Abschnitte">
-<a href="#karte">Karte</a><a href="#transport">Transport</a><a href="#hotels">Hotels</a><a href="#onsen">Onsen & Tattoos</a><a href="#essen">Essen & Day Drinking</a><a href="#budget">Budget</a><a href="#vorab">Vor der Reise</a><a href="#quellen">Quellen</a>
+<a href="#karte">Karte</a><a href="#transport">Transport</a><a href="#hotels">Hotels</a><a href="#onsen">Onsen & Tattoos</a><a href="#essen">Essen & Day Drinking</a><a href="#budget">Kosten</a><a href="#vorab">Vor der Reise</a><a href="#quellen">Quellen</a>
 </nav>
 
 <section class="band alt" id="transport"><div class="wrap">
@@ -221,17 +243,18 @@ footer{background:var(--ai);color:#dfe4ff;font-size:14px}
 </div></section>
 
 <section class="band alt" id="budget"><div class="wrap">
-<h2>Budget-Rechner</h2>
-<p class="lede">Grobe Spanne aus den recherchierten Preisen und Richtwerten, ohne internationale Flüge. Zimmer werden zu zweit geteilt, ein Auto für alle.</p>
-<div class="calc">
-<div class="ctl">
-<label for="pp">Personen (1–4)<input id="pp" type="number" min="1" max="4" value="2"></label>
+<h2>Kosten: geschätzt und tatsächlich</h2>
+<p class="lede">Jeder Posten hat eine Schätzung. Sobald etwas bezahlt ist, tragt den echten Betrag ein. Die Prognose nimmt echte Beträge, wo es sie gibt, sonst die Mitte der Schätzung. Hotels mit einem Zimmer für alle, ein Auto für alle.</p>
+<div class="kctl">
+<label for="pp">Personen<input id="pp" type="number" min="1" max="12" value="2"></label>
 <label for="fx">Kurs: 1 € = … ¥<input id="fx" type="number" min="100" max="250" step="1" value="180"></label>
-<div><div class="small">Pro Person, 8.–25. März</div><div class="total" id="tot"></div><div class="small" id="toty"></div></div>
+<button class="btn kb" type="button" id="kexp">Als JSON kopieren</button>
+<button class="btn kb" type="button" id="kres">Eigene Einträge löschen</button>
 </div>
-<div id="bud"></div>
-</div>
-<p class="small">Kurs bitte tagesaktuell eintragen. Essen und Trinken mit ¥6.000–12.000 pro Person und Tag gerechnet.</p>
+<div class="ksum" id="ksum"></div>
+<div class="scroll"><table class="stack ktab"><thead><tr><th>Posten</th><th>Gilt für</th><th>Schätzung</th><th>Tatsächlich</th><th>Pro Person</th></tr></thead><tbody id="ktb"></tbody></table></div>
+<p class="small" id="kmsg">Eingaben im Feld „Tatsächlich“ werden nur in diesem Browser gespeichert. Damit alle sie sehen, mit „Als JSON kopieren“ den Block kopieren und in trip.json unter kosten.posten einfügen.</p>
+<details id="kdet"><summary>JSON zum manuellen Kopieren</summary><textarea id="kjson" rows="10" readonly></textarea></details>
 </div></section>
 
 <section class="band" id="vorab"><div class="wrap">
@@ -364,16 +387,34 @@ $("ht").innerHTML=HT.map(r=>row(r.slice(0,6),[0,0,0,0,"n",0])).join("");
 $("ons").innerHTML=T.onsen.map(x=>`<li style="margin:8px 0">${x}</li>`).join("");
 
 $("fd").innerHTML=FD.map(r=>row(r,[])).join("");
-const B=T.budget.map(x=>x.art==="hotels"?[x.posten,HT.reduce((a,r)=>a+r[6]*r[8],0),HT.reduce((a,r)=>a+r[7]*r[8],0),"h"]:[x.posten,x.min,x.max,x.art==="auto"?"c":"p"]);
-const yen=v=>"¥"+Math.round(v/1000).toLocaleString("de-DE")+"k";
-const eur=v=>Math.round(v/50)*50;
-const calc=()=>{const pp=Math.min(4,Math.max(1,+$("pp").value||2)),fx=Math.min(250,Math.max(100,+$("fx").value||180)),rooms=Math.ceil(pp/2);
-const L=B.map(([n,lo,hi,t])=>{const f=t==="p"?1:t==="c"?1/pp:rooms/pp;return[n,lo*f,hi*f]});
-const mx=Math.max(...L.map(x=>x[2]));let lo=0,hi=0;
-$("bud").innerHTML=L.map(([n,a,b])=>{lo+=a;hi+=b;return`<div style="margin:0 0 14px"><div style="display:flex;justify-content:space-between;gap:12px"><span>${n}</span><span style="white-space:nowrap;font-variant-numeric:tabular-nums">${yen(a)}–${yen(b)}</span></div><div class="bar"><i class="hi" style="left:0;width:${b/mx*100}%"></i><i style="left:0;width:${a/mx*100}%"></i></div></div>`}).join("");
-$("tot").textContent=`${eur(lo/fx).toLocaleString("de-DE")}–${eur(hi/fx).toLocaleString("de-DE")} €`;
-$("toty").textContent=`${yen(lo)}–${yen(hi)} pro Person, ohne internationale Flüge`};
-["pp","fx"].forEach(i=>$(i).addEventListener("input",calc));calc();
+const KP=T.kosten.posten;
+let KO={};try{KO=JSON.parse(localStorage.getItem("jp27kosten")||"{}")}catch(e){}
+const fmtE=v=>Math.round(v).toLocaleString("de-DE")+" €",fmtY=v=>"¥"+Math.round(v).toLocaleString("de-DE");
+const parseAmt=(raw,cur)=>{if(raw==null)return null;let s=String(raw).trim();if(!s)return null;let c=cur;if(/€|eur/i.test(s))c="EUR";else if(/¥|yen|jpy/i.test(s))c="JPY";s=s.replace(/[^\d.,-]/g,"");if(/,\d{1,2}$/.test(s))s=s.replace(/\./g,"").replace(",",".");else s=s.replace(/[.,]/g,"");const v=parseFloat(s);return isNaN(v)?null:{v,c}};
+const rawIst=p=>p.id in KO?KO[p.id]:(p.ist==null?"":String(p.ist));
+const kcalc=()=>{const pp=Math.max(1,+$("pp").value||1),fx=Math.max(50,+$("fx").value||180),toY=(v,c)=>c==="EUR"?v*fx:v,fP=p=>p.einheit==="person"?1:1/pp;
+let eMin=0,eMax=0,prog=0,paid=0,openN=0,html="",cat="",sub=0;
+const rows=KP.map(p=>{const hasE=p.schaetzungMin!=null&&p.schaetzungMax!=null,lo=hasE?toY(p.schaetzungMin,p.waehrung):0,hi=hasE?toY(p.schaetzungMax,p.waehrung):0,mid=(lo+hi)/2;
+const a=parseAmt(rawIst(p),p.waehrung),ist=a?toY(a.v,a.c):null,f=fP(p);
+if(hasE){eMin+=lo*f;eMax+=hi*f}const use=ist!=null?ist:hasE?mid:null;if(use!=null)prog+=use*f;else openN++;if(ist!=null)paid+=ist*(p.einheit==="person"?pp:1);
+return{p,hasE,lo,hi,ist,use,f,own:p.id in KO}});
+rows.forEach((r,i)=>{const p=r.p;if(p.kategorie!==cat){if(cat)html+=`<tr class="ksub"><td colspan="4">Summe ${cat}</td><td class="n">${fmtE(sub/fx)}</td></tr>`;cat=p.kategorie;sub=0;html+=`<tr class="kcat"><td colspan="5">${cat}</td></tr>`}
+if(r.use!=null)sub+=r.use*r.f;
+const est=r.hasE?(p.schaetzungMin===p.schaetzungMax?(p.waehrung==="EUR"?fmtE(p.schaetzungMin):fmtY(p.schaetzungMin)):(p.waehrung==="EUR"?fmtE(p.schaetzungMin)+"–"+fmtE(p.schaetzungMax):fmtY(p.schaetzungMin)+"–"+fmtY(p.schaetzungMax))):"offen";
+html+=`<tr class="${r.ist!=null?"paid":""}"><td><b>${p.posten}</b>${p.notiz?`<span class="small kn">${p.notiz}</span>`:""}</td><td>${p.einheit==="person"?"pro Person":"Gruppe gesamt"}</td><td class="n">${est}</td><td><input class="kin" id="ist-${p.id}" data-id="${p.id}" inputmode="decimal" value="${String(rawIst(p)).replace(/"/g,"")}" placeholder="${p.waehrung==="EUR"?"z. B. 85 €":"z. B. 12.000 ¥"}" aria-label="Tatsächlicher Betrag ${p.posten}">${r.own?`<span class="small kn">nur in diesem Browser</span>`:p.ist!=null?`<span class="small kn">aus trip.json</span>`:""}</td><td class="n">${r.use==null?"–":fmtE(r.use*r.f/fx)}<span class="small kn">${r.ist!=null?"bezahlt":r.use!=null?"geschätzt":""}</span></td></tr>`});
+if(cat)html+=`<tr class="ksub"><td colspan="4">Summe ${cat}</td><td class="n">${fmtE(sub/fx)}</td></tr>`;
+const act=document.activeElement&&document.activeElement.classList.contains("kin")?document.activeElement.id:null,pos=act?document.activeElement.selectionStart:0;
+$("ktb").innerHTML=html;if(act){const el=$(act);if(el){el.focus();try{el.setSelectionRange(pos,pos)}catch(e){}}}
+const share=prog>0?Math.min(100,paid/(prog*pp)*100):0;
+$("ksum").innerHTML=`<div><span>Geschätzt pro Person</span><b>${fmtE(eMin/fx)}–${fmtE(eMax/fx)}</b><small>${fmtY(eMin)}–${fmtY(eMax)}</small></div><div class="hl"><span>Prognose pro Person</span><b>${fmtE(prog/fx)}</b><small>Ist-Beträge + Mitte der Schätzung</small></div><div><span>Schon bezahlt, Gruppe</span><b>${fmtE(paid/fx)}</b><small>${share.toFixed(0)} % der Prognose</small><i class="kbar"><em style="width:${share}%"></em></i></div><div><span>Prognose Gruppe (${pp} Pers.)</span><b>${fmtE(prog*pp/fx)}</b><small>${openN?openN+" Posten ohne Betrag, z. B. Flug nach Japan":"alle Posten haben einen Betrag"}</small></div>`};
+$("ktb").addEventListener("input",e=>{const el=e.target.closest(".kin");if(!el)return;KO[el.dataset.id]=el.value;try{localStorage.setItem("jp27kosten",JSON.stringify(KO))}catch(x){}clearTimeout(kcalc.t);kcalc.t=setTimeout(kcalc,350)});
+["pp","fx"].forEach(i=>$(i).addEventListener("input",kcalc));
+$("kres").onclick=()=>{KO={};try{localStorage.removeItem("jp27kosten")}catch(e){}kcalc();$("kmsg").textContent="Eigene Einträge gelöscht, es gelten wieder die Werte aus trip.json."};
+$("kexp").onclick=()=>{const out=KP.map(p=>{const a=parseAmt(rawIst(p),p.waehrung);let ist=null;if(a)ist=a.c===p.waehrung?a.v:Math.round(a.c==="EUR"?a.v*(+$("fx").value||180):a.v/(+$("fx").value||180));return{...p,ist}});const txt='"posten": '+JSON.stringify(out,null,2);$("kjson").value=txt;
+const ok=()=>{$("kmsg").textContent="Kopiert. In trip.json den Block \"posten\" unter \"kosten\" damit ersetzen, prüfen mit python3 tools/check.py, dann pushen."};
+const fb=()=>{$("kdet").open=true;$("kjson").select();$("kmsg").textContent="Kopieren wurde blockiert. Der Text steht unten markiert zum manuellen Kopieren."};
+try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}};
+kcalc();
 
 let saved={};try{saved=JSON.parse(localStorage.getItem("jp27chk")||"{}")}catch(e){}
 $("chk").innerHTML=CK.map((c,i)=>`<li><label><input type="checkbox" id="c${i}" ${saved[i]?"checked":""}><b>${c[0]}</b><span>${c[1]}</span></label></li>`).join("");

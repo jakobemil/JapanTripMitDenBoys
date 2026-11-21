@@ -1662,48 +1662,6 @@
       "trinken": "Akabane, Ameyoko, Noge in Yokohama, Ebisu Yokocho"
     }
   ],
-  "budget": [
-    {
-      "posten": "Inlandsflug Tokyo–Fukuoka",
-      "min": 9500,
-      "max": 20000,
-      "art": "person"
-    },
-    {
-      "posten": "Shinkansen Osaka–Tokyo",
-      "min": 12980,
-      "max": 14720,
-      "art": "person"
-    },
-    {
-      "posten": "Bahn, Fähren, Metro",
-      "min": 12000,
-      "max": 20000,
-      "art": "person"
-    },
-    {
-      "posten": "Eintritte inkl. Sumo",
-      "min": 15000,
-      "max": 28000,
-      "art": "person"
-    },
-    {
-      "posten": "Essen und Trinken, 17 Tage",
-      "min": 102000,
-      "max": 204000,
-      "art": "person"
-    },
-    {
-      "posten": "Mietwagen komplett",
-      "min": 153000,
-      "max": 226000,
-      "art": "auto"
-    },
-    {
-      "posten": "Hotels, 17 Nächte",
-      "art": "hotels"
-    }
-  ],
   "checkliste": [
     {
       "wann": "Jetzt",
@@ -1859,5 +1817,261 @@
       "titel": "Japan im März 2027: Kirschblüte",
       "url": "https://selfguidejapan.com/blog/japan-in-march-2027"
     }
-  ]
+  ],
+  "kosten": {
+    "_hinweis": "schaetzungMin/Max und ist in der angegebenen waehrung (JPY oder EUR). einheit 'person' = pro Person, 'gesamt' = für die ganze Gruppe (z. B. ein geteiltes Zimmer, ein Auto). ist = tatsächlich bezahlter Betrag, null solange offen.",
+    "posten": [
+      {
+        "id": "flug-int",
+        "kategorie": "Anreise",
+        "posten": "Flug Deutschland ↔ Tokyo",
+        "einheit": "person",
+        "waehrung": "EUR",
+        "schaetzungMin": null,
+        "schaetzungMax": null,
+        "ist": null,
+        "notiz": "Noch nicht recherchiert, Ist eintragen sobald gebucht"
+      },
+      {
+        "id": "flug-fuk",
+        "kategorie": "Transport",
+        "posten": "Inlandsflug Haneda → Fukuoka (9.3.)",
+        "einheit": "person",
+        "waehrung": "JPY",
+        "schaetzungMin": 9500,
+        "schaetzungMax": 20000,
+        "ist": null,
+        "notiz": "Skymark ab ca. ¥9.500"
+      },
+      {
+        "id": "shinkansen",
+        "kategorie": "Transport",
+        "posten": "Shinkansen Osaka → Tokyo (21.3.)",
+        "einheit": "person",
+        "waehrung": "JPY",
+        "schaetzungMin": 12980,
+        "schaetzungMax": 14720,
+        "ist": null,
+        "notiz": "¥12.980 mit Hayatoku 21"
+      },
+      {
+        "id": "bahn",
+        "kategorie": "Transport",
+        "posten": "Bahn, Fähren, Metro, Suica",
+        "einheit": "person",
+        "waehrung": "JPY",
+        "schaetzungMin": 12000,
+        "schaetzungMax": 20000,
+        "ist": null,
+        "notiz": ""
+      },
+      {
+        "id": "auto-miete",
+        "kategorie": "Mietwagen",
+        "posten": "Grundmiete 9 Tage",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 65000,
+        "schaetzungMax": 110000,
+        "ist": null,
+        "notiz": "Kompaktwagen, Richtwert"
+      },
+      {
+        "id": "auto-einweg",
+        "kategorie": "Mietwagen",
+        "posten": "Einweggebühr Fukuoka → Osaka",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 50000,
+        "schaetzungMax": 60000,
+        "ist": null,
+        "notiz": "Nippon: ¥880 je 10 km"
+      },
+      {
+        "id": "auto-maut",
+        "kategorie": "Mietwagen",
+        "posten": "Maut (ETC)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 18000,
+        "schaetzungMax": 25000,
+        "ist": null,
+        "notiz": "Schätzung"
+      },
+      {
+        "id": "auto-benzin",
+        "kategorie": "Mietwagen",
+        "posten": "Benzin ~1.050 km",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 12000,
+        "schaetzungMax": 16000,
+        "ist": null,
+        "notiz": ""
+      },
+      {
+        "id": "auto-parken",
+        "kategorie": "Mietwagen",
+        "posten": "Parken",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 8000,
+        "schaetzungMax": 15000,
+        "ist": null,
+        "notiz": ""
+      },
+      {
+        "id": "fuehrerschein",
+        "kategorie": "Mietwagen",
+        "posten": "ADAC-Führerscheinübersetzung",
+        "einheit": "gesamt",
+        "waehrung": "EUR",
+        "schaetzungMin": 95,
+        "schaetzungMax": 95,
+        "ist": null,
+        "notiz": "95 € je Fahrer"
+      },
+      {
+        "id": "hotel-hnd",
+        "kategorie": "Hotels",
+        "posten": "Tokyo Haneda, 8.3. (1 Nacht)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 18000,
+        "schaetzungMax": 30000,
+        "ist": null,
+        "notiz": "Ein Zimmer für alle, Villa Fontaine Grand Haneda Airport",
+        "hotel": 0
+      },
+      {
+        "id": "hotel-fuk",
+        "kategorie": "Hotels",
+        "posten": "Fukuoka, 9.3. (1 Nacht)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 15000,
+        "schaetzungMax": 45000,
+        "ist": null,
+        "notiz": "Ein Zimmer für alle, Hotel Il Palazzo",
+        "hotel": 1
+      },
+      {
+        "id": "hotel-bep",
+        "kategorie": "Hotels",
+        "posten": "Beppu, 10.–11.3. (2 Nächte)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 60000,
+        "schaetzungMax": 140000,
+        "ist": null,
+        "notiz": "Ein Zimmer für alle, Terrace Midoubaru",
+        "hotel": 2
+      },
+      {
+        "id": "hotel-nag",
+        "kategorie": "Hotels",
+        "posten": "Nagato Yumoto, 12.3. (1 Nacht)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 25000,
+        "schaetzungMax": 120000,
+        "ist": null,
+        "notiz": "Ein Zimmer für alle, KAI Nagato",
+        "hotel": 3
+      },
+      {
+        "id": "hotel-hir",
+        "kategorie": "Hotels",
+        "posten": "Hiroshima, 13.–15.3. (3 Nächte)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 39000,
+        "schaetzungMax": 90000,
+        "ist": null,
+        "notiz": "Ein Zimmer für alle, KIRO Hiroshima by The Share Hotels",
+        "hotel": 4
+      },
+      {
+        "id": "hotel-ono",
+        "kategorie": "Hotels",
+        "posten": "Onomichi, 16.3. (1 Nacht)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 20000,
+        "schaetzungMax": 40000,
+        "ist": null,
+        "notiz": "Ein Zimmer für alle, Hotel Cycle im ONOMICHI U2",
+        "hotel": 5
+      },
+      {
+        "id": "hotel-kur",
+        "kategorie": "Hotels",
+        "posten": "Kurashiki, 17.3. (1 Nacht)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 25000,
+        "schaetzungMax": 95000,
+        "ist": null,
+        "notiz": "Ein Zimmer für alle, Ryori Ryokan Tsurugata im Bikan-Viertel",
+        "hotel": 6
+      },
+      {
+        "id": "hotel-osa",
+        "kategorie": "Hotels",
+        "posten": "Osaka, 18.–20.3. (3 Nächte)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 45000,
+        "schaetzungMax": 135000,
+        "ist": null,
+        "notiz": "Ein Zimmer für alle, Cross Hotel Osaka",
+        "hotel": 7
+      },
+      {
+        "id": "hotel-tyo",
+        "kategorie": "Hotels",
+        "posten": "Tokyo, 21.–24.3. (4 Nächte)",
+        "einheit": "gesamt",
+        "waehrung": "JPY",
+        "schaetzungMin": 100000,
+        "schaetzungMax": 240000,
+        "ist": null,
+        "notiz": "Ein Zimmer für alle, sequence MIYASHITA PARK",
+        "hotel": 8
+      },
+      {
+        "id": "sumo",
+        "kategorie": "Erlebnisse",
+        "posten": "Sumo-Tickets (19.3.)",
+        "einheit": "person",
+        "waehrung": "JPY",
+        "schaetzungMin": 3500,
+        "schaetzungMax": 11000,
+        "ist": null,
+        "notiz": "Stuhlplätze 2026: ¥3.500–11.000"
+      },
+      {
+        "id": "eintritte",
+        "kategorie": "Erlebnisse",
+        "posten": "Eintritte: Himeji, Museen, Seilbahnen, Onsen",
+        "einheit": "person",
+        "waehrung": "JPY",
+        "schaetzungMin": 11500,
+        "schaetzungMax": 17000,
+        "ist": null,
+        "notiz": ""
+      },
+      {
+        "id": "essen",
+        "kategorie": "Essen & Trinken",
+        "posten": "Essen und Trinken, 17 Tage",
+        "einheit": "person",
+        "waehrung": "JPY",
+        "schaetzungMin": 102000,
+        "schaetzungMax": 204000,
+        "ist": null,
+        "notiz": "¥6.000–12.000 pro Tag"
+      }
+    ]
+  }
 }

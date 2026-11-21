@@ -61,6 +61,26 @@ for i, h in enumerate(hotels):
     if h.get("preisMin", 0) > h.get("preisMax", 0):
         fehler.append(f"Hotel {i}: preisMin größer als preisMax")
 
+ids = set()
+for p in T.get("kosten", {}).get("posten", []):
+    pid = p.get("id")
+    if pid in ids:
+        fehler.append(f"Kosten: id '{pid}' doppelt")
+    ids.add(pid)
+    if p.get("einheit") not in ("person", "gesamt"):
+        fehler.append(f"Kosten {pid}: einheit muss 'person' oder 'gesamt' sein")
+    if p.get("waehrung") not in ("JPY", "EUR"):
+        fehler.append(f"Kosten {pid}: waehrung muss 'JPY' oder 'EUR' sein")
+    lo, hi, ist = p.get("schaetzungMin"), p.get("schaetzungMax"), p.get("ist")
+    if (lo is None) != (hi is None):
+        fehler.append(f"Kosten {pid}: schaetzungMin und schaetzungMax entweder beide setzen oder beide null")
+    elif lo is not None and lo > hi:
+        fehler.append(f"Kosten {pid}: schaetzungMin größer als schaetzungMax")
+    if ist is not None and not isinstance(ist, (int, float)):
+        fehler.append(f"Kosten {pid}: ist muss eine Zahl oder null sein")
+    if lo is None and ist is None:
+        warn.append(f"Kosten {pid}: weder Schätzung noch Ist-Betrag")
+
 for w in warn:
     print("Hinweis:", w)
 for f in fehler:
