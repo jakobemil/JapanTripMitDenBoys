@@ -1814,59 +1814,11 @@
       "anzahlNaechte": 4
     }
   ],
-  "essenTabelle": [
-    {
-      "station": "Fukuoka",
-      "essen": "Hakata-Ramen (Tonkotsu), Mentaiko, Motsunabe, Gyoza",
-      "trinken": "Yatai in Nakasu, Tenjin, Nagahama; Bargeld mitnehmen"
-    },
-    {
-      "station": "Beppu",
-      "essen": "Jigoku-mushi aus dem Quelldampf, Toriten, Beppu-Reimen",
-      "trinken": "Izakaya um Kitahama, Kabosu-Highball, Oita-Shochu"
-    },
-    {
-      "station": "Mojiko und Shimonoseki",
-      "essen": "Fugu-Sushi, Yaki-Curry",
-      "trinken": "Karato-Markt Fr und Sa 10–15, So 8–15 Uhr"
-    },
-    {
-      "station": "Nagato und Hagi",
-      "essen": "Fisch vom Japanischen Meer, Nagato-Yakitori",
-      "trinken": "Craft Beer in Nagato Yumoto"
-    },
-    {
-      "station": "Hiroshima",
-      "essen": "Okonomiyaki mit Nudeln, Austern, Anago-meshi",
-      "trinken": "Saijo-Sake, Lemon-Sour, Bars in Nagarekawa"
-    },
-    {
-      "station": "Onomichi und Tomonoura",
-      "essen": "Onomichi-Ramen, Meerbrasse (Tai)",
-      "trinken": "Homeishu-Kräuterlikör, Bar im ONOMICHI U2"
-    },
-    {
-      "station": "Kurashiki",
-      "essen": "Mamakari, Barazushi, Demi-Katsudon",
-      "trinken": "Craft Beer und Sake im Speicherviertel"
-    },
-    {
-      "station": "Osaka",
-      "essen": "Takoyaki, Kushikatsu, Okonomiyaki, Doteyaki",
-      "trinken": "Tenma (Stehbars), Kyobashi, Shinsekai mit Morgen-Sets"
-    },
-    {
-      "station": "Kyoto-Fushimi",
-      "essen": "Inari-Sushi, Snacks aus Sake-Trester",
-      "trinken": "Brauerei-Verkostungen, Gekkeikan Okura Museum"
-    },
-    {
-      "station": "Tokyo",
-      "essen": "Sushi und Tamagoyaki in Tsukiji, Monjayaki, Motsuni",
-      "trinken": "Akabane, Ameyoko, Noge in Yokohama, Ebisu Yokocho"
-    }
-  ],
   "checkliste": [
+    {
+      "wann": "Wichtig",
+      "was": "Alkohol am Steuer: In Japan ist ab 0,15 mg pro Liter Atemluft Schluss, oft reicht ein Bier. Auch Beifahrer, die wissentlich mitfahren, können bestraft werden. Trinktage liegen deshalb auf autofreien Tagen (11., 14., 15. März und ab Osaka)."
+    },
     {
       "wann": "Onsen klären",
       "was": "Tattoos: In Beppu gibt es eine offizielle Liste mit rund 100 tattoofreundlichen Bädern, u. a. Takegawara, Hyotan, Tanoyu und Nageshi Onsen. Bei Ryokan vorab nach Privatbad (kashikiri) fragen; in Tokyo sind Sento wie Kosugiyu (Koenji) okay."

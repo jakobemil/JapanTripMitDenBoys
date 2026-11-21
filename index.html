@@ -204,15 +204,8 @@ footer{background:var(--ai);color:#dfe4ff;font-size:14px}
 </div>
 </header>
 <nav class="scroll" aria-label="Abschnitte">
-<a href="#karte">Karte</a><a href="#essen">Essen & Day Drinking</a><a href="#budget">Kosten</a><a href="#vorab">Vor der Reise</a><a href="#quellen">Quellen</a>
+<a href="#karte">Karte</a><a href="#budget">Kosten</a><a href="#vorab">Vor der Reise</a><a href="#quellen">Quellen</a>
 </nav>
-
-<section class="band" id="essen"><div class="wrap">
-<h2>Essen und Day Drinking nach Station</h2>
-<p class="lede">Jede Station hat ihre eigene Spezialität. Die Bar- und Marktstraßen unten öffnen oft schon mittags.</p>
-<div class="warn"><h3>Alkohol und Auto: praktisch null Toleranz</h3><p>In Japan ist ab 0,15 mg Alkohol pro Liter Atemluft Schluss, das reicht oft schon mit einem Bier. Auch Beifahrer, die wissentlich mitfahren, und wer dem Fahrer Alkohol gibt, können bestraft werden. Deshalb liegen die Trinktage im Plan auf autofreien Tagen (11., 14., 15. März und alle Stadttage ab Osaka).</p></div>
-<div class="scroll"><table class="stack"><thead><tr><th>Station</th><th>Unbedingt essen</th><th>Trinken & Bars</th></tr></thead><tbody id="fd"></tbody></table></div>
-</div></section>
 
 <section class="band alt" id="budget"><div class="wrap">
 <h2>Kosten: geschätzt und tatsächlich</h2>
@@ -253,7 +246,6 @@ const STAY={};T.tage.forEach(t=>{if(t.hotel!=null)STAY[t.tag]=t.hotel});
 const NL=T.hotels.map((h,i)=>{const ds=T.tage.filter(t=>t.hotel===i).map(t=>t.tag);return[P[h.ort][1],ds.length>1?ds[0]+".–"+ds[ds.length-1]+". "+MN:ds[0]+". "+MN,ds.length+(ds.length>1?" Nächte":" Nacht"),ds[0],h.ort]}).filter(n=>n[3]!==undefined);
 const PL=Object.fromEntries(Object.entries(T.orte).map(([k,o])=>[k,{k:(o.kultur||[]).map(x=>x.text),e:(o.essen||[]).map(x=>x.text),t:(o.trinken||[]).map(x=>x.text)}]));
 const HT=T.hotels.map(h=>[h.naechte,h.stadt,h.empfehlung,h.alternativen,h.preis,h.hinweis,h.preisMin,h.preisMax,h.anzahlNaechte]);
-const FD=T.essenTabelle.map(r=>[r.station,r.essen,r.trinken]);
 const CK=T.checkliste.map(r=>[r.wann,r.was]),SR=T.quellen.map(r=>[r.titel,r.url]);
 const VB={};(T.verbindungen||[]).forEach(v=>VB[v.tag+"|"+v.von+"|"+v.nach]=v);
 $("pp").value=T.reise.personen;$("fx").value=T.reise.wechselkurs;
@@ -363,7 +355,6 @@ const row=(a,cls)=>`<tr>${a.map((c,i)=>`<td${cls&&cls[i]?` class="${cls[i]}"`:""
 
 
 
-$("fd").innerHTML=FD.map(r=>row(r,[])).join("");
 const KP=T.kosten.posten;
 let KO={};try{KO=JSON.parse(localStorage.getItem("jp27kosten")||"{}")}catch(e){}
 const fmtE=v=>Math.round(v).toLocaleString("de-DE")+" €",fmtY=v=>"¥"+Math.round(v).toLocaleString("de-DE");

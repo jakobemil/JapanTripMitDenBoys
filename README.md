@@ -88,7 +88,7 @@ Es gibt keinen Build-Schritt. Karte: Leaflet mit Kacheln von Esri und OpenStreet
 
 Auf der Seite kann man Ist-Beträge auch direkt eintragen, z. B. `48.000` oder `85 €`. Die bleiben nur im eigenen Browser. Damit alle sie sehen: „Als JSON kopieren“, den Block `posten` in `trip.json` ersetzen, prüfen, pushen.
 
-**Weitere Bereiche:** ``essenTabelle`, `checkliste`, `quellen`, `reise` (Startwerte für Personenzahl und Wechselkurs).
+**Weitere Bereiche:** ``checkliste`, `quellen`, `reise` (Startwerte für Personenzahl und Wechselkurs).
 
 ### Beispiel: Ort einfügen
 Einen Abstecher nach Kobe am 18. März: unter `orte` einen Eintrag `"KOB"` mit Koordinaten anlegen und am Tag 18 die Stopps auf `["KUR", "HIM", "KOB", "OSA"]` ändern. Mehr braucht es nicht.
