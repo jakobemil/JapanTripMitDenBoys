@@ -2,11 +2,78 @@
 
 Interaktive Reiseübersicht: Karte mit Zeitstrahl, Tagespläne, Orts-Highlights (Kultur, Essen, Trinken) mit Google-Maps-Links, Transport, Hotels, Onsen mit Tattoos, Budget-Rechner und Checkliste.
 
-Die ganze Seite ist eine einzige Datei: `index.html`. Es gibt keinen Build-Schritt und keine Abhängigkeiten. Karte: Leaflet mit Kartenkacheln von Esri und OpenStreetMap, beides wird im Browser geladen.
+## Aufbau
+
+| Datei | Inhalt |
+|---|---|
+| `trip.json` | **Alle Reisedaten.** Hier wird geändert. |
+| `index.html` | Darstellung: liest `trip.json` und zeigt Karte, Zeitstrahl und Tabellen. Muss bei Routenänderungen nicht angefasst werden. |
+| `tools/check.py` | Prüft `trip.json` auf Tippfehler und kaputte Verweise. |
+
+Es gibt keinen Build-Schritt. Karte: Leaflet mit Kacheln von Esri und OpenStreetMap.
+
+## Daten ändern
+
+1. `trip.json` bearbeiten (direkt auf GitHub mit dem Stift-Symbol oder lokal).
+2. Prüfen: `python3 tools/check.py`
+3. Committen und pushen, Netlify oder Cloudflare veröffentlicht automatisch.
+
+### Die wichtigsten Bereiche in `trip.json`
+
+**`orte`**: jeder Ort mit Kürzel als Schlüssel, z. B. `"BEP"` für Beppu.
+
+```json
+"BEP": {
+  "jp": "別府", "name": "Beppu", "lat": 33.28, "lon": 131.49,
+  "label": "r",
+  "kultur":  [{ "text": "Takegawara Onsen, Badehaus von 1938", "maps": "Takegawara Onsen" }],
+  "essen":   [{ "text": "Toriten, Oitas Hähnchen-Tempura", "maps": "Toyotsune Beppu" }],
+  "trinken": [{ "text": "Izakaya um Kitahama", "maps": "Kitahama Beppu" }]
+}
+```
+
+- `label`: Seite der Beschriftung auf der Karte, `l` links, `r` rechts, `t` oben, `b` unten.
+- `maps`: Suchbegriff für den Google-Maps-Knopf, am besten der englische Name.
+- `klein: true`: Ort wird auf dem Handy in der Gesamtansicht nicht beschriftet.
+- Koordinaten: in Google Maps rechtsklicken, die erste Zahl ist `lat`, die zweite `lon`.
+
+**`tage`**: ein Eintrag pro Reisetag, in Reihenfolge.
+
+```json
+{
+  "tag": 12, "wochentag": "Fr", "region": "Yamaguchi",
+  "titel": "Kanmon-Straße, Fischmarkt und Torii an der Klippe",
+  "art": "car",
+  "stopps": ["BEP", "KAN", "TSU", "MOT", "NAG"],
+  "tags": ["Auto ~260 km", "Langer Tag"],
+  "plan": ["Erster Punkt", "Zweiter Punkt"],
+  "essen": "…", "abseits": "…",
+  "uebernachtung": "Nagato Yumoto, 1 Nacht",
+  "hotel": 3
+}
+```
+
+- `art`: `car` Mietwagen, `tr` Zug/Fähre, `sk` Shinkansen, `fl` Flug, `loc` vor Ort, `arr` Ankunft, `dep` Abreise. Bestimmt Linie und Farbe.
+- `stopps`: Ort-Kürzel aus `orte`, in Fahrtreihenfolge. Daraus wird die Linie auf der Karte.
+- `tags`: Chips im Tag. Ein Tag mit „Auto “ wird rot, „Autofrei“ rosa.
+- `hotel`: Nummer des Hotels in `hotels` (gezählt ab 0), `null` ohne Übernachtung.
+
+**`hotels`**: `ort` (Kürzel), `naechte`, `stadt`, `empfehlung`, `alternativen`, `preis` (Text), `hinweis`, `preisMin`/`preisMax` in Yen pro Nacht für den Budget-Rechner, `anzahlNaechte`.
+
+**Weitere Bereiche:** `transport`, `mietwagen`, `onsen`, `essenTabelle`, `budget` (`art`: `person`, `auto` oder `hotels`), `checkliste`, `quellen`, `reise` (Personen und Wechselkurs als Startwerte).
+
+### Beispiel: Ort einfügen
+Einen Abstecher nach Kobe am 18. März: unter `orte` einen Eintrag `"KOB"` mit Koordinaten anlegen und am Tag 18 die Stopps auf `["KUR", "HIM", "KOB", "OSA"]` ändern. Mehr braucht es nicht.
 
 ## Lokal ansehen
 
-`index.html` herunterladen und direkt in Chrome, Safari oder Firefox öffnen (Internet nötig, nicht in einer Datei-Vorschau öffnen).
+Weil die Seite `trip.json` nachlädt, funktioniert ein Doppelklick auf `index.html` nicht, der Browser blockiert das. Stattdessen im Repo-Ordner:
+
+```bash
+python3 -m http.server 8000
+```
+
+und dann http://localhost:8000 öffnen.
 
 ## Online stellen (Repo bleibt privat)
 
@@ -33,4 +100,4 @@ Nur mit öffentlichem Repo (GitHub Free) oder GitHub Pro. Settings → Pages →
 
 ## Änderungen
 
-`index.html` bearbeiten und pushen. Netlify und Cloudflare veröffentlichen jeden Push auf `main` automatisch neu.
+`trip.json` bearbeiten und pushen. Netlify und Cloudflare veröffentlichen jeden Push auf `main` automatisch neu.
