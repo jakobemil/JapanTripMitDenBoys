@@ -1,0 +1,9 @@
+# Statische Seite ohne Build-Schritt
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

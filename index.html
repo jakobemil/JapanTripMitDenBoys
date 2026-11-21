@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Japan März 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday travel tool: one screen to see where you are on which day
+   IDEA a JR line map on a timetable board: places on the map, days on a strip, both linked
+   PICTURE drawn map of western Japan, the day's route flown into view, timeline below
+   COLOUR indigo sea, pale land, vermilion car route, white panels
+   TYPE Zen Kaku Gothic New for titles, dates and place names, Noto Sans JP for text
+   LAYOUT map left with day panel right, timeline strip full width under both; phone: title, map, strip, panel */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0d1120);--ink:light-dark(#14182b,#e9ecf6);--mut:light-dark(#555b72,#a7adc4);--rule:light-dark(#dfe2ea,#262c44);--ai:light-dark(#1f2f6b,#141c3f);--ai2:light-dark(#2c3f86,#1d2853);--ver:light-dark(#d93a1f,#ff6a4d);--tint:light-dark(#f3f4f9,#151a2e);--sak:light-dark(#fbe8eb,#2a1a22);--sea:light-dark(#1f2f6b,#0f1636);--land:light-dark(#eef0f6,#29336a);--coast:light-dark(#c6cde4,#3d4a8c);--lab:light-dark(#14182b,#f2f4ff);--halo:light-dark(#eef0f6,#29336a);--sk:light-dark(#1f2f6b,#b9c6ff);--tr:#e6a100}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans JP",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;letter-spacing:-.02em;line-height:1.1;text-wrap:balance;margin:0}
+a{color:inherit;text-underline-offset:3px}
+button{font:inherit;color:inherit}
+.wrap{max-width:1240px;margin:0 auto}
+.band{padding-block:clamp(28px,4vw,56px);padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
+.hero{background:var(--ai);color:#fff;padding-bottom:28px}
+.hero h1{font-size:clamp(30px,4vw,44px);font-weight:900}
+.hero .wrap>p{max-width:75ch;color:#dfe4ff;margin:10px 0 22px}
+.app{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:0;background:var(--bg);color:var(--ink)}
+.map{position:relative;height:min(64vh,600px);min-height:420px;background:var(--sea);overflow:hidden}
+.map>svg{position:absolute;inset:0;width:100%;height:100%;touch-action:manipulation}
+.mk{cursor:pointer}
+.mk:focus{outline:none}
+.mk:focus-visible circle{stroke:var(--ver);stroke-width:4}
+.ctlbar{position:absolute;top:12px;left:12px;display:flex;flex-wrap:wrap;gap:8px}
+.btn{min-height:44px;padding:8px 14px;border:0;border-radius:999px;background:#fff;color:#14182b;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 1px 0 #0002}
+.btn:hover{background:#f0f2fa}
+.btn:focus-visible{outline:3px solid var(--ver);outline-offset:2px}
+.btn.on{background:var(--ver);color:#fff}
+.leg{position:absolute;left:12px;bottom:10px;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:#fff;background:#0b1233cc;padding:6px 10px;border-radius:8px;max-width:calc(100% - 24px)}
+.leg i{display:inline-block;width:22px;height:0;border-top:4px solid;vertical-align:middle;margin-right:6px}
+.note{position:absolute;right:12px;bottom:10px;font-size:13px;color:#fff;background:#0b1233cc;padding:4px 10px;border-radius:8px}
+.pan{padding:22px 24px;overflow:auto;height:min(64vh,600px);min-height:420px;border-left:1px solid var(--rule)}
+.dhead{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:end;margin-bottom:10px}
+.dhead b{font:900 56px/0.9 "Zen Kaku Gothic New",sans-serif;color:var(--ver)}
+.dhead span{display:block;font-size:14px;color:var(--mut)}
+.dhead h2{font-size:clamp(22px,2.2vw,28px)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;padding:0;list-style:none}
+.chips li{font-size:13px;padding:3px 10px;border-radius:999px;background:var(--tint);white-space:nowrap}
+.chips li.car{background:var(--ver);color:#fff}
+.chips li.free{background:var(--sak)}
+.stops{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:4px 6px;font-weight:700;font-size:15px}
+.stops li{display:flex;align-items:center;gap:6px}
+.stops li+li::before{content:"→";color:var(--mut);font-weight:400}
+.stops em{font-style:normal;display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ai);color:#fff;font-size:12px}
+.pan ul.pl{margin:0 0 10px;padding-left:1.2em}
+.pan ul.pl li{margin:4px 0}
+.pan p{margin:8px 0}
+.tip{border-left:4px solid var(--ver);padding-left:12px}
+.stay{background:var(--tint);padding:12px 14px;margin-top:12px}
+.stay b{display:block}
+.lnk{border:0;background:none;padding:0;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;color:var(--ink)}
+.lnk:focus-visible{outline:2px solid var(--ver)}
+.ph3{font-size:18px;margin:16px 0 6px;display:flex;align-items:center;gap:8px}
+.ph3 i{width:12px;height:12px;border-radius:3px;flex:none}
+.dhead b.jp{font-size:clamp(34px,4vw,46px);letter-spacing:0}
+.chips li .lnk{font-size:13px}
+.stops .lnk{font-size:15px}
+.atts{list-style:none;padding:0;margin:0 0 6px;display:grid;gap:2px}
+.att{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--rule);padding:9px 2px;min-height:44px;cursor:pointer;font-size:15px;line-height:1.45}
+.att b{font-size:13px;font-weight:700;color:var(--ver);white-space:nowrap}
+.att:hover span{text-decoration:underline;text-underline-offset:3px}
+.att:focus-visible{outline:3px solid var(--ver);outline-offset:1px}
+#pop{position:fixed;inset:0;z-index:10000;background:#0b1233b3;display:grid;place-items:center;padding:16px}
+#pop[hidden]{display:none}
+.pbox{position:relative;background:var(--bg);color:var(--ink);width:min(460px,100%);padding:26px 24px 20px;border-top:6px solid var(--ver);border-radius:4px}
+.pbox h3{font-size:24px;margin:6px 40px 8px 0}
+.pbox p{margin:6px 0}
+.pcat{font-size:13px;color:var(--mut)}
+.pact{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+.pact .btn{text-decoration:none;display:inline-flex;align-items:center;background:var(--tint);color:var(--ink);box-shadow:none}
+.pact .btn.on{background:var(--ver);color:#fff}
+.pclose{position:absolute;top:10px;right:10px;width:44px;height:44px;border:0;background:var(--tint);border-radius:50%;font-size:24px;line-height:1;cursor:pointer}
+.pclose:focus-visible{outline:3px solid var(--ver)}
+.map{isolation:isolate;z-index:0}
+#lmap{position:absolute;inset:0;background:#dfe6ee}
+.ctlbar,.leg,.note{z-index:1000}
+.pinw{background:none;border:0}
+.pin{border-radius:50%;background:#fff;border:3px solid #1f2f6b;box-sizing:border-box;display:grid;place-items:center;font:700 12px "Noto Sans JP",sans-serif;color:#fff;box-shadow:0 1px 3px #0005;cursor:pointer}
+.pin.on{background:#1f2f6b;border-color:#fff}
+.pin.ps{outline:4px solid #d93a1f;outline-offset:2px}
+.leaflet-tooltip.lab{background:#fffffff0;border:0;box-shadow:0 1px 3px #0003;color:#14182b;font:500 13px "Noto Sans JP",sans-serif;padding:2px 7px}
+.leaflet-tooltip.lab.strong{font-weight:700;font-size:14px}
+.leaflet-tooltip.lab::before{display:none}
+.leaflet-container a{color:#1f2f6b}
+.mapfail{position:absolute;inset:0;display:grid;place-content:center;gap:8px;padding:24px;text-align:center;background:#1f2f6b;color:#fff;z-index:900}
+.mapfail span{max-width:42ch;color:#dfe4ff;font-size:15px}
+.nav2{display:flex;gap:8px;margin-top:16px}
+.nav2 .btn{background:var(--tint);color:var(--ink);box-shadow:none}
+.tl{grid-column:1/-1;background:var(--ai);padding:12px 0 4px;border-top:1px solid #ffffff22}
+.tlg{display:grid;grid-template-columns:repeat(18,minmax(64px,1fr));min-width:1152px;padding:0 12px}
+.phs{grid-row:1;font:700 13px "Zen Kaku Gothic New",sans-serif;color:#c9d1ff;padding:0 4px 6px;border-bottom:2px solid #ffffff44;margin:0 3px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dbtn{grid-row:2;margin:0 3px;min-height:64px;border:0;border-radius:6px;background:#ffffff14;color:#fff;cursor:pointer;padding:0 0 6px;display:grid;justify-items:center;align-content:start;gap:0;overflow:hidden}
+.dbtn::before{content:"";width:100%;height:5px;background:var(--m,#ffffff55);margin-bottom:6px}
+.dbtn small{font-size:12px;color:#c9d1ff;line-height:1.2}
+.dbtn strong{font:900 22px/1.1 "Zen Kaku Gothic New",sans-serif}
+.dbtn span{font-size:12px;color:#dfe4ff;line-height:1.2;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;padding:0 4px}
+.dbtn:hover{background:#ffffff26}
+.dbtn:focus-visible{outline:3px solid #fff;outline-offset:1px}
+.dbtn.sel{background:#fff;color:var(--ai)}
+.dbtn.sel small,.dbtn.sel span{color:#1f2f6b}
+nav.scroll{display:flex;gap:6px;overflow-x:auto;padding:10px max(5vw,16px);background:var(--bg);border-bottom:1px solid var(--rule)}
+nav.scroll a{flex:none;text-decoration:none;padding:10px 14px;border-radius:999px;font-weight:500;font-size:15px;min-height:44px;display:flex;align-items:center}
+nav.scroll a:hover,nav.scroll a:focus-visible{background:var(--tint);outline:2px solid var(--ver)}
+@media(min-width:900px){nav.scroll{position:sticky;top:0;z-index:2000}}
+section h2{font-size:clamp(28px,3.4vw,40px);margin-bottom:8px}
+.lede{color:var(--mut);max-width:70ch;margin:0 0 24px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font-weight:700;border-bottom:2px solid var(--ink);padding:10px 8px;vertical-align:bottom}
+td{border-bottom:1px solid var(--rule);padding:10px 8px;vertical-align:top}
+td.n{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,4vw,48px)}
+.panel{background:var(--tint);padding:20px 22px}
+.panel h3{font-size:20px;margin-bottom:10px}
+.panel ul{padding-left:1.2em;margin:0}
+.panel li{margin:6px 0}
+.warn{background:var(--ver);color:#fff;padding:20px 22px;margin:24px 0}
+.warn h3{font-size:22px;margin-bottom:6px}
+.warn p{margin:0;max-width:80ch}
+.alt{background:var(--tint)}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(20px,4vw,48px);align-items:start}
+.ctl{display:grid;gap:14px}
+.ctl label{display:grid;gap:4px;font-weight:500}
+.ctl input{font:16px "Noto Sans JP",sans-serif;padding:10px 12px;border:1px solid var(--mut);background:var(--bg);color:var(--ink);width:10em;min-height:44px}
+.ctl input:focus-visible{outline:3px solid var(--ver)}
+.total{font:900 clamp(34px,5vw,56px)/1.05 "Zen Kaku Gothic New",sans-serif;color:var(--ver);white-space:nowrap}
+.bar{height:10px;background:var(--rule);margin-top:4px;position:relative}
+.bar i{position:absolute;top:0;bottom:0;background:var(--ai)}
+.bar i.hi{background:color-mix(in srgb,var(--ai) 35%,transparent)}
+.chk{list-style:none;padding:0;margin:0;display:grid;gap:2px}
+.chk label{display:grid;grid-template-columns:28px auto minmax(0,1fr);gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+.chk input{width:22px;height:22px;accent-color:var(--ver);margin-top:2px}
+.chk b{white-space:nowrap;min-width:7.5em}
+.chk input:checked~span{text-decoration:line-through;color:var(--mut)}
+.src{columns:2 22em;font-size:14px;color:var(--mut);padding-left:1.2em}
+.src li{margin:4px 0;break-inside:avoid}
+.small{font-size:14px;color:var(--mut)}
+footer{background:var(--ai);color:#dfe4ff;font-size:14px}
+@media(max-width:860px){.app{grid-template-columns:minmax(0,1fr)}.map{height:420px;min-height:0}.pan{height:auto;min-height:0;border-left:0}.tl{grid-row:2}.two,.calc{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.map{height:380px}.note{display:none}table{font-size:14px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--rule)}.stack td{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:10px;border:0;padding:3px 0;text-align:left}.stack td::before{content:attr(data-l);font-weight:700;color:var(--mut);font-size:13px}.stack td.n{white-space:normal}.chk b{min-width:0}.chk label{grid-template-columns:28px minmax(0,1fr)}.chk span{grid-column:2}.pan{padding:18px 16px}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+<header class="hero band" id="karte">
+<div class="wrap">
+<h1>Japan im März 2027: Karte und Zeitstrahl</h1>
+<p>Tag anklicken, und die Karte springt zur Strecke dieses Tages. Orte auf der Karte zeigen Highlights für Kultur, Essen und Trinken. Mit den Pfeiltasten oder „Abspielen“ geht ihr die Reise vom 8. bis 25. März durch.</p>
+<div class="app">
+<div class="map" id="mapBox"><div id="lmap" aria-label="Interaktive Karte mit der Reiseroute"></div>
+<div class="ctlbar"><button class="btn" id="all" type="button">Ganze Route</button><button class="btn" id="play" type="button">Abspielen</button></div>
+<div class="leg"><span><i style="border-color:#ff6a4d"></i>Mietwagen</span><span><i style="border-color:#b9c6ff"></i>Shinkansen</span><span><i style="border-color:#fff;border-top-style:dashed"></i>Flug</span><span><i style="border-color:#e6a100;border-top-style:dotted"></i>Zug, Fähre</span></div>
+<div class="note">Ziehen und zoomen möglich · Linien schematisch</div>
+</div>
+<div class="pan" id="pan" aria-live="polite"></div>
+<div class="tl scroll" id="tlBox"><div class="tlg" id="tl" role="tablist" aria-label="Reisetage"></div></div>
+</div>
+</div>
+</header>
+<nav class="scroll" aria-label="Abschnitte">
+<a href="#karte">Karte</a><a href="#transport">Transport</a><a href="#hotels">Hotels</a><a href="#onsen">Onsen & Tattoos</a><a href="#essen">Essen & Day Drinking</a><a href="#budget">Budget</a><a href="#vorab">Vor der Reise</a><a href="#quellen">Quellen</a>
+</nav>
+
+<section class="band alt" id="transport"><div class="wrap">
+<h2>Transport mit Preisen</h2>
+<p class="lede">Preise pro Person bzw. pro Auto, Stand der Recherche November 2026. Flug- und Mietwagenpreise schwanken stark, früh buchen.</p>
+<div class="scroll"><table class="stack"><thead><tr><th>Datum</th><th>Strecke</th><th>Verkehrsmittel</th><th>Dauer</th><th>Preis</th><th>Hinweis</th></tr></thead><tbody id="tr"></tbody></table></div>
+<div class="two" style="margin-top:32px">
+<div class="panel"><h3>Mietwagen Fukuoka → Osaka</h3><ul id="car"></ul></div>
+<div class="panel"><h3>Führerschein: ohne Übersetzung kein Auto</h3><ul>
+<li>Der deutsche internationale Führerschein wird in Japan nicht anerkannt. Ihr braucht den nationalen Kartenführerschein plus offizielle japanische Übersetzung.</li>
+<li>Übersetzung über den ADAC-Onlineshop (in Kooperation mit JAF): 95 € inkl. Versand, Lieferung 3–5 Werktage nach Fertigstellung. Bis spätestens Mitte Februar bestellen.</li>
+<li>JAF selbst nimmt Anträge nur online an und verschickt nicht ins Ausland, daher ist der ADAC der einfachste Weg.</li>
+<li>Gilt bis zu einem Jahr ab Einreise; Pass, Führerschein und Übersetzung immer im Auto haben. Jede Person, die fahren will, braucht eine eigene.</li>
+</ul></div>
+</div>
+</div></section>
+
+<section class="band" id="hotels"><div class="wrap">
+<h2>Hotels entlang der Route</h2>
+<p class="lede">Richtpreise für ein Doppelzimmer pro Nacht aus aktuellen Buchungsportalen, März ist Kirschblüten-Vorsaison und teurer. In Beppu und Nagato bewusst Häuser mit privatem Onsen, damit Tattoos kein Thema sind.</p>
+<div class="scroll"><table class="stack"><thead><tr><th>Nächte</th><th>Ort</th><th>Empfehlung</th><th>Alternativen</th><th>Richtpreis</th><th>Warum / Parken</th></tr></thead><tbody id="ht"></tbody></table></div>
+</div></section>
+
+<section class="band alt" id="onsen"><div class="wrap">
+<h2>Onsen mit Tattoos: Beppu ist die sichere Wahl</h2>
+<p class="lede">Viele Onsen verweigern Tattoos noch immer. Deshalb liegt der Onsen-Schwerpunkt auf Beppu: Die Stadt hat eine eigene Liste mit rund 100 Quellen, in denen Tattoos erlaubt sind.</p>
+<div class="two">
+<div><ul id="ons" style="padding-left:1.2em;margin:0"></ul></div>
+<div class="panel"><h3>So klappt es ohne Stress</h3><ul>
+<li>Hotels mit Bad im Zimmer oder buchbarem Privatbad (kashikiri) wählen: Allein oder zu zweit gilt keine Tattoo-Regel.</li>
+<li>Bei Ryokan vorab mailen: Wo sind die Tattoos, darf man ins Gemeinschaftsbad, gibt es ein Privatbad?</li>
+<li>An der Tür fragen: „Tattoo wa daijōbu desu ka?“ (Sind Tattoos okay?)</li>
+<li>Kleine Tattoos lassen sich manchmal mit Cover-Stickern abkleben, das ist aber Hausregel.</li>
+<li>Vor dem Bad gründlich am Sitzplatz waschen, Handtuch nicht ins Wasser, nach dem Bad nicht direkt Auto fahren, wenn man sich schwindelig fühlt.</li>
+</ul></div>
+</div>
+</div></section>
+
+<section class="band" id="essen"><div class="wrap">
+<h2>Essen und Day Drinking nach Station</h2>
+<p class="lede">Jede Station hat ihre eigene Spezialität. Die Bar- und Marktstraßen unten öffnen oft schon mittags.</p>
+<div class="warn"><h3>Alkohol und Auto: praktisch null Toleranz</h3><p>In Japan ist ab 0,15 mg Alkohol pro Liter Atemluft Schluss, das reicht oft schon mit einem Bier. Auch Beifahrer, die wissentlich mitfahren, und wer dem Fahrer Alkohol gibt, können bestraft werden. Deshalb liegen die Trinktage im Plan auf autofreien Tagen (11., 14., 15. März und alle Stadttage ab Osaka).</p></div>
+<div class="scroll"><table class="stack"><thead><tr><th>Station</th><th>Unbedingt essen</th><th>Trinken & Bars</th></tr></thead><tbody id="fd"></tbody></table></div>
+</div></section>
+
+<section class="band alt" id="budget"><div class="wrap">
+<h2>Budget-Rechner</h2>
+<p class="lede">Grobe Spanne aus den recherchierten Preisen und Richtwerten, ohne internationale Flüge. Zimmer werden zu zweit geteilt, ein Auto für alle.</p>
+<div class="calc">
+<div class="ctl">
+<label for="pp">Personen (1–4)<input id="pp" type="number" min="1" max="4" value="2"></label>
+<label for="fx">Kurs: 1 € = … ¥<input id="fx" type="number" min="100" max="250" step="1" value="180"></label>
+<div><div class="small">Pro Person, 8.–25. März</div><div class="total" id="tot"></div><div class="small" id="toty"></div></div>
+</div>
+<div id="bud"></div>
+</div>
+<p class="small">Kurs bitte tagesaktuell eintragen. Essen und Trinken mit ¥6.000–12.000 pro Person und Tag gerechnet.</p>
+</div></section>
+
+<section class="band" id="vorab"><div class="wrap">
+<h2>Vor der Reise erledigen</h2>
+<p class="lede">Abhaken wird in diesem Browser gespeichert.</p>
+<ul class="chk" id="chk"></ul>
+</div></section>
+
+<section class="band alt" id="quellen"><div class="wrap">
+<h2>Quellen</h2>
+<ol class="src" id="srcl"></ol>
+</div></section>
+<footer class="band"><div class="wrap">Stand der Recherche: 21. November 2026. Öffnungszeiten, Preise und Tattoo-Regeln vor Ort kurz prüfen.</div></footer>
+<script>
+function APP(){
+const $=id=>document.getElementById(id);
+const D=[
+["Tokyo: Ankunft","8","Mo",["Flugankunft"],["Abendlandung: Bei Haneda direkt ins Hotel im Terminal 3, dann seid ihr morgens in Minuten am Inlandsterminal.","Bei Landung in Narita: Hotel in Narita und am 9.3. mit Peach oder Jetstar ab Narita nach Fukuoka fliegen."],"Spätes Ramen oder ein erstes Highball im Flughafen-Bereich Haneda Airport Garden.","Nicht zu spät schlafen, der Flug nach Fukuoka geht am Vormittag.","Haneda, 1 Nacht",0],
+["Kyushu","9","Di",["Inlandsflug","Stadttag"],["Vormittagsflug Haneda → Fukuoka (ca. 1:50 h). Der Flughafen liegt nur zwei U-Bahn-Stationen von Hakata entfernt.","Kushida-Schrein und Kawabata-Arkade, danach Ohori-Park und die Burgruine Maizuru.","Mittag: Tonkotsu-Ramen in Nagahama, dem Viertel, in dem die dünnen Hakata-Nudeln und das Nachbestellen (kaedama) erfunden wurden."],"Abends Yatai-Hopping: rund 100 lizenzierte Straßenstände in Nakasu, Tenjin und Nagahama, ab ca. 18 Uhr, nur Bargeld, ¥1.500–3.000 pro Person.","Die Yatai in Nagahama sind schlichter und deutlich lokaler als die am Fluss in Nakasu.","Fukuoka, 1 Nacht",1],
+["Kyushu","10","Mi",["Auto ~170 km","~3 h Fahrzeit"],["9 Uhr Mietwagen in Hakata übernehmen, ETC-Karte dazu buchen.","Dazaifu Tenmangu früh am Morgen, bevor die Reisebusse kommen.","Kurzer Stopp in Yufuin am Kinrin-See, dann über den Pass nach Beppu."],"Abends im Dampfviertel Kannawa essen, dort steigt aus jedem zweiten Gully Thermaldampf.","Die Nebenstraßen von Kannawa mit den Dampfschloten sind spannender als die Hauptstraße.","Beppu, Nacht 1 von 2",0],
+["Kyushu","11","Do",["Autofrei","Onsen-Tag"],["Auto bleibt am Hotel stehen.","Die „Höllen“ von Kannawa (Umi-Jigoku, Chinoike-Jigoku), mittags Jigoku-mushi: Gemüse, Fisch und Eier im Quelldampf gegart.","Takegawara Onsen mit Sandbad im historischen Badehaus, danach Hyotan Onsen; beide gelten als tattoofreundlich."],"Toriten (Hähnchen-Tempura), Beppu-Reimen und Kabosu-Highball oder Oita-Shochu in den Izakaya rund um Kitahama.","Nachbarschaftsbäder wie Tanoyu oder Nageshi Onsen kosten wenig und stehen auf der offiziellen Tattoo-ok-Liste.","Beppu, Nacht 2 von 2",1],
+["Yamaguchi","12","Fr",["Auto ~260 km","Langer Tag"],["Beppu → Mojiko Retro (ca. 2 h): Bahnhof von 1914, Yaki-Curry als lokales Gericht.","Auto in Mojiko parken, zu Fuß durch den 780 m langen Kanmon-Tunnel unter dem Meer nach Shimonoseki (ca. 15 min), weiter zum Karato-Markt.","Mit der kleinen Fähre zurück nach Mojiko, dann über Tsunoshima-Brücke und Motonosumi-Schrein (123 rote Torii an der Klippe) nach Nagato Yumoto."],"Karato-Markt: freitags 10–15 Uhr läuft „Iki-iki Bakangai“ mit Sushi- und Fugu-Ständen am Wasser. Dafür ist der Tag auf Freitag gelegt.","Nagato Yumoto ist ein 600 Jahre altes Onsen-Städtchen mit Craft-Beer-Bar und Cafés am Fluss, kaum ausländische Gäste.","Nagato Yumoto, 1 Nacht",0],
+["Yamaguchi","13","Sa",["Auto ~230 km"],["Hagi (40 min): Samurai-Viertel, Burgruine und Hagi-yaki-Töpfereien.","Akiyoshido, eine der größten Tropfsteinhöhlen Japans, und die Karst-Hochebene Akiyoshidai darüber.","Über den Chugoku-Expressway nach Hiroshima (ca. 1:45 h), Auto für drei Nächte parken."],"Okonomiyaki im Okonomimura: drei Etagen voller kleiner Theken-Grills.","Hagi ist eine der ruhigsten Burgstädte Japans und kaum auf Tourrouten.","Hiroshima, Nacht 1 von 3",0],
+["Hiroshima","14","So",["Autofrei","Sake"],["Morgens Friedenspark, Atombombendom und Friedensmuseum, danach Shukkeien-Garten.","Mittags mit der JR in unter 40 Minuten nach Saijo: Sieben Sake-Brauereien liegen direkt am Bahnhof, viele mit Verkostung."],"Kamotsuru Brewery Shop (Lagerhaus von 1872) mit Tasting-Bar, abends zurück in Hiroshima: Austern, Lemon-Sour.","Saijo ist einer der drei großen Sake-Orte Japans, aber viel ruhiger als Kyoto-Fushimi.","Hiroshima, Nacht 2 von 3",1],
+["Hiroshima","15","Mo",["Autofrei","Insel"],["Mit JR nach Miyajimaguchi, Fähre auf die Insel (¥200 + ¥100 Besuchersteuer).","Itsukushima-Schrein (Gezeiten prüfen, bei Flut schwimmt das Torii), Seilbahn oder Wanderung auf den Misen.","Optional: zurück über Iwakuni und die Holzbogenbrücke Kintaikyo."],"Gegrillte Austern und Anago-meshi (Meeraal auf Reis) an der Inselstraße.","Der Daisho-in-Tempel am Fuß des Misen ist ruhiger als der Hauptschrein.","Hiroshima, Nacht 3 von 3",1],
+["Seto-Inlandsee","16","Di",["Auto ~140 km"],["Hiroshima → Tomonoura (ca. 1:45 h): Edo-zeitlicher Hafen mit Steinleuchtturm Joyato, Vorbild für den Ghibli-Film Ponyo.","Weiter nach Onomichi (40 min): Tempelweg zum Senkoji, Literaturpfad, Katzengasse."],"Onomichi-Ramen (Sojasuppe mit Schweinefett-Stückchen), abends Bar im ONOMICHI U2. Homeishu, Tomonouras Kräuterlikör, als Flasche für später kaufen.","Tomonoura liegt abseits jeder Bahn und wird von den meisten Japan-Reisenden übersehen.","Onomichi, 1 Nacht",0],
+["Seto-Inlandsee","17","Mi",["Auto ~80 km"],["Früh optional: Leihrad im U2 und eine kurze Runde auf der Shimanami-Route.","Kurashiki (ca. 1 h): Bikan-Viertel mit Kanälen und Speicherhäusern, Ohara-Kunstmuseum, Ivy Square."],"Okayama-Küche: Mamakari (marinierter Sardinenfisch), Barazushi; dazu Craft Beer oder lokaler Sake im Speicherviertel.","Abends nach 18 Uhr gehört das Bikan-Viertel fast den Hotelgästen.","Kurashiki, 1 Nacht",0],
+["Kansai","18","Do",["Auto ~190 km","Rückgabe"],["Kurashiki → Himeji-Burg (ca. 1:15 h), früh da sein; Eintritt seit März 2026 ¥2.500 für Auswärtige.","Weiter nach Osaka und den Wagen bis ca. 17 Uhr zurückgeben."],"Erster Abend in Ura-Namba: kleine Bars und Izakaya hinter dem Bahnhof Namba.","Ura-Namba statt Dotonbori-Hauptstraße.","Osaka, Nacht 1 von 3",0],
+["Kansai","19","Fr",["Autofrei","Sumo"],["Vormittags Osaka-Burg, dann Tenjinbashisuji, die längste Einkaufsstraße Japans.","Nachmittags Haru-Basho in der EDION Arena (Turnier 14.–28.3.); die oberste Liga startet gegen 14 Uhr."],"Mittags Stehbars in Tenma (Bier ab ca. ¥350), abends Kushikatsu und „Senbero“ in Shinsekai.","Tenma ist das Viertel, in dem Osaka selbst trinkt.","Osaka, Nacht 2 von 3",1],
+["Kansai","20","Sa",["Autofrei","Ausflug"],["7:30 Uhr Fushimi Inari in Kyoto, bevor die Massen kommen.","Danach das Sake-Viertel Fushimi mit Gekkeikan Okura Museum und Verkostungen.","Alternative: Nara mit Todaiji und Hirschpark."],"Zurück in Osaka: Kyobashi mit seiner Stehbar-Reihe am Bahnhof (Izakaya Toyo, Tachinomi Shomin).","Fushimi zu Fuß statt Kyoto-Zentrum am Samstag.","Osaka, Nacht 3 von 3",1],
+["Tokyo","21","So",["Shinkansen","Feiertag"],["Nozomi Shin-Osaka → Tokyo, ca. 2:30 h; für Fuji-Blick Fensterplatz A buchen.","21.3. ist Frühlingsanfang (Feiertag), der 22.3. Ersatzfeiertag: unbedingt Sitz reservieren.","Nachmittags Meiji-Schrein und Harajuku."],"Shibuya Nonbei Yokocho oder Ebisu Yokocho für den ersten Tokyo-Abend.","Shimokitazawa für Secondhand und kleine Bars.","Tokyo, Nacht 1 von 4",1],
+["Tokyo","22","Mo",["Autofrei","Altes Tokyo"],["Senso-ji um 7 Uhr, danach Yanaka Ginza und Yanaka-Friedhof, Ueno-Park.","Die Kirschblüte beginnt in Tokyo im Schnitt um den 24.3., 2026 schon am 19.3. Gut möglich, dass ihr die ersten Blüten seht."],"Ameyoko: Stehbars und Yakitori unter den Bahngleisen, schon ab Mittag voll.","Yanaka hat den Krieg fast unbeschadet überstanden und wirkt wie ein Dorf in der Stadt.","Tokyo, Nacht 2 von 4",1],
+["Tokyo","23","Di",["Autofrei","Ausflug"],["Kamakura (ca. 1 h): Großer Buddha, Bambushain im Hokokuji.","Auf dem Rückweg in Yokohama aussteigen."],"Noge in Yokohama (Bahnhof Sakuragicho): Dutzende Izakaya und Stehbars seit der Nachkriegszeit, Kneipentour am frühen Abend.","Noge ist Tokyos Golden Gai ohne Touristen.","Tokyo, Nacht 3 von 4",1],
+["Tokyo","24","Mi",["Autofrei","Trinktag"],["Frühstück im Tsukiji Outer Market.","Nachmittags Akabane: In der Ichibangai-Gasse sind viele Bars schon tagsüber offen.","Abends Koenji: Kosugiyu-Sento (Tattoos okay), danach kleine Bars."],"Akabane: Motsuni, Pferdefleisch, Senbero-Preise; eine Bar am Bahnhof ist rund um die Uhr offen.","Akabane und Koenji sind Wohnviertel mit echter Kneipenkultur.","Tokyo, Nacht 4 von 4",1],
+["Tokyo","25","Do",["Abreise"],["Lange ausschlafen, Spät-Check-out nutzen.","Kappabashi für Messer und Küchenzeug, Nakameguro am Meguro-Fluss.","Rechtzeitig zum Flughafen, ca. 3 h vor Abflug dort sein."],"Letztes Sushi im Flughafen oder Depachika-Bento für den Flug.","Gepäck morgens im Hotel lassen oder per Takkyubin vorab zum Flughafen schicken.","Nachtflug",1]
+];
+const TT={8:"Ankunft in Tokyo",9:"Fukuoka: Ramen, Schreine und Yatai",10:"Mietwagen holen und ab nach Beppu",11:"Beppu: Onsen-Tag ohne Auto",12:"Kanmon-Straße, Fischmarkt und Torii an der Klippe",13:"Samuraistadt Hagi und Karsthöhle",14:"Hiroshima und die Sake-Stadt Saijo",15:"Miyajima",16:"Tomonoura und Onomichi",17:"Kurashiki",18:"Himeji-Burg und Rückgabe in Osaka",19:"Osaka und Sumo",20:"Fushimi: Schrein und Sake",21:"Mit dem Shinkansen nach Tokyo",22:"Altes Tokyo und erste Kirschblüten",23:"Kamakura und Noge",24:"Tsukiji, Akabane, Koenji",25:"Letzter Tag, Nachtflug"};
+const P={HND:["羽田","Haneda",139.78,35.55,"b"],TYO:["東京","Tokyo",139.70,35.69,"t"],FUK:["福岡","Fukuoka",130.40,33.59,"l"],DAZ:["太宰府","Dazaifu",130.53,33.52,"b"],YUF:["由布院","Yufuin",131.37,33.27,"l"],BEP:["別府","Beppu",131.49,33.28,"r"],KAN:["関門","Kanmon-Straße",130.95,33.95,"l"],TSU:["角島","Tsunoshima",130.88,34.35,"l"],MOT:["元乃隅","Motonosumi",131.01,34.42,"t"],NAG:["長門","Nagato Yumoto",131.18,34.32,"b"],HAG:["萩","Hagi",131.40,34.41,"t"],AKI:["秋芳洞","Akiyoshido",131.30,34.23,"b"],HIR:["広島","Hiroshima",132.46,34.39,"t"],SAI:["西条","Saijo",132.74,34.43,"r"],MIY:["宮島","Miyajima",132.32,34.29,"b"],IWA:["岩国","Iwakuni",132.18,34.17,"l"],TOM:["鞆の浦","Tomonoura",133.38,34.38,"b"],ONO:["尾道","Onomichi",133.20,34.41,"b"],KUR:["倉敷","Kurashiki",133.77,34.60,"t"],HIM:["姫路","Himeji",134.69,34.84,"t"],OSA:["大阪","Osaka",135.50,34.69,"b"],FUS:["伏見","Fushimi (Kyoto)",135.77,34.97,"r"],KAM:["鎌倉","Kamakura",139.55,35.32,"l"],YOK:["横浜","Yokohama (Noge)",139.63,35.45,"r"],AKA:["赤羽","Akabane",139.72,35.78,"t"]};
+const S={8:["arr",["HND"]],9:["fl",["HND","FUK"]],10:["car",["FUK","DAZ","YUF","BEP"]],11:["loc",["BEP"]],12:["car",["BEP","KAN","TSU","MOT","NAG"]],13:["car",["NAG","HAG","AKI","HIR"]],14:["tr",["HIR","SAI","HIR"]],15:["tr",["HIR","MIY","IWA","HIR"]],16:["car",["HIR","TOM","ONO"]],17:["car",["ONO","KUR"]],18:["car",["KUR","HIM","OSA"]],19:["loc",["OSA"]],20:["tr",["OSA","FUS","OSA"]],21:["sk",["OSA","TYO"]],22:["loc",["TYO"]],23:["tr",["TYO","KAM","YOK","TYO"]],24:["tr",["TYO","AKA","TYO"]],25:["dep",["TYO","HND"]]};
+const NIGHT=["HND","FUK","BEP","NAG","HIR","ONO","KUR","OSA","TYO"],MINOR={NAG:1,ONO:1,KUR:1,HND:1};
+const STAY={8:0,9:1,10:2,11:2,12:3,13:4,14:4,15:4,16:5,17:6,18:7,19:7,20:7,21:8,22:8,23:8,24:8};
+const MC={car:"var(--ver)",sk:"var(--sk)",fl:"#ffffff",tr:"var(--tr)",loc:"#ffffff55",arr:"#ffffff55",dep:"#ffffff55"};
+const KY=[[130.88,33.93],[131.05,33.85],[131.0,33.72],[131.25,33.6],[131.5,33.6],[131.7,33.55],[131.68,33.38],[131.5,33.3],[131.6,33.24],[131.85,33.15],[131.95,32.95],[131.85,32.7],[131.7,32.4],[131.5,32.0],[131.45,31.6],[131.3,31.4],[131.1,31.25],[130.8,31.05],[130.65,31.2],[130.7,31.5],[130.55,31.35],[130.2,31.35],[130.3,31.75],[130.15,32.1],[130.45,32.3],[130.55,32.6],[130.45,32.85],[130.2,32.78],[129.95,32.6],[129.75,32.85],[129.6,33.15],[129.75,33.35],[129.95,33.45],[130.2,33.6],[130.38,33.62],[130.5,33.85],[130.72,33.95]];
+const SH=[[132.5,33.75],[132.7,34.05],[133.0,34.05],[133.3,34.0],[133.6,34.25],[134.0,34.35],[134.4,34.25],[134.65,34.15],[134.6,33.85],[134.75,33.75],[134.3,33.5],[134.2,33.25],[133.8,33.5],[133.5,33.4],[133.25,33.25],[133.0,32.75],[132.7,32.75],[132.55,33.1],[132.4,33.4],[132.0,33.35],[132.2,33.6]];
+const HO=[[130.88,34.0],[131.2,33.95],[131.5,34.0],[131.8,34.0],[132.1,33.88],[132.2,34.05],[132.42,34.33],[132.6,34.25],[132.85,34.22],[133.05,34.32],[133.25,34.38],[133.55,34.45],[133.85,34.52],[134.15,34.62],[134.5,34.75],[134.85,34.66],[135.2,34.68],[135.42,34.62],[135.35,34.4],[135.1,34.3],[135.15,34.05],[135.4,33.75],[135.75,33.45],[136.05,33.8],[136.3,34.12],[136.85,34.3],[136.85,34.6],[136.65,34.9],[136.85,35.05],[137.0,34.75],[137.3,34.65],[137.9,34.65],[138.25,34.6],[138.5,34.95],[138.75,35.05],[138.85,34.62],[139.1,35.0],[139.15,35.25],[139.5,35.3],[139.65,35.45],[139.8,35.62],[140.05,35.62],[139.85,35.25],[139.85,34.92],[140.35,35.12],[140.4,35.4],[140.87,35.72],[140.6,36.3],[140.75,36.9],[141.0,37.4],[141.4,38.2],[139.2,38.2],[138.75,37.6],[138.2,37.15],[137.4,36.78],[137.05,36.8],[137.3,37.45],[136.75,37.3],[136.7,36.6],[136.1,36.25],[135.95,35.75],[135.5,35.55],[135.2,35.72],[134.75,35.65],[134.25,35.55],[133.5,35.5],[133.1,35.58],[132.6,35.4],[132.05,34.95],[131.6,34.7],[131.4,34.47],[131.15,34.45],[130.95,34.45],[130.85,34.33],[130.85,34.1]];
+const AW=[[134.85,34.6],[135.0,34.55],[134.95,34.25],[134.75,34.35]],BI=[[136.0,35.05],[136.15,35.25],[136.25,35.5],[136.1,35.45],[135.95,35.2]];
+const NL=[["Haneda","8. März","1 Nacht",8,"HND"],["Fukuoka","9. März","1 Nacht",9,"FUK"],["Beppu","10.–11. März","2 Nächte",10,"BEP"],["Nagato Yumoto","12. März","1 Nacht",12,"NAG"],["Hiroshima","13.–15. März","3 Nächte",13,"HIR"],["Onomichi","16. März","1 Nacht",16,"ONO"],["Kurashiki","17. März","1 Nacht",17,"KUR"],["Osaka","18.–20. März","3 Nächte",18,"OSA"],["Tokyo","21.–24. März","4 Nächte",21,"TYO"]];
+const PL={
+HND:{k:["Edo Koji: nachgebaute Edo-Gasse mit Holzfassaden im Terminal 3"],e:["Ramen- und Sushi-Theken im Terminal 3, auch spätabends"],t:["Bars in der Haneda Airport Garden für den Ankunftsdrink"]},
+TYO:{k:["Senso-ji in Asakusa, am besten um 7 Uhr","Meiji-Schrein im Wald zwischen Harajuku und Yoyogi","Nezu-Schrein mit Torii-Tunnel, viel ruhiger als Fushimi","Yanaka: altes Tokyo mit Tempeln und Friedhof","Tokyo National Museum im Ueno-Park"],e:["Tsukiji Outer Market zum Frühstück","Monjayaki in Tsukishima","Yakitori unter den Bahnbögen von Yurakucho","Depachika (Feinkostetagen) in Ginza für Bento"],t:["Golden Gai und Omoide Yokocho in Shinjuku","Ebisu Yokocho und Nonbei Yokocho in Shibuya","Ameyoko in Ueno, schon ab Mittag","Koenji und Shimokitazawa für kleine Bars"]},
+FUK:{k:["Kushida-Schrein, Herz des Yamakasa-Festes","Tochoji-Tempel mit großem Holzbuddha","Ohori-Park und Burgruine Maizuru","Fukuoka Asian Art Museum"],e:["Hakata-Ramen (Tonkotsu) in Nagahama","Mentaiko (scharfer Fischrogen)","Motsunabe und Mizutaki (Hühner-Eintopf)","Yanagibashi Rengo Market, Hakatas Küche"],t:["Yatai in Nakasu, Tenjin und Nagahama, nur Bargeld","Bars in Daimyo und Tenjin"]},
+DAZ:{k:["Dazaifu Tenmangu, Schrein des Gelehrtengottes","Kyushu National Museum gleich nebenan","Komyozenji: stiller Steingarten, kaum besucht"],e:["Umegae-mochi: gefüllte Reiskuchen frisch vom Grill"],t:["Starbucks im Holzstab-Bau von Kengo Kuma an der Schreinstraße"]},
+YUF:{k:["Kinrin-See, morgens oft mit Nebel","Blick auf den Doppelgipfel Yufu-dake"],e:["Bungo-Rind als Croquette oder Burger an der Yunotsubo-Straße"],t:[]},
+BEP:{k:["Kannawa-Höllen: Umi-Jigoku (blau) und Chinoike-Jigoku (rot)","Takegawara Onsen, Badehaus von 1938 mit Sandbad","Myoban: Strohhütten, in denen Badesalz gewonnen wird","Hyotan Onsen in Kannawa"],e:["Jigoku-mushi: im Quelldampf gegart, Kobo Kannawa","Toriten, Oitas Hähnchen-Tempura","Beppu-Reimen (kalte Nudeln) und Dango-jiru"],t:["Izakaya um Kitahama","Kabosu-Highball mit Oitas Zitrusfrucht","Mugi-Shochu aus Oita"]},
+KAN:{k:["Mojiko-Bahnhof von 1914 und Retro-Hafen","Kanmon-Fußgängertunnel unter dem Meer, 780 m","Akama-Schrein in Shimonoseki, Ort der Heike-Sage","Mekari-Schrein direkt an der Meerenge"],e:["Yaki-Curry, die Spezialität von Mojiko","Karato-Markt: Fugu und Sushi, Fr–So","Kawara-Soba: grüner Tee-Soba auf heißem Ziegel"],t:["Mojiko Retro Beer, Craft Beer am Hafen"]},
+TSU:{k:["Tsunoshima-Brücke über türkises Wasser","Leuchtturm von 1876 zum Hochsteigen"],e:["Meeresfrüchte-Imbisse an der Brücke"],t:[]},
+MOT:{k:["123 rote Torii die Klippe hinunter","Opferkasten oben auf dem großen Torii: Münze werfen","Senjojiki-Hochebene, 10 Minuten entfernt"],e:["Rasthof Senza Kitchen mit lokalen Produkten"],t:[]},
+NAG:{k:["Onto: historisches Badehaus direkt über der Quelle","Bambustreppe, abends beleuchtet","Taineiji-Tempel im Wald"],e:["Nagato-Yakitori","Fisch aus Senzaki am Japanischen Meer"],t:["365+1: Craft Beer im Onsen-Städtchen","„Craft Onsen Beverage“ aus Quellwasser"]},
+HAG:{k:["Samurai-Viertel Horiuchi mit Lehmmauern","Burgruine im Shizuki-Park","Shokasonjuku: Schule von Yoshida Shoin, UNESCO-Welterbe","Hagi-yaki-Töpfereien, viele mit Verkauf"],e:["Natsumikan, Hagis Sommerzitrusfrucht, als Saft oder Süßes","Kensaki-Tintenfisch"],t:["Sake aus Hagi, z. B. Toyo Bijin"]},
+AKI:{k:["Akiyoshido: Tropfsteinhöhle mit Sinterterrassen","Akiyoshidai: Karstplateau mit Kalksteinfeldern"],e:[],t:[]},
+HIR:{k:["Friedenspark, Atombombendom, Friedensmuseum","Shukkeien-Garten","Burg Hiroshima"],e:["Okonomiyaki Hiroshima-Art mit Nudeln, Okonomimura","Austern, im März noch Saison","Scharfe Hiroshima-Tsukemen","Momiji-manju als Snack"],t:["Nagarekawa, Hiroshimas Kneipenviertel","Lemon-Sour mit Setouchi-Zitronen"]},
+SAI:{k:["Sieben Brauereien ab dem Bahnhof: Kamotsuru, Hakubotan, Kamoizumi, Fukubijin, Sanyotsuru, Kirei, Saijotsuru","Brunnen mit Brauwasser zum Probieren"],e:["Bijin-nabe: Eintopf mit Sake gekocht"],t:["Kamotsuru Brewery Shop mit Tasting-Bar","Probiersets in mehreren Brauereien"]},
+MIY:{k:["Itsukushima-Schrein und das Torii im Meer","Misen per Seilbahn, ewiges Feuer im Reikado","Daisho-in-Tempel am Hang","Senjokaku-Halle und fünfstöckige Pagode"],e:["Gegrillte Austern an der Omotesando","Anago-meshi (Meeraal auf Reis)","Age-Momiji: frittierte Momiji-manju"],t:["Miyajima Brewery, Craft Beer auf der Insel"]},
+IWA:{k:["Kintaikyo: fünfbogige Holzbrücke","Burg Iwakuni per Seilbahn"],e:["Iwakuni-zushi: gepresstes Schicht-Sushi"],t:["Brauerei Sakai (Gokyo) nah an der Brücke"]},
+TOM:{k:["Hafen aus der Edo-Zeit mit Steinleuchtturm Joyato","Taichoro im Fukuzenji: Fensterblick auf die Inseln","Iroha-maru-Museum zu Sakamoto Ryoma"],e:["Tai (Meerbrasse) als Sashimi oder Tai-meshi"],t:["Homeishu: Kräuterlikör, nur hier gebraut"]},
+ONO:{k:["Senkoji-Tempel und Aussicht über die Meerenge","Tempelweg und Literaturpfad am Hang","Katzengasse (Neko no Hosomichi)"],e:["Onomichi-Ramen mit Schweinefett-Stückchen","Frischer Fisch aus der Seto-Inlandsee"],t:["Bar im ONOMICHI U2","Zitronen-Drinks von den Shimanami-Inseln"]},
+KUR:{k:["Bikan-Viertel: Kanäle, Weiden, weiße Speicher","Ohara-Kunstmuseum, Japans erstes Museum westlicher Kunst","Ivy Square: alte Spinnerei mit Efeu"],e:["Mamakari: marinierter Sardinenfisch","Barazushi, Okayamas buntes Sushi","Demi-Katsudon"],t:["Doppo Craft Beer aus Okayama","Sake aus Omachi-Reis"]},
+HIM:{k:["Himeji-Burg, die weiße Reiherburg","Kokoen-Garten direkt daneben","Engyoji auf dem Berg Shosha, Tempel im Wald"],e:["Himeji-Oden mit Ingwer-Sojasauce","Anago aus der Seto-Inlandsee"],t:[]},
+OSA:{k:["Burg Osaka mit Park","Shitennoji, einer der ältesten Tempel Japans","Sumiyoshi Taisha mit roter Bogenbrücke","Sumo in der EDION Arena (14.–28.3.)"],e:["Takoyaki und Okonomiyaki","Kushikatsu in Shinsekai","Tenjinbashisuji, längste Einkaufsstraße Japans"],t:["Tenma: Stehbars, Bier ab ca. ¥350","Kyobashi: Izakaya Toyo und Tachinomi Shomin","Ura-Namba hinter dem Bahnhof"]},
+FUS:{k:["Fushimi Inari: Tausende Torii den Berg hinauf","Gekkeikan Okura Sake Museum","Teradaya, Gasthaus aus der Bakumatsu-Zeit"],e:["Inari-Sushi und Kitsune-Udon"],t:["Sake-Probiersets in den Brauereien des Viertels"]},
+KAM:{k:["Großer Buddha im Kotoku-in","Bambushain im Hokokuji mit Teehaus","Tsurugaoka Hachimangu","Hasedera mit Blick aufs Meer"],e:["Shirasu-don: kleine Fischchen auf Reis"],t:["Lokales Kamakura-Bier"]},
+YOK:{k:["Sankeien-Garten mit historischen Häusern","Chinatown, die größte Japans"],e:["Iekei-Ramen, Yokohamas Ramen-Stil","Dim Sum in Chinatown"],t:["Noge: Izakaya-Hopping seit der Nachkriegszeit","Yokohama Bay Brewing"]},
+AKA:{k:["Ufer des Arakawa, im Frühling mit Kirschbäumen"],e:["Motsuni und Pferdefleisch","Ramen am Bahnhof"],t:["Marumasu-ya: Izakaya-Institution, öffnet morgens","Ichibangai-Gasse mit Bars, die tagsüber offen sind","Eine Bar am Bahnhof ist rund um die Uhr offen"]}};
+const mb=$("mapBox");
+let sel=null,selP=null;
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const map=L.map("lmap",{zoomControl:false,scrollWheelZoom:true,worldCopyJump:false}).setView([34.6,134.5],6);
+L.control.zoom({position:"topright"}).addTo(map);
+const ESRI="https://server.arcgisonline.com/ArcGIS/rest/services/";
+const BL={"Straßenkarte":L.tileLayer(ESRI+"World_Street_Map/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Tiles &copy; Esri"}),
+"Gelände":L.tileLayer(ESRI+"World_Topo_Map/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Tiles &copy; Esri"}),
+"Satellit":L.tileLayer(ESRI+"World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Tiles &copy; Esri, Maxar"}),
+"OpenStreetMap":L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'})};
+BL["Straßenkarte"].addTo(map);if(L.control.layers)L.control.layers(BL,null,{position:"topright",collapsed:true}).addTo(map);
+const LY=L.layerGroup().addTo(map);
+const ll=k=>[P[k][3],P[k][2]];
+const fit=(keys,mx=.3,my=.2)=>{const la=keys.map(k=>P[k][3]),lo=keys.map(k=>P[k][2]);let a=Math.min(...la),b=Math.max(...la),c=Math.min(...lo),d=Math.max(...lo);if(b-a<my){const m=(a+b)/2;a=m-my/2;b=m+my/2}if(d-c<mx){const m=(c+d)/2;c=m-mx/2;d=m+mx/2}return L.latLngBounds([a,c],[b,d])};
+const overview=()=>fit(["FUK","BEP","TSU","TYO","KAM","AKA","HIM"]);
+const flyTo=v=>{draw();const pad=mb.clientWidth<600?[24,24]:[50,50];RM?map.fitBounds(v,{padding:pad}):map.flyToBounds(v,{padding:pad,duration:.9,maxZoom:13})};
+const COL={car:"#d93a1f",sk:"#1f2f6b",fl:"#1f2f6b",tr:"#c98a00",loc:"#1f2f6b",arr:"#1f2f6b",dep:"#1f2f6b"};
+const curve=(a,b,o)=>{const p=ll(a),q=ll(b),mx=(p[0]+q[0])/2,my=(p[1]+q[1])/2,dy=q[0]-p[0],dx=q[1]-p[1],c=[mx+dx*o,my-dy*o],r=[];for(let i=0;i<=32;i++){const t=i/32,u=1-t;r.push([u*u*p[0]+2*u*t*c[0]+t*t*q[0],u*u*p[1]+2*u*t*c[1]+t*t*q[1]])}return r};
+const seg=(a,b,md,w,op)=>{const pts=md==="fl"?curve(a,b,.18):md==="sk"?curve(a,b,-.06):[ll(a),ll(b)];
+L.polyline(pts,{color:"#fff",weight:w+4,opacity:op*.9,interactive:false}).addTo(LY);
+L.polyline(pts,{color:COL[md],weight:w,opacity:op,dashArray:md==="fl"?"8 8":md==="tr"?"2 9":md==="sk"?"14 6":null,lineCap:"round",interactive:false}).addTo(LY)};
+const trunk=[];Object.keys(S).forEach(d=>{const [md,st]=S[d];if(md==="car"||md==="fl"||md==="sk")for(let i=0;i<st.length-1;i++)trunk.push([st[i],st[i+1],md])});
+const DIR={l:"left",r:"right",t:"top",b:"bottom"};
+const draw=()=>{LY.clearLayers();const small=mb.clientWidth<600,day=sel?S[sel]:null,ds=day?day[1]:[];
+trunk.forEach(t=>seg(t[0],t[1],t[2],sel?3:4,sel?.35:.95));
+if(day)for(let i=0;i<ds.length-1;i++)seg(ds[i],ds[i+1],day[0],6,1);
+const num={};ds.forEach(k=>{if(!(k in num))num[k]=Object.keys(num).length+1});
+Object.keys(P).forEach(k=>{const on=k in num,nt=NIGHT.includes(k),ps=k===selP;if(!on&&k==="HND")return;
+const r=on?24:nt?16:12;
+const html=`<div class="pin${on?" on":""}${nt?" nt":""}${ps?" ps":""}" style="width:${r}px;height:${r}px">${on&&ds.length>1?num[k]:""}</div>`;
+const mk=L.marker(ll(k),{icon:L.divIcon({className:"pinw",html,iconSize:[r,r],iconAnchor:[r/2,r/2]}),title:P[k][1],keyboard:true,riseOnHover:true,zIndexOffset:on?1000:nt?500:0}).addTo(LY);
+mk.on("click",()=>byPlace(k));
+const showLab=on||ps||(!sel&&!selP&&nt&&!(small&&MINOR[k]))||(selP&&!sel)||(sel&&nt&&!small&&!(k==="TYO"&&"HND" in num));
+const d=DIR[P[k][4]];mk.bindTooltip(on?`${P[k][0]} ${P[k][1]}`:P[k][1],{permanent:showLab,direction:d,offset:d==="left"?[-r/2,0]:d==="right"?[r/2,0]:d==="top"?[0,-r/2]:[0,r/2],className:"lab"+(on||ps?" strong":"")})})};
+new ResizeObserver(()=>map.invalidateSize()).observe(mb);
+const PHN={Tokyo:"Tokyo",Kyushu:"Kyushu",Yamaguchi:"Yamaguchi",Hiroshima:"Hiroshima","Seto-Inlandsee":"Seto-Inlandsee",Kansai:"Kansai"};
+let tl="",col=1,lastPh="",spans=[];
+D.forEach((d,i)=>{const p=d[0]==="Tokyo: Ankunft"?"Tokyo":d[0];if(p!==lastPh){spans.push([p,i+1,1]);lastPh=p}else spans[spans.length-1][2]++});
+tl+=spans.map(s=>`<div class="phs" style="grid-column:${s[1]}/span ${s[2]}" title="${PHN[s[0]]}">${PHN[s[0]]}</div>`).join("");
+tl+=D.map((d,i)=>{const st=S[d[1]][1],last=P[st[st.length-1]][1].split(" ")[0];return`<button class="dbtn" type="button" role="tab" id="t${d[1]}" style="grid-column:${i+1};--m:${MC[S[d[1]][0]]}" aria-label="${d[2]} ${d[1]}. März: ${TT[d[1]]}"><small>${d[2]}</small><strong>${d[1]}</strong><span>${d[1]==="25"?"Abflug":last}</span></button>`}).join("");
+$("tl").innerHTML=tl;
+const pan=$("pan");
+const showAll=()=>{sel=null;selP=null;document.querySelectorAll(".dbtn").forEach(b=>{b.classList.remove("sel");b.setAttribute("aria-selected","false")});
+pan.innerHTML=`<div class="dhead"><b>17</b><div><span>Nächte, 8.–25. März</span><h2>Die ganze Route</h2></div></div><ul class="chips"><li class="car">Mietwagen 10.–18.3.</li><li>Shinkansen 21.3.</li><li>Flug 9.3.</li></ul><ul class="pl">${NL.map(n=>`<li><button class="lnk" type="button" data-p="${n[4]}">${n[0]}</button>: ${n[1]}, ${n[2]}</li>`).join("")}</ul><p class="small">Einen Ort antippen für Kultur, Essen und Trinken, oder einen Tag im Zeitstrahl wählen.</p>`;
+flyTo(overview())};
+pan.addEventListener("click",e=>{const b=e.target.closest("[data-p],[data-d]");if(!b)return;stop();b.dataset.p?showPlace(b.dataset.p):pick(b.dataset.d,true)});
+const visits=k=>Object.keys(S).map(Number).filter(d=>S[d][1].includes(k));
+const GQ={"Edo Koji": "Edo Koji Haneda Airport Terminal 3", "Ramen- und Sushi": "Haneda Airport Terminal 3 restaurants", "Bars in der Haneda": "Haneda Airport Garden", "Senso-ji": "Senso-ji Asakusa", "Meiji-Schrein": "Meiji Jingu", "Nezu-Schrein": "Nezu Shrine", "Yanaka:": "Yanaka Ginza", "Tokyo National Museum": "Tokyo National Museum", "Tsukiji Outer": "Tsukiji Outer Market", "Monjayaki": "Tsukishima Monja Street", "Yakitori unter": "Yurakucho Gado-shita", "Depachika": "Mitsukoshi Ginza depachika", "Golden Gai": "Shinjuku Golden Gai", "Ebisu Yokocho": "Ebisu Yokocho", "Ameyoko": "Ameyoko Ueno", "Koenji und": "Koenji Station", "Kushida-Schrein": "Kushida Shrine Fukuoka", "Tochoji": "Tochoji Temple Fukuoka", "Ohori-Park": "Ohori Park Fukuoka", "Fukuoka Asian Art": "Fukuoka Asian Art Museum", "Hakata-Ramen": "Nagahama ramen Fukuoka", "Mentaiko": "Fukuya Mentaiko Nakasu", "Motsunabe": "Motsunabe Hakata", "Yanagibashi": "Yanagibashi Rengo Market", "Yatai in Nakasu": "Nakasu Yatai", "Bars in Daimyo": "Daimyo Fukuoka", "Dazaifu Tenmangu": "Dazaifu Tenmangu", "Kyushu National": "Kyushu National Museum", "Komyozenji": "Komyozenji Dazaifu", "Umegae": "Dazaifu Tenmangu Omotesando", "Starbucks": "Starbucks Dazaifu Tenmangu Omotesando", "Kinrin-See": "Lake Kinrin Yufuin", "Blick auf den": "Yufu-dake", "Bungo-Rind": "Yunotsubo Kaido Yufuin", "Kannawa-Höllen": "Umi Jigoku Beppu", "Takegawara": "Takegawara Onsen", "Myoban": "Yunosato Myoban Beppu", "Hyotan": "Hyotan Onsen Beppu", "Jigoku-mushi": "Jigoku Mushi Kobo Kannawa", "Toriten": "Toyotsune Beppu", "Beppu-Reimen": "Beppu reimen", "Izakaya um": "Kitahama Beppu", "Kabosu": "Kitahama Beppu bar", "Mugi-Shochu": "Beppu izakaya", "Mojiko-Bahnhof": "Mojiko Station", "Kanmon-Fußgänger": "Kanmon Tunnel Pedestrian Mojiko", "Akama-Schrein": "Akama Shrine Shimonoseki", "Mekari-Schrein": "Mekari Shrine", "Yaki-Curry": "yaki curry Mojiko", "Karato-Markt": "Karato Market Shimonoseki", "Kawara-Soba": "Kawara soba Shimonoseki", "Mojiko Retro Beer": "Mojiko Retro Beer", "Tsunoshima-Brücke": "Tsunoshima Bridge", "Leuchtturm von 1876": "Tsunoshima Lighthouse", "Meeresfrüchte-Imbisse": "Tsunoshima Ohashi restaurant", "123 rote": "Motonosumi Shrine", "Opferkasten": "Motonosumi Shrine", "Senjojiki": "Senjojiki Nagato", "Rasthof Senza": "Michi no Eki Senzaki", "Onto:": "Onto Nagato Yumoto", "Bambustreppe": "Nagato Yumoto Onsen", "Taineiji": "Taineiji Temple Nagato", "Nagato-Yakitori": "yakitori Nagato", "Fisch aus Senzaki": "Senzaki Nagato", "365+1": "365+1 Beer Nagato Yumoto", "„Craft Onsen": "Nagato Yumoto Onsen", "Samurai-Viertel": "Horiuchi Samurai District Hagi", "Burgruine im": "Hagi Castle Ruins Shizuki Park", "Shokasonjuku": "Shokasonjuku Academy", "Hagi-yaki": "Hagi ware pottery Hagi", "Natsumikan": "Hagi natsumikan", "Kensaki": "Hagi Sea Mart", "Sake aus Hagi": "Sumikawa Shuzo Toyo Bijin", "Akiyoshido:": "Akiyoshido Cave", "Akiyoshidai:": "Akiyoshidai Karst Plateau", "Friedenspark": "Hiroshima Peace Memorial Park", "Shukkeien": "Shukkeien Garden", "Burg Hiroshima": "Hiroshima Castle", "Okonomiyaki Hiroshima": "Okonomimura Hiroshima", "Austern, im": "Hiroshima oyster restaurant", "Scharfe Hiroshima": "Hiroshima tsukemen", "Momiji-manju als": "Momiji manju Hiroshima", "Nagarekawa": "Nagarekawa Hiroshima", "Lemon-Sour": "Nagarekawa Hiroshima bar", "Sieben Brauereien": "Saijo Sake Brewery Street", "Brunnen mit": "Saijo Sake Brewery Street", "Bijin-nabe": "bijin nabe Saijo", "Kamotsuru": "Kamotsuru Brewery Shop", "Probiersets in mehreren": "Saijo Sake Brewery Street", "Itsukushima-Schrein": "Itsukushima Shrine", "Misen per": "Miyajima Ropeway", "Daisho-in": "Daisho-in Miyajima", "Senjokaku": "Senjokaku Miyajima", "Gegrillte Austern": "Miyajima Omotesando shopping street", "Anago-meshi": "Anagomeshi Ueno Miyajimaguchi", "Age-Momiji": "Momiji-do Miyajima", "Miyajima Brewery": "Miyajima Brewery", "Kintaikyo:": "Kintaikyo Bridge", "Burg Iwakuni": "Iwakuni Castle", "Iwakuni-zushi": "Iwakuni sushi Kintaikyo", "Brauerei Sakai": "Sakai Shuzo Gokyo Iwakuni", "Hafen aus der": "Joyato Tomonoura", "Taichoro": "Taichoro Fukuzenji", "Iroha-maru": "Irohamaru Museum Tomonoura", "Tai (Meerbrasse)": "Tomonoura sea bream restaurant", "Homeishu": "Homeishu Tomonoura", "Senkoji-Tempel": "Senkoji Temple Onomichi", "Tempelweg": "Onomichi Temple Walk", "Katzengasse": "Neko no Hosomichi Onomichi", "Onomichi-Ramen": "Onomichi ramen", "Frischer Fisch": "Onomichi seafood restaurant", "Bar im ONOMICHI": "ONOMICHI U2", "Zitronen-Drinks": "Setoda lemon", "Bikan-Viertel": "Kurashiki Bikan Historical Quarter", "Ohara-Kunstmuseum": "Ohara Museum of Art", "Ivy Square": "Kurashiki Ivy Square", "Mamakari": "Kurashiki mamakari", "Barazushi": "Kurashiki barazushi", "Demi-Katsudon": "demi katsudon Okayama", "Doppo": "Doppo craft beer Okayama", "Sake aus Omachi": "Kurashiki sake", "Himeji-Burg": "Himeji Castle", "Kokoen": "Kokoen Garden", "Engyoji": "Engyoji Mount Shosha", "Himeji-Oden": "Himeji oden", "Anago aus": "Himeji anago", "Burg Osaka": "Osaka Castle", "Shitennoji": "Shitennoji", "Sumiyoshi Taisha": "Sumiyoshi Taisha", "Sumo in der": "EDION Arena Osaka", "Takoyaki und": "Dotonbori takoyaki", "Kushikatsu": "Shinsekai kushikatsu", "Tenjinbashisuji": "Tenjinbashisuji Shopping Street", "Tenma:": "Tenma Osaka izakaya", "Kyobashi:": "Izakaya Toyo Kyobashi", "Ura-Namba": "Ura Namba", "Fushimi Inari:": "Fushimi Inari Taisha", "Gekkeikan": "Gekkeikan Okura Sake Museum", "Teradaya": "Teradaya Fushimi", "Inari-Sushi": "Fushimi Inari inari sushi", "Sake-Probiersets": "Fushimi sake brewery tasting", "Großer Buddha": "Kotoku-in Great Buddha Kamakura", "Bambushain": "Hokokuji Temple Kamakura", "Tsurugaoka": "Tsurugaoka Hachimangu", "Hasedera": "Hasedera Kamakura", "Shirasu-don": "shirasu don Kamakura", "Lokales Kamakura": "Kamakura Beer", "Sankeien": "Sankeien Garden", "Chinatown, die": "Yokohama Chinatown", "Iekei-Ramen": "Yoshimuraya Yokohama", "Dim Sum": "Yokohama Chinatown dim sum", "Noge:": "Noge Yokohama", "Yokohama Bay": "Yokohama Bay Brewing", "Ufer des Arakawa": "Arakawa riverbank Akabane", "Motsuni und": "Akabane Ichibangai", "Ramen am Bahnhof": "Akabane Station ramen", "Marumasu-ya": "Marumasuya Akabane", "Ichibangai-Gasse": "Akabane Ichibangai", "Eine Bar am Bahnhof": "Akabane Station izakaya"}
+;
+const esc=t=>String(t).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+const qOf=(t,k)=>{const key=Object.keys(GQ).find(g=>t.startsWith(g));return key?GQ[key]:t.split(":")[0]+" "+P[k][1]+" Japan"};
+let curK=null;
+const sec=(t,c,a)=>a.length?`<h3 class="ph3"><i style="background:${c}"></i>${t}</h3><ul class="atts">${a.map(x=>`<li><button class="att" type="button" data-t="${esc(x)}" data-c="${esc(t)}"><span>${x}</span><b aria-hidden="true">Karte ↗</b></button></li>`).join("")}</ul>`:"";
+const pop=document.createElement("div");pop.id="pop";pop.hidden=true;pop.innerHTML='<div class="pbox" role="dialog" aria-modal="true" aria-labelledby="popT"><button class="pclose" type="button" id="popX" aria-label="Schließen">×</button><span class="pcat" id="popC"></span><h3 id="popT"></h3><p id="popD"></p><p class="small" id="popQ"></p><div class="pact"><a class="btn on" id="popM" target="_blank" rel="noopener">In Google Maps öffnen</a><a class="btn" id="popR" target="_blank" rel="noopener">Route dorthin</a></div><p class="small">Öffnet Google Maps in einem neuen Fenster oder in der App.</p></div>';document.body.appendChild(pop);
+let lastF=null;
+const openPop=(t,c)=>{const k=curK,q=qOf(t,k);let i=t.indexOf(":");if(i<0)i=t.indexOf(", ");lastF=document.activeElement;
+$("popC").textContent=c+" · "+P[k][0]+" "+P[k][1];$("popT").textContent=i>0?t.slice(0,i):t;$("popD").textContent=i>0?t.slice(i+1).trim().replace(/^./,c=>c.toUpperCase()):"";$("popD").hidden=i<0;
+$("popQ").textContent="Suche: "+q;$("popM").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);$("popR").href="https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(q);
+pop.hidden=false;$("popX").focus()};
+const closePop=()=>{pop.hidden=true;lastF&&lastF.focus&&lastF.focus()};
+pop.addEventListener("click",e=>{if(e.target===pop||e.target.id==="popX")closePop()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!pop.hidden)closePop()});
+pan.addEventListener("click",e=>{const b=e.target.closest(".att");if(b)openPop(b.dataset.t,b.dataset.c)});
+const showPlace=k=>{curK=k;const p=P[k],q=PL[k]||{k:[],e:[],t:[]},vs=visits(k),from=sel;selP=k;
+pan.innerHTML=`<div class="dhead"><b class="jp">${p[0]}</b><div><span>${vs.length?"Auf der Route am "+vs.map(d=>d+".").join(", ")+" März":"Ort auf der Route"}</span><h2>${p[1]}</h2></div></div><ul class="chips">${vs.map(d=>`<li><button class="lnk" type="button" data-d="${d}">${D.find(x=>x[1]===String(d))[2]} ${d}. März ansehen</button></li>`).join("")}</ul>${sec("Kultur und Sehenswertes","var(--ai)",q.k)}${sec("Essen","var(--ver)",q.e)}${sec("Trinken","var(--tr)",q.t)}${from?`<div class="nav2"><button class="btn" type="button" data-d="${from}">← Zurück zum ${from}. März</button></div>`:""}`;
+pan.scrollTop=0;
+const near=Object.keys(P).filter(j=>j!==k&&Math.abs(P[j][2]-p[2])<.35&&Math.abs(P[j][3]-p[3])<.25&&j!=="HND");
+flyTo(fit([k,...near],.6,.4));try{history.replaceState(null,"","#ort-"+k.toLowerCase())}catch(e){}};
+const pick=(d,scroll)=>{const D0=D.find(x=>x[1]===String(d));if(!D0)return showAll();sel=String(d);selP=null;
+document.querySelectorAll(".dbtn").forEach(b=>{const on=b.id==="t"+sel;b.classList.toggle("sel",on);b.setAttribute("aria-selected",on)});
+if(scroll){const b=$("t"+sel);b&&b.scrollIntoView({block:"nearest",inline:"center",behavior:RM?"auto":"smooth"})}
+const st=S[sel][1],seen=[];st.forEach(k=>{if(!seen.includes(k))seen.push(k)});const hi=STAY[sel];
+pan.innerHTML=`<div class="dhead"><b>${sel}</b><div><span>${D0[2]}, ${sel}. März 2027</span><h2>${TT[sel]}</h2></div></div><ul class="chips">${D0[3].map(c=>`<li class="${/Auto |Rückgabe/.test(c)?"car":/Autofrei/.test(c)?"free":""}">${c}</li>`).join("")}</ul><p class="small" style="margin:0 0 4px">Ort antippen für Highlights:</p><ol class="stops">${seen.map((k,i)=>`<li>${seen.length>1?`<em>${i+1}</em>`:""}<button class="lnk" type="button" data-p="${k}">${P[k][1]}</button></li>`).join("")}</ol><ul class="pl">${D0[4].map(x=>`<li>${x}</li>`).join("")}</ul><p><strong>Essen & Trinken:</strong> ${D0[5]}</p><p class="tip"><strong>Abseits:</strong> ${D0[6]}</p>${hi!==undefined?`<div class="stay"><b>Übernachtung: ${D0[7]}</b>${HT[hi][2]} <span class="small">(${HT[hi][4]} pro Nacht, Richtwert)</span></div>`:`<div class="stay"><b>Nachtflug ab Tokyo</b>Gepäck im Hotel lassen, ca. 3 h vor Abflug am Terminal.</div>`}<div class="nav2"><button class="btn" type="button" id="prev" ${sel==="8"?"disabled":""}>← Vortag</button><button class="btn" type="button" id="next" ${sel==="25"?"disabled":""}>Nächster Tag →</button></div>`;
+pan.scrollTop=0;$("prev").onclick=()=>go(-1);$("next").onclick=()=>go(1);
+flyTo(fit(st));try{history.replaceState(null,"","#tag-"+sel)}catch(e){}};
+const go=n=>{const i=D.findIndex(x=>x[1]===sel);const j=Math.max(0,Math.min(D.length-1,(i<0?-1:i)+n));pick(D[j][1],true)};
+$("tl").addEventListener("click",e=>{const b=e.target.closest(".dbtn");if(b){stop();pick(b.id.slice(1),true)}});
+$("tl").addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();stop();go(e.key==="ArrowRight"?1:-1);$("t"+sel).focus()}});
+const byPlace=k=>{stop();showPlace(k)};
+let timer=0;const stop=()=>{clearInterval(timer);timer=0;$("play").classList.remove("on");$("play").textContent="Abspielen"};
+$("play").onclick=()=>{if(timer)return stop();$("play").classList.add("on");$("play").textContent="Stopp";if(!sel||sel==="25")pick("8",true);else go(1);timer=setInterval(()=>{if(sel==="25")return stop();go(1)},4200)};
+$("all").onclick=()=>{stop();showAll();try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}};
+const h0=(location.hash.match(/^#tag-(\d+)$/)||[])[1];const o0=((location.hash.match(/^#ort-([a-z]+)$/)||[])[1]||"").toUpperCase();
+map.fitBounds(overview(),{padding:[40,40]});if(h0&&S[h0])pick(h0,true);else if(P[o0]){showAll();showPlace(o0)}else showAll();
+const row=(a,cls)=>`<tr>${a.map((c,i)=>`<td${cls&&cls[i]?` class="${cls[i]}"`:""}>${c}</td>`).join("")}</tr>`;
+const TR=[
+["8.3.","Flughafen → Hotel","Zu Fuß (Haneda T3) oder Bahn ab Narita","5–60 min","–","Bei Haneda-Landung Hotel im Terminal nehmen"],
+["9.3.","Tokyo Haneda → Fukuoka","Inlandsflug: Skymark, ANA, JAL, Starflyer","ca. 1:50 h","ab ca. ¥9.500","Ab Narita mit Peach ab ca. ¥4.800 zzgl. Gepäck"],
+["9.3.","Alternative Tokyo → Hakata","Shinkansen Nozomi","ca. 5 h","¥17.920","Preis mit Hayatoku 21; nur sinnvoll ohne Flug"],
+["10.–18.3.","Fukuoka → Osaka","Mietwagen, Einwegmiete","9 Tage","ca. ¥153–226k pro Auto","Aufschlüsselung unten"],
+["14.3.","Hiroshima ↔ Saijo","JR Sanyo-Linie","unter 40 min","IC-Karte","Brauereien direkt am Bahnhof"],
+["15.3.","Hiroshima → Miyajima","JR bis Miyajimaguchi + Fähre","45–95 min","¥440–620 + ¥100","¥100 ist die Besuchersteuer; Direktboot ab Friedenspark ¥2.400"],
+["20.3.","Osaka → Fushimi Inari","Keihan-Linie","ca. 45–50 min","IC-Karte","Fushimi-Momoyama für das Sake-Viertel"],
+["21.3.","Shin-Osaka → Tokyo","Shinkansen Nozomi, reserviert","ca. 2:30 h","¥14.720","¥12.980 mit Hayatoku 21 (smartEX, mind. 21 Tage vorher)"],
+["21.–25.3.","Tokyo, Kamakura, Yokohama","Metro und JR mit Suica","–","nach Strecke","Suica im Handy-Wallet spart Automaten"],
+["25.3.","Hotel → Flughafen","Keikyu/Monorail (Haneda) oder Skyliner (Narita)","30–75 min","nach Strecke","Ca. 3 h vor Abflug am Terminal sein"]];
+$("tr").innerHTML=TR.map(r=>row(r,[0,0,0,"n","n",0])).join("");
+$("car").innerHTML=["<b>Grundmiete:</b> Kompaktwagen ca. ¥7.000–12.000 pro Tag, für 9 Tage etwa ¥65.000–110.000 (Richtwert; Mittelklasse laut JNTO ¥14.000–30.000).","<b>Einweggebühr:</b> Nippon Rent-A-Car rechnet ¥880 je 10 km, für rund 620 km Fukuoka–Osaka also ca. ¥55.000. Toyota rechnet per Simulator, Einweg muss vorab angemeldet werden.","<b>Maut:</b> mit ETC-Karte geschätzt ¥18.000–25.000. Der Kyushu Expressway Pass (2 Tage ¥6.200, Verkauf endet 31.3.2027) lohnt hier kaum, der San'in-Setouchi-Shikoku-Pass (9 Tage ¥16.700) gilt nur für Honshu ohne Stadtautobahnen. Beim Vermieter vergleichen.","<b>Benzin</b> für ~1.050 km ca. ¥12.000–16.000, <b>Parken</b> in Städten ¥1.000–2.500 pro Nacht.","Linksverkehr. Ziele ins Navi am einfachsten per Telefonnummer oder Mapcode eingeben."].map(x=>`<li>${x}</li>`).join("");
+const HT=[
+["8.3.","Tokyo Haneda","Villa Fontaine Grand Haneda Airport","Bei Narita: Hotel direkt am Flughafen","¥18–30k","Im Terminal 3, kurzer Weg zum Inlandsflug",18,30,1],
+["9.3.","Fukuoka","Hotel Il Palazzo (Nakasu, Design-Ikone)","Nishitetsu Hotel Croom Hakata Gion; Band Hotel Hakata","¥15–45k","Zu Fuß zu den Yatai, Auto erst am 10.3.",15,45,1],
+["10.–11.3.","Beppu","Terrace Midoubaru: jedes Zimmer mit halboffenem Onsen-Bad, Tattoos erlaubt","Nagomitsuki (alle 12 Zimmer mit Open-Air-Bad); günstig: Yamada Bessou mit buchbarem Privatbad","¥30–70k","Privatbad löst die Tattoo-Frage, Parken meist dabei",30,70,2],
+["12.3.","Nagato Yumoto","KAI Nagato (Hoshino Resorts, Ryokan mit Kaiseki)","Otani Sanso; günstig: SOIL Nagatoyumoto","¥25–120k","Ryokan mit Abendessen, Zimmer mit eigenem Bad anfragen",25,120,1],
+["13.–15.3.","Hiroshima","KIRO Hiroshima by The Share Hotels","Sheraton Grand Hiroshima am Bahnhof, mit Parkhaus","¥13–30k","KIRO: Design und gutes Frühstück nahe Friedenspark; kein eigener Parkplatz",13,30,3],
+["16.3.","Onomichi","Hotel Cycle im ONOMICHI U2","LOG, Design-Unterkunft am Tempelhang (teurer)","¥20–40k","Am Hafen, Bar und Restaurant im Haus; Parken ¥2.000, davon ¥1.000 Gutschein",20,40,1],
+["17.3.","Kurashiki","Ryori Ryokan Tsurugata im Bikan-Viertel","Ryokan Kurashiki (Michelin, ab ¥91.000); Yoruya (13 Zimmer)","¥25–95k","Mitten im Kanalviertel, Parkplatz vorab klären",25,95,1],
+["18.–20.3.","Osaka","Cross Hotel Osaka (Shinsaibashi)","Hotel The Flag Shinsaibashi, sehr gut bewertet und günstiger","¥15–45k","Zentral für Namba, Sumo-Halle und Tenma",15,45,3],
+["21.–24.3.","Tokyo","sequence MIYASHITA PARK (Shibuya)","Hotel Groove Shinjuku im Kabukicho Tower (Premium)","¥25–60k","Check-out erst um 14 Uhr, ideal für den Nachtflug-Tag",25,60,4]];
+$("ht").innerHTML=HT.map(r=>row(r.slice(0,6),[0,0,0,0,"n",0])).join("");
+$("ons").innerHTML=["<b>Takegawara Onsen, Beppu:</b> historisches Holzbadehaus mitten in der Stadt, mit Sandbad. Gilt als tattoofreundlich.","<b>Hyotan Onsen, Beppu (Kannawa):</b> großes Tagesbad mit Dampf-, Sand- und Wasserfallbecken, wird gezielt für Gäste mit Tattoos empfohlen.","<b>Tanoyu und Nageshi Onsen, Beppu:</b> kleine Stadtbäder aus der Edo-Tradition, laut Oita-Tourismus Tattoos erlaubt.","<b>Strand-Sandbad Beppu:</b> man liegt eingegraben im warmen Sand, gilt als tattoofreundlich.","<b>Ryokan mit Zimmerbad</b> in Beppu und Nagato (siehe Hotels): Onsen jederzeit, ohne Regeln.","<b>Tokyo:</b> Kosugiyu (Koenji und Harajuku) und Koganeyu; normale Nachbarschafts-Sento fragen meist gar nicht nach Tattoos.","Dogo Onsen und Kinosaki wären weitere tattoofreundliche Orte, liegen aber nicht auf eurer Route."].map(x=>`<li style="margin:8px 0">${x}</li>`).join("");
+const FD=[
+["Fukuoka","Hakata-Ramen (Tonkotsu), Mentaiko, Motsunabe, Gyoza","Yatai in Nakasu, Tenjin, Nagahama; Bargeld mitnehmen"],
+["Beppu","Jigoku-mushi aus dem Quelldampf, Toriten, Beppu-Reimen","Izakaya um Kitahama, Kabosu-Highball, Oita-Shochu"],
+["Mojiko und Shimonoseki","Fugu-Sushi, Yaki-Curry","Karato-Markt Fr und Sa 10–15, So 8–15 Uhr"],
+["Nagato und Hagi","Fisch vom Japanischen Meer, Nagato-Yakitori","Craft Beer in Nagato Yumoto"],
+["Hiroshima","Okonomiyaki mit Nudeln, Austern, Anago-meshi","Saijo-Sake, Lemon-Sour, Bars in Nagarekawa"],
+["Onomichi und Tomonoura","Onomichi-Ramen, Meerbrasse (Tai)","Homeishu-Kräuterlikör, Bar im ONOMICHI U2"],
+["Kurashiki","Mamakari, Barazushi, Demi-Katsudon","Craft Beer und Sake im Speicherviertel"],
+["Osaka","Takoyaki, Kushikatsu, Okonomiyaki, Doteyaki","Tenma (Stehbars), Kyobashi, Shinsekai mit Morgen-Sets"],
+["Kyoto-Fushimi","Inari-Sushi, Snacks aus Sake-Trester","Brauerei-Verkostungen, Gekkeikan Okura Museum"],
+["Tokyo","Sushi und Tamagoyaki in Tsukiji, Monjayaki, Motsuni","Akabane, Ameyoko, Noge in Yokohama, Ebisu Yokocho"]];
+$("fd").innerHTML=FD.map(r=>row(r,[])).join("");
+const B=[["Inlandsflug Tokyo–Fukuoka",9500,20000,"p"],["Shinkansen Osaka–Tokyo",12980,14720,"p"],["Bahn, Fähren, Metro",12000,20000,"p"],["Eintritte inkl. Sumo",15000,28000,"p"],["Essen und Trinken, 17 Tage",102000,204000,"p"],["Mietwagen komplett",153000,226000,"c"],["Hotels, 17 Nächte",HT.reduce((a,r)=>a+r[6]*1000*r[8],0),HT.reduce((a,r)=>a+r[7]*1000*r[8],0),"h"]];
+const yen=v=>"¥"+Math.round(v/1000).toLocaleString("de-DE")+"k";
+const eur=v=>Math.round(v/50)*50;
+const calc=()=>{const pp=Math.min(4,Math.max(1,+$("pp").value||2)),fx=Math.min(250,Math.max(100,+$("fx").value||180)),rooms=Math.ceil(pp/2);
+const L=B.map(([n,lo,hi,t])=>{const f=t==="p"?1:t==="c"?1/pp:rooms/pp;return[n,lo*f,hi*f]});
+const mx=Math.max(...L.map(x=>x[2]));let lo=0,hi=0;
+$("bud").innerHTML=L.map(([n,a,b])=>{lo+=a;hi+=b;return`<div style="margin:0 0 14px"><div style="display:flex;justify-content:space-between;gap:12px"><span>${n}</span><span style="white-space:nowrap;font-variant-numeric:tabular-nums">${yen(a)}–${yen(b)}</span></div><div class="bar"><i class="hi" style="left:0;width:${b/mx*100}%"></i><i style="left:0;width:${a/mx*100}%"></i></div></div>`}).join("");
+$("tot").textContent=`${eur(lo/fx).toLocaleString("de-DE")}–${eur(hi/fx).toLocaleString("de-DE")} €`;
+$("toty").textContent=`${yen(lo)}–${yen(hi)} pro Person, ohne internationale Flüge`};
+["pp","fx"].forEach(i=>$(i).addEventListener("input",calc));calc();
+const CK=[["Jetzt","Hotels buchen, vor allem Tokyo 21.–25.3. und die Ryokan mit Privatbad in Beppu und Nagato."],["Jetzt","Mietwagen Fukuoka → Osaka als Einwegmiete buchen, ETC-Karte dazu."],["Dezember","Inlandsflug Haneda → Fukuoka am 9.3. buchen."],["Bis Mitte Feb.","ADAC-Führerscheinübersetzung für jede Person bestellen, die fahren will (95 €)."],["6. Februar","Sumo-Tickets für Fr 19.3. bei Ticket Oosumo kaufen; Vorverkaufsstart, Druck später im Seven-Eleven."],["Bis 28. Feb.","Shinkansen am 21.3. mit Hayatoku 21 über smartEX buchen (mind. 21 Tage vorher)."],["Januar","Offizielle Kirschblüten-Prognose prüfen und Tokyo-Tage ggf. umstellen."],["Vor Abflug","Bargeld für Yatai und Märkte, Suica im Handy-Wallet, eSIM oder Pocket-WLAN."],["Unterwegs","Tage 12. und 13. nicht tauschen: Der Sushi-Markt in Shimonoseki läuft nur Fr bis So."]];
+let saved={};try{saved=JSON.parse(localStorage.getItem("jp27chk")||"{}")}catch(e){}
+$("chk").innerHTML=CK.map((c,i)=>`<li><label><input type="checkbox" id="c${i}" ${saved[i]?"checked":""}><b>${c[0]}</b><span>${c[1]}</span></label></li>`).join("");
+$("chk").addEventListener("change",e=>{saved[e.target.id.slice(1)]=e.target.checked;try{localStorage.setItem("jp27chk",JSON.stringify(saved))}catch(x){}});
+const SR=[["Toyota Rent a Car: Führerschein-Voraussetzungen","https://rent.toyota.co.jp/global_eng/drive/"],["ADAC: Führerscheinübersetzung Japan","https://www.adac.de/der-adac/regionalclubs/nrw/fuehrerscheinuebersetzung-japan/"],["JAF: Fahren mit ausländischem Führerschein","https://english.jaf.or.jp/use-jaf-more/drive-in-japan/switch-to-japanese-license"],["Nippon Rent-A-Car: Einweggebühren","https://www.nipponrentacar.co.jp/en/service/oneway.html"],["NEXCO West: Kyushu Expressway Pass","https://www.w-nexco.co.jp/global/en/kep/"],["JNTO: Expressway Passes","https://www.japan.travel/en/ca/expressway-passes/"],["Ekitan: Shinkansen Shinagawa–Shin-Osaka","https://ekitan.com/en/article/shinagawa-to-osaka-shinkansen"],["smartEX: Hayatoku 21 Preise","https://smart-ex.jp/en/product/hayatoku21/pdf/hayatoku21_fares_from_260313.pdf"],["Expedia: Flüge Haneda–Fukuoka","https://expedia.co.jp/en/lp/flights/hnd/fuk/tokyo-to-fukuoka"],["Tokyo Cheapo: Günstige Inlandsflüge","https://tokyocheapo.com/travel/transport/cheap-domestic-flights-tokyo/"],["explore.osaka: Sumo-Turnier 2027","https://explore.osaka/osaka-sumo-tournament/"],["Japan Times: Beppus Tattoo-ok-Karte","https://japantimes.co.jp/news/2018/12/16/national/tattoo-ok-hot-spa-map-released-rugby-world-cup-host-prefecture"],["Visit Oita: Tanoyu Onsen","https://en.visit-oita.jp/onsen/spots/detail/5886"],["Terrace Midoubaru, Beppu","https://japanese-onsen.com/ryokans/terrace-midoubaru-beppu-onsen/"],["Kanmon: Karato-Markt","https://kanmon.gr.jp/kanmon2020/en/detail/97.html"],["Fukuoka Yatai Guide 2026","https://japanactivity.com/fukuoka-yatai-etiquette-a-guide-to-street-food-stalls"],["Regierung Japan: Saijo Sake-Straße","https://gov-online.go.jp/eng/publicity/book/hlj/html/202304/202304_06_en.html"],["japan-guide: Nach Miyajima","https://www.japan-guide.com/e/e3454.html"],["japan-guide: Tomonoura","https://japan-guide.com/e/e3432.html"],["Nagato: Yumoto Onsen","https://nanavi.jp/en/sightseeing/nagatoyumoto/"],["Hotel Cycle, Onomichi","https://www.gltjp.com/en/directory/item/16987/"],["Michelin: Ryokan Kurashiki","https://guide.michelin.com/en/hotels-stays/kurashiki/ryokan-kurashiki-6933"],["Himeji-Burg: Eintritt","https://www.himejicastle.jp/en"],["Day Drinking in Tenma","https://metronine.osaka/en/article_tour/temma-hashigozake/"],["GO TOKYO: Akabane Ichibangai","https://www.gotokyo.org/en/spot/90/index.html"],["Time Out: Noge in Yokohama","https://timeout.com/tokyo/bars-and-pubs/best-restaurants-and-bar-in-retro-nightlife-hub-yokohama-noge"],["Time Out: Tattoofreundliche Sento in Tokyo","https://www.timeout.com/tokyo/health-and-beauty/best-tattoo-friendly-sento-bathhouses-in-tokyo"],["JAF: Alkohol am Steuer","https://jaf.or.jp/-/media/3/454/462/3723/JAF_china_h.pdf"],["Japan im März 2027: Kirschblüte","https://selfguidejapan.com/blog/japan-in-march-2027"]];
+$("srcl").innerHTML=SR.map(([t,u])=>`<li><a href="${u}">${t}</a></li>`).join("");
+
+}
+(function(){
+const SRC=["https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js","https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js","https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"];
+let done=false;const run=()=>{if(done)return;done=true;try{APP()}catch(e){console.error(e)}};
+const fail=()=>{const ch=()=>{const o={};["addTo","on","bindTooltip","setView","fitBounds","flyToBounds","invalidateSize","clearLayers"].forEach(f=>o[f]=()=>o);return o};
+window.L={map:()=>ch(),control:{zoom:()=>ch(),layers:()=>ch()},tileLayer:()=>ch(),layerGroup:()=>ch(),latLngBounds:(a,b)=>[a,b],polyline:()=>ch(),marker:()=>ch(),divIcon:o=>o};
+const m=document.getElementById("lmap");if(m)m.innerHTML='<div class="mapfail"><b>Die Karte konnte nicht geladen werden.</b><span>Die Datei braucht Internet. Bitte herunterladen und direkt in Chrome, Safari oder Firefox öffnen, nicht in einer Vorschau. Zeitstrahl und Ortsinfos funktionieren trotzdem.</span></div>';run()};
+const tryN=n=>{if(window.L&&window.L.map)return run();if(n>=SRC.length)return fail();const sc=document.createElement("script");sc.src=SRC[n];sc.onload=()=>window.L&&window.L.map?run():tryN(n+1);sc.onerror=()=>tryN(n+1);document.head.appendChild(sc)};
+tryN(0);setTimeout(()=>{if(!done)fail()},9000)})();
+</script>
+</body>
+</html>
