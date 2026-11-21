@@ -58,7 +58,16 @@ Es gibt keinen Build-Schritt. Karte: Leaflet mit Kacheln von Esri und OpenStreet
 - `tags`: Chips im Tag. Ein Tag mit „Auto “ wird rot, „Autofrei“ rosa.
 - `hotel`: Nummer des Hotels in `hotels` (gezählt ab 0), `null` ohne Übernachtung.
 
-**`hotels`**: `ort` (Kürzel), `naechte`, `stadt`, `empfehlung`, `alternativen`, `preis` (Text), `hinweis`, `preisMin`/`preisMax` in Yen pro Nacht für den Budget-Rechner, `anzahlNaechte`.
+**`verbindungen`**: Infos zu jeder Strecke zwischen zwei Stopps eines Tages. Erscheinen beim Klick auf die Linie in der Karte und in der Tagesansicht.
+
+```json
+{ "tag": 12, "von": "BEP", "nach": "KAN", "mittel": "Mietwagen, Higashi-Kyushu-Expressway",
+  "dauer": "ca. 2 h", "strecke": "ca. 130 km", "preis": "Maut über ETC", "hinweis": "…" }
+```
+
+`tag`, `von` und `nach` müssen zu zwei aufeinanderfolgenden `stopps` des Tages passen. Ändert ihr die Stopps eines Tages, meldet `tools/check.py` fehlende oder überflüssige Verbindungen.
+
+**`hotels`**: erscheinen auf der Seite als ToDos in der Checkliste „Vor der Reise erledigen“ (und als Kostenposten). `ort` (Kürzel), `naechte`, `stadt`, `empfehlung`, `alternativen`, `preis` (Text), `hinweis`, `preisMin`/`preisMax` in Yen pro Nacht für den Budget-Rechner, `anzahlNaechte`.
 
 **`kosten.posten`**: jeder Kostenpunkt mit Schätzung und echtem Betrag.
 
@@ -79,7 +88,7 @@ Es gibt keinen Build-Schritt. Karte: Leaflet mit Kacheln von Esri und OpenStreet
 
 Auf der Seite kann man Ist-Beträge auch direkt eintragen, z. B. `48.000` oder `85 €`. Die bleiben nur im eigenen Browser. Damit alle sie sehen: „Als JSON kopieren“, den Block `posten` in `trip.json` ersetzen, prüfen, pushen.
 
-**Weitere Bereiche:** `transport`, `mietwagen`, `onsen`, `essenTabelle`, `checkliste`, `quellen`, `reise` (Startwerte für Personenzahl und Wechselkurs).
+**Weitere Bereiche:** `transport`, `mietwagen`, ``essenTabelle`, `checkliste`, `quellen`, `reise` (Startwerte für Personenzahl und Wechselkurs).
 
 ### Beispiel: Ort einfügen
 Einen Abstecher nach Kobe am 18. März: unter `orte` einen Eintrag `"KOB"` mit Koordinaten anlegen und am Tag 18 die Stopps auf `["KUR", "HIM", "KOB", "OSA"]` ändern. Mehr braucht es nicht.

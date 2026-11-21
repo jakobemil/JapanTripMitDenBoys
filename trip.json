@@ -1402,6 +1402,308 @@
       "hotel": null
     }
   ],
+  "verbindungen": [
+    {
+      "tag": 9,
+      "von": "HND",
+      "nach": "FUK",
+      "mittel": "Inlandsflug (Skymark, ANA, JAL, Starflyer)",
+      "dauer": "ca. 1:50 h",
+      "strecke": "ca. 900 km Luftlinie",
+      "preis": "ab ca. ¥9.500 p. P.",
+      "hinweis": "Ab Narita mit Peach ab ca. ¥4.800 zzgl. Gepäck. Flughafen Fukuoka liegt zwei U-Bahn-Stationen von Hakata."
+    },
+    {
+      "tag": 10,
+      "von": "FUK",
+      "nach": "DAZ",
+      "mittel": "Mietwagen",
+      "dauer": "ca. 40 min",
+      "strecke": "ca. 20 km",
+      "preis": "",
+      "hinweis": "9 Uhr Übernahme in Hakata, ETC-Karte dazu buchen."
+    },
+    {
+      "tag": 10,
+      "von": "DAZ",
+      "nach": "YUF",
+      "mittel": "Mietwagen, Oita-Expressway",
+      "dauer": "ca. 1:15 h",
+      "strecke": "ca. 90 km",
+      "preis": "Maut über ETC",
+      "hinweis": ""
+    },
+    {
+      "tag": 10,
+      "von": "YUF",
+      "nach": "BEP",
+      "mittel": "Mietwagen über den Pass",
+      "dauer": "ca. 40 min",
+      "strecke": "ca. 25 km",
+      "preis": "",
+      "hinweis": "Schöne Passstraße mit Blick auf die Bucht von Beppu."
+    },
+    {
+      "tag": 12,
+      "von": "BEP",
+      "nach": "KAN",
+      "mittel": "Mietwagen, Higashi-Kyushu-Expressway",
+      "dauer": "ca. 2 h",
+      "strecke": "ca. 130 km",
+      "preis": "Maut über ETC",
+      "hinweis": "Auto in Mojiko parken, zu Fuß durch den Kanmon-Tunnel, mit der Fähre zurück."
+    },
+    {
+      "tag": 12,
+      "von": "KAN",
+      "nach": "TSU",
+      "mittel": "Mietwagen über die Kanmon-Brücke",
+      "dauer": "ca. 1:15 h",
+      "strecke": "ca. 75 km",
+      "preis": "",
+      "hinweis": ""
+    },
+    {
+      "tag": 12,
+      "von": "TSU",
+      "nach": "MOT",
+      "mittel": "Mietwagen an der Küste",
+      "dauer": "ca. 40 min",
+      "strecke": "ca. 30 km",
+      "preis": "",
+      "hinweis": ""
+    },
+    {
+      "tag": 12,
+      "von": "MOT",
+      "nach": "NAG",
+      "mittel": "Mietwagen",
+      "dauer": "ca. 30 min",
+      "strecke": "ca. 20 km",
+      "preis": "",
+      "hinweis": "Ankunft im Ryokan, danach bleibt das Auto stehen und es darf getrunken werden."
+    },
+    {
+      "tag": 13,
+      "von": "NAG",
+      "nach": "HAG",
+      "mittel": "Mietwagen",
+      "dauer": "ca. 40 min",
+      "strecke": "ca. 35 km",
+      "preis": "",
+      "hinweis": ""
+    },
+    {
+      "tag": 13,
+      "von": "HAG",
+      "nach": "AKI",
+      "mittel": "Mietwagen",
+      "dauer": "ca. 45 min",
+      "strecke": "ca. 35 km",
+      "preis": "",
+      "hinweis": ""
+    },
+    {
+      "tag": 13,
+      "von": "AKI",
+      "nach": "HIR",
+      "mittel": "Mietwagen, Chugoku-Expressway",
+      "dauer": "ca. 1:45 h",
+      "strecke": "ca. 150 km",
+      "preis": "Maut über ETC",
+      "hinweis": "Auto in Hiroshima für drei Nächte parken, ca. ¥1.000–2.500 pro Nacht."
+    },
+    {
+      "tag": 14,
+      "von": "HIR",
+      "nach": "SAI",
+      "mittel": "JR Sanyo-Linie",
+      "dauer": "unter 40 min",
+      "strecke": "ca. 30 km",
+      "preis": "IC-Karte",
+      "hinweis": "Die Brauereien liegen direkt am Bahnhof Saijo."
+    },
+    {
+      "tag": 14,
+      "von": "SAI",
+      "nach": "HIR",
+      "mittel": "JR Sanyo-Linie",
+      "dauer": "unter 40 min",
+      "strecke": "ca. 30 km",
+      "preis": "IC-Karte",
+      "hinweis": ""
+    },
+    {
+      "tag": 15,
+      "von": "HIR",
+      "nach": "MIY",
+      "mittel": "JR bis Miyajimaguchi + Fähre",
+      "dauer": "45–95 min",
+      "strecke": "ca. 25 km",
+      "preis": "¥440–620 + ¥100 Besuchersteuer",
+      "hinweis": "Direktboot ab Friedenspark ca. ¥2.400."
+    },
+    {
+      "tag": 15,
+      "von": "MIY",
+      "nach": "IWA",
+      "mittel": "Fähre + JR bis Iwakuni + Bus",
+      "dauer": "ca. 45–60 min",
+      "strecke": "ca. 20 km",
+      "preis": "IC-Karte",
+      "hinweis": "Optional, Bus vom Bahnhof Iwakuni zur Kintaikyo-Brücke."
+    },
+    {
+      "tag": 15,
+      "von": "IWA",
+      "nach": "HIR",
+      "mittel": "Bus + JR Sanyo-Linie",
+      "dauer": "ca. 50–60 min",
+      "strecke": "ca. 40 km",
+      "preis": "IC-Karte",
+      "hinweis": ""
+    },
+    {
+      "tag": 16,
+      "von": "HIR",
+      "nach": "TOM",
+      "mittel": "Mietwagen, Sanyo-Expressway",
+      "dauer": "ca. 1:45 h",
+      "strecke": "ca. 110 km",
+      "preis": "Maut über ETC",
+      "hinweis": ""
+    },
+    {
+      "tag": 16,
+      "von": "TOM",
+      "nach": "ONO",
+      "mittel": "Mietwagen",
+      "dauer": "ca. 40 min",
+      "strecke": "ca. 25 km",
+      "preis": "",
+      "hinweis": ""
+    },
+    {
+      "tag": 17,
+      "von": "ONO",
+      "nach": "KUR",
+      "mittel": "Mietwagen, Sanyo-Expressway",
+      "dauer": "ca. 1 h",
+      "strecke": "ca. 70 km",
+      "preis": "Maut über ETC",
+      "hinweis": "Optional vorher eine kurze Radrunde auf der Shimanami-Route."
+    },
+    {
+      "tag": 18,
+      "von": "KUR",
+      "nach": "HIM",
+      "mittel": "Mietwagen, Sanyo-Expressway",
+      "dauer": "ca. 1:15 h",
+      "strecke": "ca. 100 km",
+      "preis": "Maut über ETC",
+      "hinweis": "Früh losfahren, Himeji-Burg ¥2.500 Eintritt."
+    },
+    {
+      "tag": 18,
+      "von": "HIM",
+      "nach": "OSA",
+      "mittel": "Mietwagen",
+      "dauer": "ca. 1:30 h",
+      "strecke": "ca. 100 km",
+      "preis": "Maut über ETC",
+      "hinweis": "Rückgabe bis ca. 17 Uhr; Einweggebühr ca. ¥55.000."
+    },
+    {
+      "tag": 20,
+      "von": "OSA",
+      "nach": "FUS",
+      "mittel": "Keihan-Linie",
+      "dauer": "ca. 45–50 min",
+      "strecke": "ca. 45 km",
+      "preis": "IC-Karte",
+      "hinweis": "Zum Sake-Viertel Fushimi-Momoyama aussteigen."
+    },
+    {
+      "tag": 20,
+      "von": "FUS",
+      "nach": "OSA",
+      "mittel": "Keihan-Linie",
+      "dauer": "ca. 45–50 min",
+      "strecke": "ca. 45 km",
+      "preis": "IC-Karte",
+      "hinweis": ""
+    },
+    {
+      "tag": 21,
+      "von": "OSA",
+      "nach": "TYO",
+      "mittel": "Shinkansen Nozomi, reserviert",
+      "dauer": "ca. 2:30 h",
+      "strecke": "ca. 550 km",
+      "preis": "¥14.720 (¥12.980 mit Hayatoku 21)",
+      "hinweis": "Für Fuji-Blick Fensterplatz A. Feiertag: Sitz reservieren."
+    },
+    {
+      "tag": 23,
+      "von": "TYO",
+      "nach": "KAM",
+      "mittel": "JR Yokosuka-Linie",
+      "dauer": "ca. 1 h",
+      "strecke": "ca. 50 km",
+      "preis": "IC-Karte",
+      "hinweis": ""
+    },
+    {
+      "tag": 23,
+      "von": "KAM",
+      "nach": "YOK",
+      "mittel": "JR Yokosuka-Linie",
+      "dauer": "ca. 25 min",
+      "strecke": "ca. 25 km",
+      "preis": "IC-Karte",
+      "hinweis": "Für Noge in Sakuragicho aussteigen."
+    },
+    {
+      "tag": 23,
+      "von": "YOK",
+      "nach": "TYO",
+      "mittel": "JR Keihin-Tohoku- oder Tokaido-Linie",
+      "dauer": "ca. 30–45 min",
+      "strecke": "ca. 30 km",
+      "preis": "IC-Karte",
+      "hinweis": ""
+    },
+    {
+      "tag": 24,
+      "von": "TYO",
+      "nach": "AKA",
+      "mittel": "JR Saikyo- oder Keihin-Tohoku-Linie",
+      "dauer": "ca. 20 min",
+      "strecke": "ca. 15 km",
+      "preis": "IC-Karte",
+      "hinweis": ""
+    },
+    {
+      "tag": 24,
+      "von": "AKA",
+      "nach": "TYO",
+      "mittel": "JR",
+      "dauer": "ca. 20–40 min",
+      "strecke": "ca. 15 km",
+      "preis": "IC-Karte",
+      "hinweis": "Abends weiter nach Koenji zum Kosugiyu-Sento."
+    },
+    {
+      "tag": 25,
+      "von": "TYO",
+      "nach": "HND",
+      "mittel": "Keikyu oder Tokyo Monorail",
+      "dauer": "ca. 30 min",
+      "strecke": "ca. 15 km",
+      "preis": "IC-Karte",
+      "hinweis": "Ca. 3 h vor Abflug am Terminal sein."
+    }
+  ],
   "hotels": [
     {
       "ort": "HND",
@@ -1601,15 +1903,6 @@
     "<b>Benzin</b> für ~1.050 km ca. ¥12.000–16.000, <b>Parken</b> in Städten ¥1.000–2.500 pro Nacht.",
     "Linksverkehr. Ziele ins Navi am einfachsten per Telefonnummer oder Mapcode eingeben."
   ],
-  "onsen": [
-    "<b>Takegawara Onsen, Beppu:</b> historisches Holzbadehaus mitten in der Stadt, mit Sandbad. Gilt als tattoofreundlich.",
-    "<b>Hyotan Onsen, Beppu (Kannawa):</b> großes Tagesbad mit Dampf-, Sand- und Wasserfallbecken, wird gezielt für Gäste mit Tattoos empfohlen.",
-    "<b>Tanoyu und Nageshi Onsen, Beppu:</b> kleine Stadtbäder aus der Edo-Tradition, laut Oita-Tourismus Tattoos erlaubt.",
-    "<b>Strand-Sandbad Beppu:</b> man liegt eingegraben im warmen Sand, gilt als tattoofreundlich.",
-    "<b>Ryokan mit Zimmerbad</b> in Beppu und Nagato (siehe Hotels): Onsen jederzeit, ohne Regeln.",
-    "<b>Tokyo:</b> Kosugiyu (Koenji und Harajuku) und Koganeyu; normale Nachbarschafts-Sento fragen meist gar nicht nach Tattoos.",
-    "Dogo Onsen und Kinosaki wären weitere tattoofreundliche Orte, liegen aber nicht auf eurer Route."
-  ],
   "essenTabelle": [
     {
       "station": "Fukuoka",
@@ -1664,8 +1957,8 @@
   ],
   "checkliste": [
     {
-      "wann": "Jetzt",
-      "was": "Hotels buchen, vor allem Tokyo 21.–25.3. und die Ryokan mit Privatbad in Beppu und Nagato."
+      "wann": "Onsen klären",
+      "was": "Tattoos: In Beppu gibt es eine offizielle Liste mit rund 100 tattoofreundlichen Bädern, u. a. Takegawara, Hyotan, Tanoyu und Nageshi Onsen. Bei Ryokan vorab nach Privatbad (kashikiri) fragen; in Tokyo sind Sento wie Kosugiyu (Koenji) okay."
     },
     {
       "wann": "Jetzt",

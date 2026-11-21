@@ -61,6 +61,15 @@ for i, h in enumerate(hotels):
     if h.get("preisMin", 0) > h.get("preisMax", 0):
         fehler.append(f"Hotel {i}: preisMin größer als preisMax")
 
+paare = {(t.get("tag"), a, b) for t in tage for a, b in zip(t.get("stopps", []), t.get("stopps", [])[1:])}
+for v in T.get("verbindungen", []):
+    k = (v.get("tag"), v.get("von"), v.get("nach"))
+    if k not in paare:
+        fehler.append(f"Verbindung {k}: passt zu keinem Stopp-Paar in 'tage'")
+fehlt = paare - {(v.get("tag"), v.get("von"), v.get("nach")) for v in T.get("verbindungen", [])}
+for k in sorted(fehlt):
+    warn.append(f"Tag {k[0]}: Strecke {k[1]} → {k[2]} hat keinen Eintrag in 'verbindungen' (Linie nicht anklickbar)")
+
 ids = set()
 for p in T.get("kosten", {}).get("posten", []):
     pid = p.get("id")

@@ -120,6 +120,14 @@ button{font:inherit;color:inherit}
 .ktab tr.paid td:first-child b::after{content:" ✓";color:var(--ver)}
 #kjson{width:100%;font:13px ui-monospace,monospace;margin-top:8px;background:var(--bg);color:var(--ink);border:1px solid var(--rule)}
 @media(max-width:600px){.ktab .kcat td,.ktab .ksub td{display:block;padding-left:0}.ktab .kcat td::before,.ktab .ksub td::before{content:none}.kin{width:100%}}
+.conns{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:4px}
+.conn{width:100%;text-align:left;display:grid;gap:0;background:var(--tint);border:0;border-left:4px solid var(--ver);padding:8px 12px;min-height:44px;cursor:pointer;font-size:15px}
+.conn small{font-size:13px;color:var(--mut)}
+.conn:hover span{text-decoration:underline}
+.conn:focus-visible{outline:3px solid var(--ver)}
+.ctab{width:100%;border-collapse:collapse;margin:6px 0 4px;font-size:15px}
+.ctab th{width:8.5em;font-weight:700;color:var(--mut);font-size:14px;border-bottom:1px solid var(--rule);padding:8px 8px 8px 0;vertical-align:top}
+.ctab td{border-bottom:1px solid var(--rule);padding:8px 0}
 .nav2{display:flex;gap:8px;margin-top:16px}
 .nav2 .btn{background:var(--tint);color:var(--ink);box-shadow:none}
 .tl{grid-column:1/-1;background:var(--ai);padding:12px 0 4px;border-top:1px solid #ffffff22}
@@ -196,7 +204,7 @@ footer{background:var(--ai);color:#dfe4ff;font-size:14px}
 </div>
 </header>
 <nav class="scroll" aria-label="Abschnitte">
-<a href="#karte">Karte</a><a href="#transport">Transport</a><a href="#hotels">Hotels</a><a href="#onsen">Onsen & Tattoos</a><a href="#essen">Essen & Day Drinking</a><a href="#budget">Kosten</a><a href="#vorab">Vor der Reise</a><a href="#quellen">Quellen</a>
+<a href="#karte">Karte</a><a href="#transport">Transport</a><a href="#essen">Essen & Day Drinking</a><a href="#budget">Kosten</a><a href="#vorab">Vor der Reise</a><a href="#quellen">Quellen</a>
 </nav>
 
 <section class="band alt" id="transport"><div class="wrap">
@@ -210,27 +218,6 @@ footer{background:var(--ai);color:#dfe4ff;font-size:14px}
 <li>Übersetzung über den ADAC-Onlineshop (in Kooperation mit JAF): 95 € inkl. Versand, Lieferung 3–5 Werktage nach Fertigstellung. Bis spätestens Mitte Februar bestellen.</li>
 <li>JAF selbst nimmt Anträge nur online an und verschickt nicht ins Ausland, daher ist der ADAC der einfachste Weg.</li>
 <li>Gilt bis zu einem Jahr ab Einreise; Pass, Führerschein und Übersetzung immer im Auto haben. Jede Person, die fahren will, braucht eine eigene.</li>
-</ul></div>
-</div>
-</div></section>
-
-<section class="band" id="hotels"><div class="wrap">
-<h2>Hotels entlang der Route</h2>
-<p class="lede">Richtpreise für ein Doppelzimmer pro Nacht aus aktuellen Buchungsportalen, März ist Kirschblüten-Vorsaison und teurer. In Beppu und Nagato bewusst Häuser mit privatem Onsen, damit Tattoos kein Thema sind.</p>
-<div class="scroll"><table class="stack"><thead><tr><th>Nächte</th><th>Ort</th><th>Empfehlung</th><th>Alternativen</th><th>Richtpreis</th><th>Warum / Parken</th></tr></thead><tbody id="ht"></tbody></table></div>
-</div></section>
-
-<section class="band alt" id="onsen"><div class="wrap">
-<h2>Onsen mit Tattoos: Beppu ist die sichere Wahl</h2>
-<p class="lede">Viele Onsen verweigern Tattoos noch immer. Deshalb liegt der Onsen-Schwerpunkt auf Beppu: Die Stadt hat eine eigene Liste mit rund 100 Quellen, in denen Tattoos erlaubt sind.</p>
-<div class="two">
-<div><ul id="ons" style="padding-left:1.2em;margin:0"></ul></div>
-<div class="panel"><h3>So klappt es ohne Stress</h3><ul>
-<li>Hotels mit Bad im Zimmer oder buchbarem Privatbad (kashikiri) wählen: Allein oder zu zweit gilt keine Tattoo-Regel.</li>
-<li>Bei Ryokan vorab mailen: Wo sind die Tattoos, darf man ins Gemeinschaftsbad, gibt es ein Privatbad?</li>
-<li>An der Tür fragen: „Tattoo wa daijōbu desu ka?“ (Sind Tattoos okay?)</li>
-<li>Kleine Tattoos lassen sich manchmal mit Cover-Stickern abkleben, das ist aber Hausregel.</li>
-<li>Vor dem Bad gründlich am Sitzplatz waschen, Handtuch nicht ins Wasser, nach dem Bad nicht direkt Auto fahren, wenn man sich schwindelig fühlt.</li>
 </ul></div>
 </div>
 </div></section>
@@ -284,6 +271,7 @@ const HT=T.hotels.map(h=>[h.naechte,h.stadt,h.empfehlung,h.alternativen,h.preis,
 const TR=T.transport.map(r=>[r.datum,r.strecke,r.mittel,r.dauer,r.preis,r.hinweis]);
 const FD=T.essenTabelle.map(r=>[r.station,r.essen,r.trinken]);
 const CK=T.checkliste.map(r=>[r.wann,r.was]),SR=T.quellen.map(r=>[r.titel,r.url]);
+const VB={};(T.verbindungen||[]).forEach(v=>VB[v.tag+"|"+v.von+"|"+v.nach]=v);
 $("pp").value=T.reise.personen;$("fx").value=T.reise.wechselkurs;
 
 
@@ -294,7 +282,7 @@ const MC={car:"var(--ver)",sk:"var(--sk)",fl:"#ffffff",tr:"var(--tr)",loc:"#ffff
 
 
 const mb=$("mapBox");
-let sel=null,selP=null;
+let sel=null,selP=null,selC=null;
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const map=L.map("lmap",{zoomControl:false,scrollWheelZoom:true,worldCopyJump:false}).setView([34.6,134.5],6);
 L.control.zoom({position:"topright"}).addTo(map);
@@ -311,14 +299,17 @@ const overview=()=>fit(["FUK","BEP","TSU","TYO","KAM","AKA","HIM"]);
 const flyTo=v=>{draw();const pad=mb.clientWidth<600?[24,24]:[50,50];RM?map.fitBounds(v,{padding:pad}):map.flyToBounds(v,{padding:pad,duration:.9,maxZoom:13})};
 const COL={car:"#d93a1f",sk:"#1f2f6b",fl:"#1f2f6b",tr:"#c98a00",loc:"#1f2f6b",arr:"#1f2f6b",dep:"#1f2f6b"};
 const curve=(a,b,o)=>{const p=ll(a),q=ll(b),mx=(p[0]+q[0])/2,my=(p[1]+q[1])/2,dy=q[0]-p[0],dx=q[1]-p[1],c=[mx+dx*o,my-dy*o],r=[];for(let i=0;i<=32;i++){const t=i/32,u=1-t;r.push([u*u*p[0]+2*u*t*c[0]+t*t*q[0],u*u*p[1]+2*u*t*c[1]+t*t*q[1]])}return r};
-const seg=(a,b,md,w,op)=>{const pts=md==="fl"?curve(a,b,.18):md==="sk"?curve(a,b,-.06):[ll(a),ll(b)];
+const seg=(a,b,md,w,op,day)=>{const pts=md==="fl"?curve(a,b,.18):md==="sk"?curve(a,b,-.06):[ll(a),ll(b)],key=day+"|"+a+"|"+b,on=key===selC;
+if(on)L.polyline(pts,{color:"#d93a1f",weight:w+12,opacity:.35,interactive:false}).addTo(LY);
 L.polyline(pts,{color:"#fff",weight:w+4,opacity:op*.9,interactive:false}).addTo(LY);
-L.polyline(pts,{color:COL[md],weight:w,opacity:op,dashArray:md==="fl"?"8 8":md==="tr"?"2 9":md==="sk"?"14 6":null,lineCap:"round",interactive:false}).addTo(LY)};
-const trunk=[];Object.keys(S).forEach(d=>{const [md,st]=S[d];if(md==="car"||md==="fl"||md==="sk")for(let i=0;i<st.length-1;i++)trunk.push([st[i],st[i+1],md])});
+L.polyline(pts,{color:COL[md],weight:on?w+2:w,opacity:on?1:op,dashArray:md==="fl"?"8 8":md==="tr"?"2 9":md==="sk"?"14 6":null,lineCap:"round",interactive:false}).addTo(LY);
+if(day&&VB[key])L.polyline(pts,{color:"#000",opacity:.01,weight:22,interactive:true,bubblingMouseEvents:false}).addTo(LY).on("click",()=>{stop();showConn(+day,a,b)}).bindTooltip(`${P[a][1]} → ${P[b][1]}: ${VB[key].dauer}`,{sticky:true,className:"lab"})};
+const trunk=[];Object.keys(S).forEach(d=>{const [md,st]=S[d];if(md==="car"||md==="fl"||md==="sk")for(let i=0;i<st.length-1;i++)trunk.push([st[i],st[i+1],md,d])});
 const DIR={l:"left",r:"right",t:"top",b:"bottom"};
 const draw=()=>{LY.clearLayers();const small=mb.clientWidth<600,day=sel?S[sel]:null,ds=day?day[1]:[];
-trunk.forEach(t=>seg(t[0],t[1],t[2],sel?3:4,sel?.35:.95));
-if(day)for(let i=0;i<ds.length-1;i++)seg(ds[i],ds[i+1],day[0],6,1);
+trunk.forEach(t=>seg(t[0],t[1],t[2],sel?3:4,sel?.35:.95,t[3]));
+if(day)for(let i=0;i<ds.length-1;i++)seg(ds[i],ds[i+1],day[0],6,1,sel);
+if(selC){const [cd,ca,cb]=selC.split("|");if(!(sel&&cd===sel))seg(ca,cb,S[cd][0],6,1,cd)}
 const num={};ds.forEach(k=>{if(!(k in num))num[k]=Object.keys(num).length+1});
 Object.keys(P).forEach(k=>{const on=k in num,nt=NIGHT.includes(k),ps=k===selP;if(!on&&k==="HND")return;
 const r=on?24:nt?16:12;
@@ -335,10 +326,10 @@ tl+=spans.map(s=>`<div class="phs" style="grid-column:${s[1]}/span ${s[2]}" titl
 tl+=D.map((d,i)=>{const st=S[d[1]][1],last=P[st[st.length-1]][1].split(" ")[0];return`<button class="dbtn" type="button" role="tab" id="t${d[1]}" style="grid-column:${i+1};--m:${MC[S[d[1]][0]]}" aria-label="${d[2]} ${d[1]}. März: ${TT[d[1]]}"><small>${d[2]}</small><strong>${d[1]}</strong><span>${d[1]==="25"?"Abflug":last}</span></button>`}).join("");
 $("tl").innerHTML=tl;
 const pan=$("pan");
-const showAll=()=>{sel=null;selP=null;document.querySelectorAll(".dbtn").forEach(b=>{b.classList.remove("sel");b.setAttribute("aria-selected","false")});
+const showAll=()=>{sel=null;selP=null;selC=null;document.querySelectorAll(".dbtn").forEach(b=>{b.classList.remove("sel");b.setAttribute("aria-selected","false")});
 pan.innerHTML=`<div class="dhead"><b>17</b><div><span>Nächte, 8.–25. März</span><h2>Die ganze Route</h2></div></div><ul class="chips"><li class="car">Mietwagen 10.–18.3.</li><li>Shinkansen 21.3.</li><li>Flug 9.3.</li></ul><ul class="pl">${NL.map(n=>`<li><button class="lnk" type="button" data-p="${n[4]}">${n[0]}</button>: ${n[1]}, ${n[2]}</li>`).join("")}</ul><p class="small">Einen Ort antippen für Kultur, Essen und Trinken, oder einen Tag im Zeitstrahl wählen.</p>`;
 flyTo(overview())};
-pan.addEventListener("click",e=>{const b=e.target.closest("[data-p],[data-d]");if(!b)return;stop();b.dataset.p?showPlace(b.dataset.p):pick(b.dataset.d,true)});
+pan.addEventListener("click",e=>{const b=e.target.closest("[data-p],[data-d],[data-c]");if(!b)return;stop();if(b.dataset.c){const c=b.dataset.c.split("|");showConn(+c[0],c[1],c[2])}else b.dataset.p?showPlace(b.dataset.p):pick(b.dataset.d,true)});
 const visits=k=>Object.keys(S).map(Number).filter(d=>S[d][1].includes(k));
 
 ;
@@ -357,16 +348,22 @@ const closePop=()=>{pop.hidden=true;lastF&&lastF.focus&&lastF.focus()};
 pop.addEventListener("click",e=>{if(e.target===pop||e.target.id==="popX")closePop()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!pop.hidden)closePop()});
 pan.addEventListener("click",e=>{const b=e.target.closest(".att");if(b)openPop(b.dataset.t,b.dataset.c)});
-const showPlace=k=>{curK=k;const p=P[k],q=PL[k]||{k:[],e:[],t:[]},vs=visits(k),from=sel;selP=k;
+const showPlace=k=>{curK=k;selC=null;const p=P[k],q=PL[k]||{k:[],e:[],t:[]},vs=visits(k),from=sel;selP=k;
 pan.innerHTML=`<div class="dhead"><b class="jp">${p[0]}</b><div><span>${vs.length?"Auf der Route am "+vs.map(d=>d+".").join(", ")+" März":"Ort auf der Route"}</span><h2>${p[1]}</h2></div></div><ul class="chips">${vs.map(d=>`<li><button class="lnk" type="button" data-d="${d}">${D.find(x=>x[1]===String(d))[2]} ${d}. März ansehen</button></li>`).join("")}</ul>${sec("Kultur und Sehenswertes","var(--ai)",q.k)}${sec("Essen","var(--ver)",q.e)}${sec("Trinken","var(--tr)",q.t)}${from?`<div class="nav2"><button class="btn" type="button" data-d="${from}">← Zurück zum ${from}. März</button></div>`:""}`;
 pan.scrollTop=0;
 const near=Object.keys(P).filter(j=>j!==k&&Math.abs(P[j][2]-p[2])<.35&&Math.abs(P[j][3]-p[3])<.25&&j!=="HND");
 flyTo(fit([k,...near],.6,.4));try{history.replaceState(null,"","#ort-"+k.toLowerCase())}catch(e){}};
-const pick=(d,scroll)=>{const D0=D.find(x=>x[1]===String(d));if(!D0)return showAll();sel=String(d);selP=null;
+const TM={car:"driving",tr:"transit",sk:"transit",loc:"transit",arr:"transit",dep:"transit"};
+const showConn=(day,a,b)=>{const key=day+"|"+a+"|"+b,v=VB[key];if(!v)return;selC=key;selP=null;const md=S[day][0],D0=D.find(x=>x[1]===String(day));
+const gm=TM[md]?`https://www.google.com/maps/dir/?api=1&origin=${P[a][3]},${P[a][2]}&destination=${P[b][3]},${P[b][2]}&travelmode=${TM[md]}`:"";
+const rowC=(l,x)=>x?`<tr><th scope="row">${l}</th><td>${x}</td></tr>`:"";
+pan.innerHTML=`<div class="dhead"><b>${day}</b><div><span>Verbindung am ${D0[2]}, ${day}. März</span><h2>${P[a][1]} → ${P[b][1]}</h2></div></div><ul class="chips"><li class="${md==="car"?"car":""}">${{car:"Mietwagen",tr:"Zug, Fähre",sk:"Shinkansen",fl:"Flug",loc:"Vor Ort",arr:"Ankunft",dep:"Abreise"}[md]}</li><li>${v.dauer}</li></ul><table class="ctab">${rowC("Verkehrsmittel",v.mittel)}${rowC("Dauer",v.dauer)}${rowC("Strecke",v.strecke)}${rowC("Preis",v.preis)}${rowC("Hinweis",v.hinweis)}</table><p class="small">Zeiten und Entfernungen sind Richtwerte.</p><div class="pact">${gm?`<a class="btn on" href="${gm}" target="_blank" rel="noopener">Route in Google Maps</a>`:""}<button class="btn" type="button" data-d="${day}">Ganzer Tag ${day}. März</button></div><p>Start: <button class="lnk" type="button" data-p="${a}">${P[a][1]}</button>, Ziel: <button class="lnk" type="button" data-p="${b}">${P[b][1]}</button></p>`;
+pan.scrollTop=0;flyTo(fit([a,b],.3,.2))};
+const pick=(d,scroll)=>{const D0=D.find(x=>x[1]===String(d));if(!D0)return showAll();sel=String(d);selP=null;selC=null;
 document.querySelectorAll(".dbtn").forEach(b=>{const on=b.id==="t"+sel;b.classList.toggle("sel",on);b.setAttribute("aria-selected",on)});
 if(scroll){const b=$("t"+sel);b&&b.scrollIntoView({block:"nearest",inline:"center",behavior:RM?"auto":"smooth"})}
 const st=S[sel][1],seen=[];st.forEach(k=>{if(!seen.includes(k))seen.push(k)});const hi=STAY[sel];
-pan.innerHTML=`<div class="dhead"><b>${sel}</b><div><span>${D0[2]}, ${sel}. März 2027</span><h2>${TT[sel]}</h2></div></div><ul class="chips">${D0[3].map(c=>`<li class="${/Auto |Rückgabe/.test(c)?"car":/Autofrei/.test(c)?"free":""}">${c}</li>`).join("")}</ul><p class="small" style="margin:0 0 4px">Ort antippen für Highlights:</p><ol class="stops">${seen.map((k,i)=>`<li>${seen.length>1?`<em>${i+1}</em>`:""}<button class="lnk" type="button" data-p="${k}">${P[k][1]}</button></li>`).join("")}</ol><ul class="pl">${D0[4].map(x=>`<li>${x}</li>`).join("")}</ul><p><strong>Essen & Trinken:</strong> ${D0[5]}</p><p class="tip"><strong>Abseits:</strong> ${D0[6]}</p>${hi!==undefined?`<div class="stay"><b>Übernachtung: ${D0[7]}</b>${HT[hi][2]} <span class="small">(${HT[hi][4]} pro Nacht, Richtwert)</span></div>`:`<div class="stay"><b>Nachtflug ab Tokyo</b>Gepäck im Hotel lassen, ca. 3 h vor Abflug am Terminal.</div>`}<div class="nav2"><button class="btn" type="button" id="prev" ${sel==="8"?"disabled":""}>← Vortag</button><button class="btn" type="button" id="next" ${sel==="25"?"disabled":""}>Nächster Tag →</button></div>`;
+pan.innerHTML=`<div class="dhead"><b>${sel}</b><div><span>${D0[2]}, ${sel}. März 2027</span><h2>${TT[sel]}</h2></div></div><ul class="chips">${D0[3].map(c=>`<li class="${/Auto |Rückgabe/.test(c)?"car":/Autofrei/.test(c)?"free":""}">${c}</li>`).join("")}</ul><p class="small" style="margin:0 0 4px">Ort antippen für Highlights:</p><ol class="stops">${seen.map((k,i)=>`<li>${seen.length>1?`<em>${i+1}</em>`:""}<button class="lnk" type="button" data-p="${k}">${P[k][1]}</button></li>`).join("")}</ol>${st.length>1?`<ul class="conns">${st.slice(0,-1).map((k,i)=>{const v=VB[sel+"|"+k+"|"+st[i+1]];return v?`<li><button class="conn" type="button" data-c="${sel}|${k}|${st[i+1]}"><span>${P[k][1]} → ${P[st[i+1]][1]}</span><small>${v.mittel}, ${v.dauer}</small></button></li>`:""}).join("")}</ul>`:""}<ul class="pl">${D0[4].map(x=>`<li>${x}</li>`).join("")}</ul><p><strong>Essen & Trinken:</strong> ${D0[5]}</p><p class="tip"><strong>Abseits:</strong> ${D0[6]}</p>${hi!==undefined?`<div class="stay"><b>Übernachtung: ${D0[7]}</b><a href="#vorab">Hotel buchen: ToDo in der Checkliste</a></div>`:`<div class="stay"><b>Nachtflug ab Tokyo</b>Gepäck im Hotel lassen, ca. 3 h vor Abflug am Terminal.</div>`}<div class="nav2"><button class="btn" type="button" id="prev" ${sel==="8"?"disabled":""}>← Vortag</button><button class="btn" type="button" id="next" ${sel==="25"?"disabled":""}>Nächster Tag →</button></div>`;
 pan.scrollTop=0;$("prev").onclick=()=>go(-1);$("next").onclick=()=>go(1);
 flyTo(fit(st));try{history.replaceState(null,"","#tag-"+sel)}catch(e){}};
 const go=n=>{const i=D.findIndex(x=>x[1]===sel);const j=Math.max(0,Math.min(D.length-1,(i<0?-1:i)+n));pick(D[j][1],true)};
@@ -383,8 +380,6 @@ const row=(a,cls)=>`<tr>${a.map((c,i)=>`<td${cls&&cls[i]?` class="${cls[i]}"`:""
 $("tr").innerHTML=TR.map(r=>row(r,[0,0,0,"n","n",0])).join("");
 $("car").innerHTML=T.mietwagen.map(x=>`<li>${x}</li>`).join("");
 
-$("ht").innerHTML=HT.map(r=>row(r.slice(0,6),[0,0,0,0,"n",0])).join("");
-$("ons").innerHTML=T.onsen.map(x=>`<li style="margin:8px 0">${x}</li>`).join("");
 
 $("fd").innerHTML=FD.map(r=>row(r,[])).join("");
 const KP=T.kosten.posten;
@@ -417,7 +412,9 @@ try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}};
 kcalc();
 
 let saved={};try{saved=JSON.parse(localStorage.getItem("jp27chk")||"{}")}catch(e){}
-$("chk").innerHTML=CK.map((c,i)=>`<li><label><input type="checkbox" id="c${i}" ${saved[i]?"checked":""}><b>${c[0]}</b><span>${c[1]}</span></label></li>`).join("");
+const HTD=T.hotels.map((h,i)=>["Hotel buchen",`<strong>${h.stadt}, ${h.naechte}</strong> (${h.anzahlNaechte} ${h.anzahlNaechte>1?"Nächte":"Nacht"}): Empfehlung ${h.empfehlung}. Alternativen: ${h.alternativen}. Richtwert ${h.preis} pro Nacht. ${h.hinweis}.`,"h"+i]);
+const ALL=[...HTD,...CK.map((c,i)=>[c[0],c[1],String(i)])];
+$("chk").innerHTML=ALL.map(c=>`<li><label><input type="checkbox" id="c${c[2]}" ${saved[c[2]]?"checked":""}><b>${c[0]}</b><span>${c[1]}</span></label></li>`).join("");
 $("chk").addEventListener("change",e=>{saved[e.target.id.slice(1)]=e.target.checked;try{localStorage.setItem("jp27chk",JSON.stringify(saved))}catch(x){}});
 
 $("srcl").innerHTML=SR.map(([t,u])=>`<li><a href="${u}">${t}</a></li>`).join("");
