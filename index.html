@@ -204,23 +204,8 @@ footer{background:var(--ai);color:#dfe4ff;font-size:14px}
 </div>
 </header>
 <nav class="scroll" aria-label="Abschnitte">
-<a href="#karte">Karte</a><a href="#transport">Transport</a><a href="#essen">Essen & Day Drinking</a><a href="#budget">Kosten</a><a href="#vorab">Vor der Reise</a><a href="#quellen">Quellen</a>
+<a href="#karte">Karte</a><a href="#essen">Essen & Day Drinking</a><a href="#budget">Kosten</a><a href="#vorab">Vor der Reise</a><a href="#quellen">Quellen</a>
 </nav>
-
-<section class="band alt" id="transport"><div class="wrap">
-<h2>Transport mit Preisen</h2>
-<p class="lede">Preise pro Person bzw. pro Auto, Stand der Recherche November 2026. Flug- und Mietwagenpreise schwanken stark, früh buchen.</p>
-<div class="scroll"><table class="stack"><thead><tr><th>Datum</th><th>Strecke</th><th>Verkehrsmittel</th><th>Dauer</th><th>Preis</th><th>Hinweis</th></tr></thead><tbody id="tr"></tbody></table></div>
-<div class="two" style="margin-top:32px">
-<div class="panel"><h3>Mietwagen Fukuoka → Osaka</h3><ul id="car"></ul></div>
-<div class="panel"><h3>Führerschein: ohne Übersetzung kein Auto</h3><ul>
-<li>Der deutsche internationale Führerschein wird in Japan nicht anerkannt. Ihr braucht den nationalen Kartenführerschein plus offizielle japanische Übersetzung.</li>
-<li>Übersetzung über den ADAC-Onlineshop (in Kooperation mit JAF): 95 € inkl. Versand, Lieferung 3–5 Werktage nach Fertigstellung. Bis spätestens Mitte Februar bestellen.</li>
-<li>JAF selbst nimmt Anträge nur online an und verschickt nicht ins Ausland, daher ist der ADAC der einfachste Weg.</li>
-<li>Gilt bis zu einem Jahr ab Einreise; Pass, Führerschein und Übersetzung immer im Auto haben. Jede Person, die fahren will, braucht eine eigene.</li>
-</ul></div>
-</div>
-</div></section>
 
 <section class="band" id="essen"><div class="wrap">
 <h2>Essen und Day Drinking nach Station</h2>
@@ -268,7 +253,6 @@ const STAY={};T.tage.forEach(t=>{if(t.hotel!=null)STAY[t.tag]=t.hotel});
 const NL=T.hotels.map((h,i)=>{const ds=T.tage.filter(t=>t.hotel===i).map(t=>t.tag);return[P[h.ort][1],ds.length>1?ds[0]+".–"+ds[ds.length-1]+". "+MN:ds[0]+". "+MN,ds.length+(ds.length>1?" Nächte":" Nacht"),ds[0],h.ort]}).filter(n=>n[3]!==undefined);
 const PL=Object.fromEntries(Object.entries(T.orte).map(([k,o])=>[k,{k:(o.kultur||[]).map(x=>x.text),e:(o.essen||[]).map(x=>x.text),t:(o.trinken||[]).map(x=>x.text)}]));
 const HT=T.hotels.map(h=>[h.naechte,h.stadt,h.empfehlung,h.alternativen,h.preis,h.hinweis,h.preisMin,h.preisMax,h.anzahlNaechte]);
-const TR=T.transport.map(r=>[r.datum,r.strecke,r.mittel,r.dauer,r.preis,r.hinweis]);
 const FD=T.essenTabelle.map(r=>[r.station,r.essen,r.trinken]);
 const CK=T.checkliste.map(r=>[r.wann,r.was]),SR=T.quellen.map(r=>[r.titel,r.url]);
 const VB={};(T.verbindungen||[]).forEach(v=>VB[v.tag+"|"+v.von+"|"+v.nach]=v);
@@ -377,8 +361,6 @@ const h0=(location.hash.match(/^#tag-(\d+)$/)||[])[1];const o0=((location.hash.m
 map.fitBounds(overview(),{padding:[40,40]});if(h0&&S[h0])pick(h0,true);else if(P[o0]){showAll();showPlace(o0)}else showAll();
 const row=(a,cls)=>`<tr>${a.map((c,i)=>`<td${cls&&cls[i]?` class="${cls[i]}"`:""}>${c}</td>`).join("")}</tr>`;
 
-$("tr").innerHTML=TR.map(r=>row(r,[0,0,0,"n","n",0])).join("");
-$("car").innerHTML=T.mietwagen.map(x=>`<li>${x}</li>`).join("");
 
 
 $("fd").innerHTML=FD.map(r=>row(r,[])).join("");

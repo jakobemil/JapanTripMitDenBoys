@@ -1814,95 +1814,6 @@
       "anzahlNaechte": 4
     }
   ],
-  "transport": [
-    {
-      "datum": "8.3.",
-      "strecke": "Flughafen → Hotel",
-      "mittel": "Zu Fuß (Haneda T3) oder Bahn ab Narita",
-      "dauer": "5–60 min",
-      "preis": "–",
-      "hinweis": "Bei Haneda-Landung Hotel im Terminal nehmen"
-    },
-    {
-      "datum": "9.3.",
-      "strecke": "Tokyo Haneda → Fukuoka",
-      "mittel": "Inlandsflug: Skymark, ANA, JAL, Starflyer",
-      "dauer": "ca. 1:50 h",
-      "preis": "ab ca. ¥9.500",
-      "hinweis": "Ab Narita mit Peach ab ca. ¥4.800 zzgl. Gepäck"
-    },
-    {
-      "datum": "9.3.",
-      "strecke": "Alternative Tokyo → Hakata",
-      "mittel": "Shinkansen Nozomi",
-      "dauer": "ca. 5 h",
-      "preis": "¥17.920",
-      "hinweis": "Preis mit Hayatoku 21; nur sinnvoll ohne Flug"
-    },
-    {
-      "datum": "10.–18.3.",
-      "strecke": "Fukuoka → Osaka",
-      "mittel": "Mietwagen, Einwegmiete",
-      "dauer": "9 Tage",
-      "preis": "ca. ¥153–226k pro Auto",
-      "hinweis": "Aufschlüsselung unten"
-    },
-    {
-      "datum": "14.3.",
-      "strecke": "Hiroshima ↔ Saijo",
-      "mittel": "JR Sanyo-Linie",
-      "dauer": "unter 40 min",
-      "preis": "IC-Karte",
-      "hinweis": "Brauereien direkt am Bahnhof"
-    },
-    {
-      "datum": "15.3.",
-      "strecke": "Hiroshima → Miyajima",
-      "mittel": "JR bis Miyajimaguchi + Fähre",
-      "dauer": "45–95 min",
-      "preis": "¥440–620 + ¥100",
-      "hinweis": "¥100 ist die Besuchersteuer; Direktboot ab Friedenspark ¥2.400"
-    },
-    {
-      "datum": "20.3.",
-      "strecke": "Osaka → Fushimi Inari",
-      "mittel": "Keihan-Linie",
-      "dauer": "ca. 45–50 min",
-      "preis": "IC-Karte",
-      "hinweis": "Fushimi-Momoyama für das Sake-Viertel"
-    },
-    {
-      "datum": "21.3.",
-      "strecke": "Shin-Osaka → Tokyo",
-      "mittel": "Shinkansen Nozomi, reserviert",
-      "dauer": "ca. 2:30 h",
-      "preis": "¥14.720",
-      "hinweis": "¥12.980 mit Hayatoku 21 (smartEX, mind. 21 Tage vorher)"
-    },
-    {
-      "datum": "21.–25.3.",
-      "strecke": "Tokyo, Kamakura, Yokohama",
-      "mittel": "Metro und JR mit Suica",
-      "dauer": "–",
-      "preis": "nach Strecke",
-      "hinweis": "Suica im Handy-Wallet spart Automaten"
-    },
-    {
-      "datum": "25.3.",
-      "strecke": "Hotel → Flughafen",
-      "mittel": "Keikyu/Monorail (Haneda) oder Skyliner (Narita)",
-      "dauer": "30–75 min",
-      "preis": "nach Strecke",
-      "hinweis": "Ca. 3 h vor Abflug am Terminal sein"
-    }
-  ],
-  "mietwagen": [
-    "<b>Grundmiete:</b> Kompaktwagen ca. ¥7.000–12.000 pro Tag, für 9 Tage etwa ¥65.000–110.000 (Richtwert; Mittelklasse laut JNTO ¥14.000–30.000).",
-    "<b>Einweggebühr:</b> Nippon Rent-A-Car rechnet ¥880 je 10 km, für rund 620 km Fukuoka–Osaka also ca. ¥55.000. Toyota rechnet per Simulator, Einweg muss vorab angemeldet werden.",
-    "<b>Maut:</b> mit ETC-Karte geschätzt ¥18.000–25.000. Der Kyushu Expressway Pass (2 Tage ¥6.200, Verkauf endet 31.3.2027) lohnt hier kaum, der San'in-Setouchi-Shikoku-Pass (9 Tage ¥16.700) gilt nur für Honshu ohne Stadtautobahnen. Beim Vermieter vergleichen.",
-    "<b>Benzin</b> für ~1.050 km ca. ¥12.000–16.000, <b>Parken</b> in Städten ¥1.000–2.500 pro Nacht.",
-    "Linksverkehr. Ziele ins Navi am einfachsten per Telefonnummer oder Mapcode eingeben."
-  ],
   "essenTabelle": [
     {
       "station": "Fukuoka",
@@ -1970,7 +1881,7 @@
     },
     {
       "wann": "Bis Mitte Feb.",
-      "was": "ADAC-Führerscheinübersetzung für jede Person bestellen, die fahren will (95 €)."
+      "was": "ADAC-Führerscheinübersetzung für jede Person bestellen, die fahren will (95 €, Lieferung 3–5 Werktage). Der internationale Führerschein gilt in Japan nicht; Kartenführerschein, Übersetzung und Pass immer im Auto."
     },
     {
       "wann": "6. Februar",
